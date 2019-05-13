@@ -40,7 +40,7 @@
 <script>
 import NavigationBar from "@/views/NavigationBar.vue";
 import translate, { setCORS } from "google-translate-api-browser";
-setCORS("http://cors-anywhere.herokuapp.com/");
+setCORS("https://cors-anywhere.herokuapp.com/");
 // import { setCORS } from "google-translate-api-browser";
 // setting up cors-anywhere server address
 // const translate = setCORS("http://cors-anywhere.herokuapp.com/");
