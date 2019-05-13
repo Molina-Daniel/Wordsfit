@@ -1,18 +1,48 @@
 <template>
-  <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png" />
-    <HelloWorld msg="Welcome to Your Vue.js App" />
+  <div class="container">
+    <div>
+      <NavigationBar/>
+    </div>
+    <div class="main">
+      <div>
+        <router-link to="/workout">
+          <button>Workout</button>
+        </router-link>
+      </div>
+      <div>
+        <router-link to="/addword">
+          <button>Add Words</button>
+        </router-link>
+      </div>
+      <div>
+        <router-link to="/chats">
+          <button>Chat Rooms</button>
+        </router-link>
+      </div>
+      <div>
+        <router-link to="/games">
+          <button>Games</button>
+        </router-link>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
-import HelloWorld from "@/components/HelloWorld.vue";
+import NavigationBar from "@/views/NavigationBar.vue";
 
 export default {
   name: "home",
   components: {
-    HelloWorld
+    NavigationBar
   }
 };
 </script>
+
+<style scoped>
+button {
+  padding: 15px 35px;
+  margin-bottom: 10px;
+}
+</style>
