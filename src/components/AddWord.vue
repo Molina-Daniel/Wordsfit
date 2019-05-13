@@ -85,4 +85,13 @@ export default {
 </script>
 
 <style scoped>
+#translation,
+#listSelect {
+  margin-left: 10px;
+  border: none;
+}
+
+button {
+  margin-left: 10px;
+}
 </style>
