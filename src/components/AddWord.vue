@@ -77,7 +77,7 @@ export default {
         });
     },
     getCurrentWord() {
-      this.currentWord = this.textToTranslate;
+      this.currentWord = this.textToTranslate.toLowerCase();
     },
     addWord() {
       db.collection("users")
