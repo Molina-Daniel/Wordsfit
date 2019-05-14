@@ -6,22 +6,27 @@
     <div class="main">
       <div>
         <router-link to="/workout">
-          <button>Workout</button>
+          <button>Workout(train)</button>
         </router-link>
       </div>
       <div>
         <router-link to="/addword">
-          <button>Add Words</button>
+          <button>Add Exercises(words)</button>
+        </router-link>
+      </div>
+      <div>
+        <router-link to="/addword">
+          <button>Workout Routines(lists)</button>
         </router-link>
       </div>
       <div>
         <router-link to="/chats">
-          <button>Chat Rooms</button>
+          <button>Supplements Shop(chat rooms)</button>
         </router-link>
       </div>
       <div>
         <router-link to="/games">
-          <button>Games</button>
+          <button>Competitions(games)</button>
         </router-link>
       </div>
     </div>

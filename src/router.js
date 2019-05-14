@@ -5,6 +5,7 @@ import Login from "./views/Login.vue";
 import Registration from "./views/Registration.vue";
 import Home from "./views/Home.vue";
 import AddWord from "./components/AddWord.vue";
+import Workout from "./components/Workout.vue";
 
 Vue.use(Router);
 
@@ -36,6 +37,11 @@ export default new Router({
       path: "/addword",
       name: "addword",
       component: AddWord
+    },
+    {
+      path: "/workout",
+      name: "workout",
+      component: Workout
     },
   ]
 });
