@@ -29,16 +29,18 @@
     <div>
       <p>Choose where to save this:</p>
       <label for="saveInList">List:</label>
-      <select name="saveInList" id="listSelect">
+      <select v-model="list" name="saveInList" id="listSelect">
         <option value="general">General</option>
       </select>
-      <button>Save!</button>
+      <button @click="addWord">Save!</button>
     </div>
   </div>
 </template>
 
 <script>
 import NavigationBar from "@/views/NavigationBar.vue";
+import firebase from "firebase";
+import db from "@/db/firebaseInit";
 import translate, { setCORS } from "google-translate-api-browser";
 setCORS("https://cors-anywhere.herokuapp.com/");
 // import { setCORS } from "google-translate-api-browser";
@@ -52,19 +54,17 @@ export default {
   },
   data() {
     return {
+      userID: "dmolcap@gmail.com",
       textToTranslate: "",
       translation: "",
-      currentWord: ""
+      currentWord: "",
+      list: null
     };
   },
-  computed: {
-    // getCurrentWord() {
-    //   return (this.currentWord = this.textToTranslate);
-    // }
-  },
+  computed: {},
   methods: {
     translateMe() {
-      translate(this.textToTranslate, { to: "es" })
+      translate(this.textToTranslate, { from: "en", to: "es" })
         .then(res => {
           // I do not eat six days
           console.log(res.text);
@@ -78,6 +78,19 @@ export default {
     },
     getCurrentWord() {
       this.currentWord = this.textToTranslate;
+    },
+    addWord() {
+      db.collection("users")
+        .doc(this.userID)
+        .collection("lists")
+        .doc(this.list)
+        .update({
+          [this.currentWord]: firebase.firestore.FieldValue.arrayUnion(
+            this.translation
+          )
+        })
+        .then(() => console.log("Merge done!"))
+        .catch(error => console.error("Error merging: ", error));
     }
   },
   mounted() {}
