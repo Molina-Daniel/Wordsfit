@@ -58,7 +58,7 @@ export default {
       textToTranslate: "",
       translation: "",
       currentWord: "",
-      list: null
+      list: "general"
     };
   },
   computed: {},
@@ -68,7 +68,7 @@ export default {
         .then(res => {
           // I do not eat six days
           console.log(res.text);
-          this.translation = res.text;
+          this.translation = res.text.toLowerCase();
           this.getCurrentWord();
           this.textToTranslate = "";
         })

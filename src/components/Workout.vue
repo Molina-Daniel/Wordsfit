@@ -19,11 +19,11 @@
     <div>
       <label for="answer">{{ word }} =</label>
       <input type="text" name="answer" id="answer" v-model="answer">
-      <button>Check!</button>
+      <button @click="checkAnswer">Check!</button>
     </div>
 
     <div>
-      <button class="mt">Next one..</button>
+      <button class="mt" @click="askRandomWord">Start / Next One</button>
     </div>
 
     <div>
@@ -50,16 +50,12 @@ export default {
       answer: null,
       result: null,
       words: null,
-      wordsAndAnswers: null
+      wordsAndAnswers: null,
+      index: null,
+      answers: null
     };
   },
-  computed: {
-    askRandomWord() {
-      return (this.word = this.words[
-        Math.floor(Math.random() * this.words.length)
-      ]);
-    }
-  },
+  computed: {},
   methods: {
     // Get ONE document from a collection
     getlist() {
@@ -73,38 +69,54 @@ export default {
           this.words = Object.keys(doc.data());
           // this.answers = Object.values(doc.data());
           this.wordsAndAnswers = Object.entries(doc.data());
-          // askRandomWord();
+          // this.checkAnswer();
           console.log(this.words);
           console.log(this.wordsAndAnswers);
           console.log(this.wordsAndAnswers[0][1]);
         })
         .catch(error => console.log("Error getting document:", error));
+    },
+    askRandomWord() {
+      this.word = this.words[Math.floor(Math.random() * this.words.length)];
+    },
+    getAnswers() {
+      this.wordsAndAnswers.forEach(element => {
+        if (element[0] == this.word) {
+          this.answers = element[1];
+        }
+      });
+    },
+    checkAnswer() {
+      this.getAnswers();
+      if (this.answers.includes(this.answer.toLowerCase())) {
+        this.result = "CORRECT!!";
+        this.answer = "";
+      } else {
+        this.result = "FAIL!! TRY AGAIN";
+      }
     }
-
-    // Get ALL documents from a collection
-    // getlist() {
-    //   let docRef = db
-    //     .collection("users")
-    //     .doc(this.userID)
-    //     .collection("lists")
-    //     // .doc(this.list)
-    //     .get()
-    //     .then(querySnapshot => {
-    //       querySnapshot.forEach(doc => {
-    //         // doc.data() is never undefined for query doc snapshots
-    //         console.log(doc.data());
-    //       });
-    //     })
-    //     .catch(error => console.log("Error getting document:", error));
-    // },
   },
   created() {
-    // Get ONE document from a collection
     this.getlist();
   }
 };
 
-// .then(doc => console.log(doc._document.proto.fields))
+// Get ALL documents from a collection
+// getlist() {
+//   let docRef = db
+//     .collection("users")
+//     .doc(this.userID)
+//     .collection("lists")
+//     // .doc(this.list)
+//     .get()
+//     .then(querySnapshot => {
+//       querySnapshot.forEach(doc => {
+//         // doc.data() is never undefined for query doc snapshots
+//         console.log(doc.data());
+//       });
+//     })
+//     .catch(error => console.log("Error getting document:", error));
+// },// .then(doc => console.log(doc._document.proto.fields))
 </script>
 
 <style>
