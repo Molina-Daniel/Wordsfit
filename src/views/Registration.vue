@@ -6,22 +6,17 @@
     <div class="margintop">
       <label for="email">Email:</label>
       <div class="margintop">
-        <input type="text" name="email" id="email">
+        <input v-model="email" type="text" name="email" id="email">
       </div>
     </div>
     <div class="margintop">
       <label for="password">Password:</label>
       <div class="margintop">
-        <input type="text" name="password" id="password">
+        <input v-model="password" type="password" name="password" id="password">
       </div>
-      <div class="margintop">
-        <label for="password">Repeat password:</label>
-      </div>
-      <div class="margintop">
-        <input type="text" name="password" id="password">
-      </div>
+
       <router-link to="/home">
-        <button class="margintop">Sign In!</button>
+        <button class="margintop" @click="register">Sign In!</button>
       </router-link>
     </div>
     <div class="margintop">
@@ -35,7 +30,31 @@
 </template>
 
 <script>
-export default {};
+import firebase from "firebase";
+
+export default {
+  name: "registration",
+  data() {
+    return {
+      email: null,
+      password: null
+    };
+  },
+  methods: {
+    register(e) {
+      firebase
+        .auth()
+        .createUserWithEmailAndPassword(this.email, this.password)
+        .then(user => {
+          alert(`Account created for ${this.email}`);
+          this.$router.push("/home");
+        })
+        .catch(error => alert(error.message));
+
+      // e.preventDefault();
+    }
+  }
+};
 </script>
 
 <style scoped>

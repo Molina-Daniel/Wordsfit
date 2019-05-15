@@ -6,6 +6,7 @@ import Registration from "./views/Registration.vue";
 import Home from "./views/Home.vue";
 import AddWord from "./components/AddWord.vue";
 import Workout from "./components/Workout.vue";
+import Lists from "./components/Lists.vue";
 
 Vue.use(Router);
 
@@ -42,6 +43,11 @@ export default new Router({
       path: "/workout",
       name: "workout",
       component: Workout
+    },
+    {
+      path: "/lists",
+      name: "lists",
+      component: Lists
     },
   ]
 });

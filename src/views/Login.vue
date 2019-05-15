@@ -18,6 +18,13 @@
         <button class="margintop">Log In!</button>
       </router-link>
     </div>
+
+    <div>
+      <p>
+        <a href>Did you forget your password? Click here!</a>
+      </p>
+    </div>
+
     <div class="margintop">
       <p>Or Log In with:</p>
       <button>Google</button>
@@ -35,7 +42,12 @@
 </template>
 
 <script>
-export default {};
+export default {
+  name: "login",
+  data() {
+    return {};
+  }
+};
 </script>
 
 <style scoped>

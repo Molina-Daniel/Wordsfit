@@ -15,7 +15,7 @@
         </router-link>
       </div>
       <div>
-        <router-link to="/addword">
+        <router-link to="/lists">
           <button>Workout Routines(lists)</button>
         </router-link>
       </div>

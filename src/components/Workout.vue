@@ -116,7 +116,7 @@ export default {
 //       });
 //     })
 //     .catch(error => console.log("Error getting document:", error));
-// },// .then(doc => console.log(doc._document.proto.fields))
+// },
 </script>
 
 <style>
