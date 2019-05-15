@@ -4,7 +4,7 @@
       <Navbar/>
     </div>
     <div>
-      <h5>Here you can create new lists and modify them.</h5>
+      <h5>Here you can check your lists, create new ones and modify them.</h5>
     </div>
 
     <div>
