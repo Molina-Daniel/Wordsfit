@@ -1,7 +1,7 @@
 <template>
   <div>
     <div>
-      <NavigationBar/>
+      <Navbar/>
     </div>
     <div>
       <h5>Here you can translate and add new words to your lists to practice them later</h5>
@@ -38,7 +38,7 @@
 </template>
 
 <script>
-import NavigationBar from "@/views/NavigationBar.vue";
+import Navbar from "@/views/Navbar.vue";
 import firebase from "firebase";
 import db from "@/db/firebaseInit";
 import translate, { setCORS } from "google-translate-api-browser";
@@ -50,7 +50,7 @@ setCORS("https://cors-anywhere.herokuapp.com/");
 export default {
   name: "AddWord",
   components: {
-    NavigationBar
+    Navbar
   },
   data() {
     return {

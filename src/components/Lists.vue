@@ -1,7 +1,7 @@
 <template>
   <div>
     <div>
-      <NavigationBar/>
+      <Navbar/>
     </div>
     <div>
       <h5>Here you can create new lists and modify them.</h5>
@@ -31,14 +31,14 @@
 </template>
 
 <script>
-import NavigationBar from "@/views/NavigationBar.vue";
+import Navbar from "@/views/Navbar.vue";
 import firebase from "firebase";
 import db from "@/db/firebaseInit";
 
 export default {
   name: "Lists",
   components: {
-    NavigationBar
+    Navbar
   },
   data() {
     return {
@@ -104,7 +104,7 @@ export default {
     this.getList();
   },
   filters: {
-    capitalize: function(value) {
+    capitalize(value) {
       if (!value) return "";
       value = value.toString();
       return value.charAt(0).toUpperCase() + value.slice(1);

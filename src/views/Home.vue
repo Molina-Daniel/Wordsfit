@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <div>
-      <NavigationBar/>
+      <Navbar/>
     </div>
     <div class="main">
       <div>
@@ -35,12 +35,12 @@
 
 <script>
 // @ is an alias to /src
-import NavigationBar from "@/views/NavigationBar.vue";
+import Navbar from "@/views/Navbar.vue";
 
 export default {
   name: "home",
   components: {
-    NavigationBar
+    Navbar
   }
 };
 </script>

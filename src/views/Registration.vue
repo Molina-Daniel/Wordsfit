@@ -15,9 +15,7 @@
         <input v-model="password" type="password" name="password" id="password">
       </div>
 
-      <router-link to="/home">
-        <button class="margintop" @click="register">Sign In!</button>
-      </router-link>
+      <button class="margintop" @click="register">Sign In!</button>
     </div>
     <div class="margintop">
       <p>Or Sign In with:</p>
@@ -49,7 +47,10 @@ export default {
           alert(`Account created for ${this.email}`);
           this.$router.push("/home");
         })
-        .catch(error => alert(error.message));
+        .catch(error => {
+          alert(error.message);
+          console.log(error.code);
+        });
 
       // e.preventDefault();
     }

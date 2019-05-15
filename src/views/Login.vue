@@ -6,17 +6,15 @@
     <div class="margintop">
       <label for="email">Email:</label>
       <div class="margintop">
-        <input type="text" name="email" id="email">
+        <input v-model="email" type="text" name="email" id="email">
       </div>
     </div>
     <div class="margintop">
       <label for="password">Password:</label>
       <div class="margintop">
-        <input type="text" name="password" id="password">
+        <input v-model="password" type="password" name="password" id="password">
       </div>
-      <router-link to="/home">
-        <button class="margintop">Log In!</button>
-      </router-link>
+      <button @click="login" class="margintop">Log In!</button>
     </div>
 
     <div>
@@ -42,10 +40,32 @@
 </template>
 
 <script>
+import firebase from "firebase";
+
 export default {
   name: "login",
   data() {
-    return {};
+    return {
+      email: null,
+      password: null
+    };
+  },
+  methods: {
+    login(e) {
+      firebase
+        .auth()
+        .signInWithEmailAndPassword(this.email, this.password)
+        .then(user => {
+          alert(`You are logged in as ${this.email}`);
+          this.$router.push("/home");
+        })
+        .catch(error => {
+          alert(error.message);
+          console.log(error.code);
+        });
+
+      e.preventDefault();
+    }
   }
 };
 </script>
