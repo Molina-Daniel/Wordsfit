@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-card flat>
+    <v-card class="indigo lighten-2 mt-2" flat>
       <v-card-text>
         <h1 class="text-xs-center">
           Add Words
@@ -15,9 +15,9 @@
     <v-container fluid grid-list-sm>
       <v-layout row wrap>
         <v-flex d-flex xs12>
-          <v-layout class="grey lighten-2" row wrap>
+          <v-layout class="amber lighten-2" row wrap>
             <v-flex d-flex xs12>
-              <v-card class="indigo lighten-2" light tile flat>
+              <v-card class="amber lighten-2" light tile flat>
                 <v-card-text class="text-xs-center">Choose language</v-card-text>
               </v-card>
             </v-flex>
@@ -84,32 +84,30 @@
         </v-flex>
       </v-layout>
 
-      <v-layout align-center justify-center row>
+      <v-layout class="amber lighten-2" align-center justify-center row>
         <v-flex xs5>
-          <v-card tile flat>
-            <v-card-text class="text-xs-center">{{ currentWord }}</v-card-text>
-          </v-card>
+          <v-textarea
+            v-model="currentWord"
+            name="input-7-1"
+            label="Your words"
+            height="75"
+            outline
+            readonly
+          ></v-textarea>
         </v-flex>
         <v-flex xs2>
           <v-card-text class="text-xs-center">=</v-card-text>
         </v-flex>
         <v-flex xs5>
-          <v-text-field
-            hint="You can change the translation"
-            persistent-hint
-            v-model="translation"
-            label="Translation"
-            outline
-            clearable
-          ></v-text-field>
+          <v-textarea v-model="translation" name="input-7-1" label="Word" height="75" outline></v-textarea>
         </v-flex>
       </v-layout>
 
       <v-layout row wrap>
         <v-flex d-flex xs12>
-          <v-layout class="grey lighten-2" row wrap>
+          <v-layout class="amber lighten-2" row wrap>
             <v-flex d-flex xs12>
-              <v-card tile flat>
+              <v-card class="amber lighten-2" tile flat>
                 <v-card-text class="text-xs-center">Choose a list where save it:</v-card-text>
               </v-card>
             </v-flex>
@@ -322,7 +320,7 @@ export default {
   },
   methods: {
     translateMe() {
-      translate(this.textToTranslate, { from: "en", to: "es" })
+      translate(this.textToTranslate, { from: this.fromLang, to: this.toLang })
         .then(res => {
           // I do not eat six days
           console.log(res.text);

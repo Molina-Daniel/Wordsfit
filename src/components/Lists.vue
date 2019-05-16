@@ -1,18 +1,21 @@
 <template>
   <div>
-    <v-card>
+    <v-card class="indigo lighten-2 mt-2" flat>
       <v-card-text>
-        <h1 class="text-xs-center">Workout</h1>
-        <p class="text-xs-center">Here you can train with vocabulary from your lists</p>
+        <h1 class="text-xs-center">
+          Lists
+          <i class="fas fa-clipboard-list"></i>
+        </h1>
+        <p class="text-xs-center ma-0">Here you can train with vocabulary from your lists</p>
       </v-card-text>
     </v-card>
 
     <v-container fluid grid-list-sm>
       <v-layout row wrap>
         <v-flex d-flex xs12>
-          <v-layout class="grey lighten-2" row wrap>
+          <v-layout class="amber lighten-2" row wrap>
             <v-flex d-flex xs12>
-              <v-card color="indigo lighten-2" dark tile flat>
+              <v-card color="amber lighten-2" dark tile flat>
                 <v-card-text class="text-xs-center">Choose a list to Workout:</v-card-text>
               </v-card>
             </v-flex>
@@ -22,7 +25,7 @@
                 <v-flex xs8>
                   <v-layout>
                     <v-flex>
-                      <v-card color="grey lighten-2" tile flat>
+                      <v-card color="amber lighten-2" tile flat>
                         <v-card-text>Lists:</v-card-text>
                       </v-card>
                     </v-flex>
@@ -55,9 +58,9 @@
 
       <v-layout row wrap>
         <v-flex d-flex xs12>
-          <v-layout class="grey lighten-2" row wrap>
+          <v-layout class="amber lighten-2" row wrap>
             <v-flex d-flex xs12>
-              <v-card color="indigo lighten-2" dark tile flat>
+              <v-card color="amber lighten-2" dark tile flat>
                 <v-card-text class="text-xs-center">Or create a new one:</v-card-text>
               </v-card>
             </v-flex>
@@ -67,7 +70,7 @@
                 <v-flex xs8>
                   <v-layout>
                     <v-flex>
-                      <v-card color="grey lighten-2" tile flat>
+                      <v-card color="amber lighten-2" tile flat>
                         <v-card-text>Name:</v-card-text>
                       </v-card>
                     </v-flex>
@@ -89,9 +92,12 @@
         </v-flex>
       </v-layout>
 
-      <v-card>
+      <v-card class="amber darken-2">
         <v-card-text>
-          <p v-for="word in words" :key="word">{{ word }}</p>
+          <p v-for="(word, i) in words" :key="word">
+            {{ word }} =
+            <span v-for="answer in answers[i]" :key="answer">{{ answer+", " }}</span>
+          </p>
         </v-card-text>
       </v-card>
     </v-container>
@@ -140,6 +146,7 @@ export default {
       userID: "dmolcap@gmail.com",
       list: "general",
       words: null,
+      answers: null,
       newListName: null
     };
   },
@@ -175,10 +182,10 @@ export default {
         .then(doc => {
           // Retrieve the keys form the object
           this.words = Object.keys(doc.data());
-          // this.answers = Object.values(doc.data());
+          this.answers = Object.values(doc.data());
           // this.wordsAndAnswers = Object.entries(doc.data());
           // this.checkAnswer();
-          // console.log(this.words);
+          console.log(this.answers);
         })
         .catch(error => console.log("Error getting document:", error));
     },
