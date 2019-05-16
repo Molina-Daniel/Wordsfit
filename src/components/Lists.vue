@@ -1,8 +1,8 @@
 <template>
   <div>
-    <div>
+    <!-- <div>
       <Navbar/>
-    </div>
+    </div>-->
     <div>
       <h5>Here you can check your lists, create new ones and modify them.</h5>
     </div>

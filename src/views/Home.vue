@@ -1,32 +1,47 @@
 <template>
   <div class="container">
-    <div>
+    <!-- <div>
       <Navbar/>
-    </div>
+    </div>-->
     <div class="main">
       <div>
         <router-link to="/workout">
-          <button>Workout(train)</button>
+          <div class="text-xs-center">
+            <v-btn round color="primary" dark>Workout</v-btn>
+            <i class="fas fa-dumbbell"></i>
+          </div>
         </router-link>
       </div>
       <div>
         <router-link to="/addword">
-          <button>Add Exercises(words)</button>
+          <div class="text-xs-center">
+            <v-btn round color="primary" dark>Add Words</v-btn>
+            <i class="fas fa-pencil-alt"></i>
+          </div>
         </router-link>
       </div>
       <div>
         <router-link to="/lists">
-          <button>Workout Routines(lists)</button>
+          <div class="text-xs-center">
+            <v-btn round color="primary" dark>Workout Routines</v-btn>
+            <i class="fas fa-clipboard-list"></i>
+          </div>
         </router-link>
       </div>
       <div>
         <router-link to="/chats">
-          <button>Supplements Shop(chat rooms)</button>
+          <div class="text-xs-center">
+            <v-btn round color="primary" dark>Supplements Shop</v-btn>
+            <i class="fas fa-comments"></i>
+          </div>
         </router-link>
       </div>
       <div>
         <router-link to="/games">
-          <button>Competitions(games)</button>
+          <div class="text-xs-center">
+            <v-btn round color="primary" dark>Competitions</v-btn>
+            <i class="fas fa-gamepad"></i>
+          </div>
         </router-link>
       </div>
     </div>
@@ -45,8 +60,4 @@ export default {
 </script>
 
 <style scoped>
-button {
-  padding: 15px 35px;
-  margin-bottom: 10px;
-}
 </style>

@@ -1,8 +1,8 @@
 <template>
   <div>
-    <div>
+    <!-- <div>
       <Navbar/>
-    </div>
+    </div>-->
     <div>
       <h5>Here you can train with vocabulary from your lists</h5>
     </div>
