@@ -1,8 +1,98 @@
 <template>
   <div>
+    <v-card>
+      <v-card-text>
+        <h1 class="text-xs-center">Workout</h1>
+        <p class="text-xs-center">Here you can train with vocabulary from your lists</p>
+      </v-card-text>
+    </v-card>
+
+    <v-container fluid grid-list-sm>
+      <v-layout row wrap>
+        <v-flex d-flex xs12>
+          <v-layout class="grey lighten-2" row wrap>
+            <v-flex d-flex xs12>
+              <v-card color="indigo lighten-2" dark tile flat>
+                <v-card-text class="text-xs-center">Choose a list to Workout:</v-card-text>
+              </v-card>
+            </v-flex>
+
+            <v-flex d-flex>
+              <v-layout row justify-space-between>
+                <v-flex xs8>
+                  <v-layout>
+                    <v-flex>
+                      <v-card color="grey lighten-2" tile flat>
+                        <v-card-text>Lists:</v-card-text>
+                      </v-card>
+                    </v-flex>
+                    <v-flex>
+                      <v-autocomplete
+                        v-model="list"
+                        :items="lists"
+                        class="mx-1"
+                        flat
+                        hide-no-data
+                        hide-details
+                        label="Lists"
+                        solo-inverted
+                      ></v-autocomplete>
+                    </v-flex>
+                  </v-layout>
+                </v-flex>
+                <v-flex xs4>
+                  <v-layout>
+                    <v-flex>
+                      <v-btn @click="getlist" class="px-2" outline color="indigo">Train!</v-btn>
+                    </v-flex>
+                  </v-layout>
+                </v-flex>
+              </v-layout>
+            </v-flex>
+          </v-layout>
+        </v-flex>
+      </v-layout>
+
+      <v-layout align-center justify-center row>
+        <v-flex xs5>
+          <v-card tile flat>
+            <v-card-text class="text-xs-center">{{ word }}</v-card-text>
+          </v-card>
+        </v-flex>
+        <v-flex xs2>
+          <v-card-text class="text-xs-center">=</v-card-text>
+        </v-flex>
+        <v-flex xs5>
+          <v-text-field
+            hint="You can change the translation"
+            persistent-hint
+            v-model="answer"
+            label="Translation"
+            outline
+            clearable
+          ></v-text-field>
+        </v-flex>
+      </v-layout>
+
+      <v-layout row>
+        <v-flex>
+          <v-btn @click="checkAnswer" class="px-2" outline color="indigo">Check!</v-btn>
+        </v-flex>
+        <v-flex>
+          <v-btn @click="askRandomWord" class="px-2" outline color="indigo">Start / Next!</v-btn>
+        </v-flex>
+      </v-layout>
+
+      <v-card>
+        <v-card-text>
+          <h1 class="text-xs-center">{{ result }}</h1>
+        </v-card-text>
+      </v-card>
+    </v-container>
+
     <!-- <div>
       <Navbar/>
-    </div>-->
+    </div>
     <div>
       <h5>Here you can train with vocabulary from your lists</h5>
     </div>
@@ -28,7 +118,7 @@
 
     <div>
       <h2>{{ result }}</h2>
-    </div>
+    </div>-->
   </div>
 </template>
 
@@ -55,7 +145,11 @@ export default {
       answers: null
     };
   },
-  computed: {},
+  computed: {
+    lists() {
+      return this.$store.getters.getLists;
+    }
+  },
   methods: {
     // Get ONE document from a collection
     getlist() {
@@ -98,6 +192,7 @@ export default {
   },
   created() {
     this.getlist();
+    this.$store.dispatch("getAllLists");
   }
 };
 

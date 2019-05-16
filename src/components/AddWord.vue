@@ -70,13 +70,7 @@
             <v-flex d-flex>
               <v-layout row wrap>
                 <v-flex xs8>
-                  <v-text-field
-                    v-model="textToTranslate"
-                    label="Type here"
-                    persistent-hint
-                    outline
-                    clearable
-                  ></v-text-field>
+                  <v-text-field v-model="textToTranslate" label="Type here" outline clearable></v-text-field>
                 </v-flex>
                 <v-flex xs4>
                   <v-btn @click="translateMe" class="px-2" outline color="indigo">Translate!</v-btn>
