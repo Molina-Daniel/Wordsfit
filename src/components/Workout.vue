@@ -89,8 +89,8 @@
         </v-card-text>
       </v-card>
     </v-container>
-
-    <!-- <div>
+  </div>
+  <!-- <div>
       <Navbar/>
     </div>
     <div>
@@ -118,8 +118,7 @@
 
     <div>
       <h2>{{ result }}</h2>
-    </div>-->
-  </div>
+  </div>-->
 </template>
 
 <script>
@@ -215,21 +214,9 @@ export default {
 </script>
 
 <style>
-#answer {
-  margin-left: 10px;
-  margin-top: 30px;
-}
-
-#listSelect {
-  margin-left: 10px;
-}
-
-button {
-  margin-left: 10px;
-}
-
-.mt {
-  margin-top: 20px;
+.v-card__text {
+  padding: 8px;
+  width: 100%;
 }
 </style>
 

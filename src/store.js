@@ -25,9 +25,7 @@ export default new Vuex.Store({
         .get()
         .then(querySnapshot => {
           querySnapshot.forEach(doc => {
-            if (doc.id != "general") {
-              context.commit("setLists", doc.id)
-            }
+            context.commit("setLists", doc.id)
           });
         })
         .catch(error => console.log("Error getting document:", error));

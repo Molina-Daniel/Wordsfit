@@ -1,11 +1,14 @@
 <template>
   <div>
-    <v-card>
+    <v-card flat>
       <v-card-text>
-        <h1 class="text-xs-center">Add Words</h1>
-        <p
+        <h1 class="text-xs-center">
+          Add Words
+          <i class="fas fa-pencil-alt"></i>
+        </h1>
+        <!-- <p
           class="text-xs-center"
-        >Here you can translate and add new words to your lists to practice them later</p>
+        >Here you can translate and add new words to your lists to practice them later</p>-->
       </v-card-text>
     </v-card>
 
@@ -23,11 +26,11 @@
               <v-layout row>
                 <v-flex xs6>
                   <v-layout>
-                    <v-flex>
+                    <!-- <v-flex>
                       <v-card color="grey lighten-2" tile flat>
                         <v-card-text>From:</v-card-text>
                       </v-card>
-                    </v-flex>
+                    </v-flex>-->
                     <v-flex>
                       <!-- <v-select :items="langs" label="Language"></v-select> -->
                       <v-autocomplete
@@ -37,7 +40,7 @@
                         flat
                         hide-no-data
                         hide-details
-                        label="Language"
+                        label="From"
                         solo-inverted
                       ></v-autocomplete>
                     </v-flex>
@@ -45,11 +48,11 @@
                 </v-flex>
                 <v-flex xs6>
                   <v-layout>
-                    <v-flex>
+                    <!-- <v-flex>
                       <v-card color="grey lighten-2" tile flat>
                         <v-card-text>To:</v-card-text>
                       </v-card>
-                    </v-flex>
+                    </v-flex>-->
                     <v-flex>
                       <v-autocomplete
                         v-model="toLang"
@@ -58,7 +61,7 @@
                         flat
                         hide-no-data
                         hide-details
-                        label="Language"
+                        label="To"
                         solo-inverted
                       ></v-autocomplete>
                     </v-flex>
@@ -106,8 +109,8 @@
         <v-flex d-flex xs12>
           <v-layout class="grey lighten-2" row wrap>
             <v-flex d-flex xs12>
-              <v-card color="indigo lighten-2" dark tile flat>
-                <v-card-text class="text-xs-center">Choose the where save it:</v-card-text>
+              <v-card tile flat>
+                <v-card-text class="text-xs-center">Choose a list where save it:</v-card-text>
               </v-card>
             </v-flex>
 
@@ -116,19 +119,12 @@
                 <v-flex xs8>
                   <v-layout>
                     <v-flex>
-                      <v-card color="grey lighten-2" tile flat>
-                        <v-card-text>Lists:</v-card-text>
-                      </v-card>
-                    </v-flex>
-                    <v-flex>
                       <v-autocomplete
                         v-model="list"
                         :items="lists"
                         class="mx-1"
                         flat
-                        hide-no-data
-                        hide-details
-                        label="Lists"
+                        prefix="List:"
                         solo-inverted
                       ></v-autocomplete>
                     </v-flex>
@@ -369,16 +365,6 @@ export default {
 </script>
 
 <style scoped>
-#translation,
-#listSelect {
-  margin-left: 10px;
-  border: none;
-}
-
-button {
-  margin-left: 10px;
-}
-
 .v-card__text {
   padding: 8px;
   width: 100%;
