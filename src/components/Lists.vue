@@ -10,12 +10,12 @@
       </v-card-text>
     </v-card>
 
-    <v-container fluid grid-list-sm>
+    <v-container class="indigo lighten-2" fluid grid-list-sm>
       <v-layout row wrap>
         <v-flex d-flex xs12>
           <v-layout class="amber lighten-2" row wrap>
             <v-flex d-flex xs12>
-              <v-card color="amber lighten-2" dark tile flat>
+              <v-card color="amber lighten-2" tile flat>
                 <v-card-text class="text-xs-center">Choose a list to Workout:</v-card-text>
               </v-card>
             </v-flex>
@@ -46,7 +46,7 @@
                 <v-flex xs4>
                   <v-layout>
                     <v-flex>
-                      <v-btn @click="getList" class="px-2" outline color="indigo">Show list!</v-btn>
+                      <v-btn @click="getList" class="px-2" dark round color="indigo">Show list!</v-btn>
                     </v-flex>
                   </v-layout>
                 </v-flex>
@@ -60,7 +60,7 @@
         <v-flex d-flex xs12>
           <v-layout class="amber lighten-2" row wrap>
             <v-flex d-flex xs12>
-              <v-card color="amber lighten-2" dark tile flat>
+              <v-card color="amber lighten-2" tile flat>
                 <v-card-text class="text-xs-center">Or create a new one:</v-card-text>
               </v-card>
             </v-flex>
@@ -82,7 +82,7 @@
                 <v-flex xs4>
                   <v-layout>
                     <v-flex>
-                      <v-btn @click="newList" class="px-2" outline color="indigo">Create!</v-btn>
+                      <v-btn @click="newList" dark round color="indigo">Create!</v-btn>
                     </v-flex>
                   </v-layout>
                 </v-flex>

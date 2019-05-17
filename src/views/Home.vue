@@ -7,40 +7,50 @@
       <div>
         <router-link to="/workout">
           <div class="text-xs-center">
-            <v-btn round color="primary" dark>Workout</v-btn>
-            <i class="fas fa-dumbbell"></i>
+            <v-btn round color="primary" dark>
+              <span>Workout</span>
+              <v-icon right>fas fa-dumbbell</v-icon>
+            </v-btn>
           </div>
         </router-link>
       </div>
       <div>
         <router-link to="/addword">
           <div class="text-xs-center">
-            <v-btn round color="primary" dark>Add Words</v-btn>
-            <i class="fas fa-pencil-alt"></i>
+            <v-btn round color="primary" dark>
+              <span>Add Words</span>
+              <v-icon right>fas fa-pencil-alt</v-icon>
+            </v-btn>
           </div>
         </router-link>
       </div>
       <div>
         <router-link to="/lists">
           <div class="text-xs-center">
-            <v-btn round color="primary" dark>Workout Routines</v-btn>
-            <i class="fas fa-clipboard-list"></i>
+            <v-btn round color="primary" dark>
+              <span>Workout Routines</span>
+              <v-icon right>fas fa-clipboard-list</v-icon>
+            </v-btn>
           </div>
         </router-link>
       </div>
       <div>
         <router-link to="/chats">
           <div class="text-xs-center">
-            <v-btn round color="primary" dark>Supplements Shop</v-btn>
-            <i class="fas fa-comments"></i>
+            <v-btn round color="primary" dark>
+              <span>Supplements Shop</span>
+              <v-icon right>fas fa-comments</v-icon>
+            </v-btn>
           </div>
         </router-link>
       </div>
       <div>
         <router-link to="/games">
           <div class="text-xs-center">
-            <v-btn round color="primary" dark>Competitions</v-btn>
-            <i class="fas fa-gamepad"></i>
+            <v-btn round color="primary" dark>
+              <span>Competitions</span>
+              <v-icon right>fas fa-gamepad</v-icon>
+            </v-btn>
           </div>
         </router-link>
       </div>

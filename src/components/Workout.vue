@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-card class="indigo lighten-2 mt-2" flat>
+    <v-card color="rgb(255, 0, 0, 0)" class="mt-2" flat>
       <v-card-text>
         <h1 class="text-xs-center">
           Workout
@@ -10,7 +10,7 @@
       </v-card-text>
     </v-card>
 
-    <v-container fluid grid-list-sm>
+    <v-container class="amber lighten-2 mt-2" fluid grid-list-sm>
       <v-layout row wrap>
         <v-flex d-flex xs12>
           <v-layout class="amber lighten-2" row wrap>
@@ -46,7 +46,7 @@
                 <v-flex xs4>
                   <v-layout>
                     <v-flex>
-                      <v-btn @click="getlist" class="px-2" outline color="indigo">Train!</v-btn>
+                      <v-btn @click="getlist" dark round color="indigo">Train!</v-btn>
                     </v-flex>
                   </v-layout>
                 </v-flex>
@@ -56,7 +56,7 @@
         </v-flex>
       </v-layout>
 
-      <v-layout class="amber lighten-2" align-center justify-center row>
+      <v-layout class="amber lighten-2 mt-3" align-center justify-center row>
         <v-flex xs5>
           <v-textarea v-model="word" name="input-7-1" label="Word" height="75" outline readonly></v-textarea>
         </v-flex>
@@ -98,10 +98,10 @@
 
       <v-layout class="amber lighten-2 text-xs-center" row>
         <v-flex>
-          <v-btn @click="checkAnswer" class="px-2" outline color="indigo">Check!</v-btn>
+          <v-btn @click="checkAnswer" class="px-2" dark round color="indigo">Check!</v-btn>
         </v-flex>
         <v-flex>
-          <v-btn @click="askRandomWord" class="px-2" outline color="indigo">Start / Next!</v-btn>
+          <v-btn @click="askRandomWord" class="px-2" dark round color="indigo">Start / Next!</v-btn>
         </v-flex>
       </v-layout>
 

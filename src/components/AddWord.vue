@@ -6,13 +6,13 @@
           Add Words
           <i class="fas fa-pencil-alt"></i>
         </h1>
-        <!-- <p
-          class="text-xs-center"
-        >Here you can translate and add new words to your lists to practice them later</p>-->
+        <p
+          class="text-xs-center mb-0"
+        >Here you can translate and add new words to your lists to practice them later</p>
       </v-card-text>
     </v-card>
 
-    <v-container fluid grid-list-sm>
+    <v-container class="amber lighten-2 mt-2" fluid grid-list-sm>
       <v-layout row wrap>
         <v-flex d-flex xs12>
           <v-layout class="amber lighten-2" row wrap>
@@ -26,13 +26,7 @@
               <v-layout row>
                 <v-flex xs6>
                   <v-layout>
-                    <!-- <v-flex>
-                      <v-card color="grey lighten-2" tile flat>
-                        <v-card-text>From:</v-card-text>
-                      </v-card>
-                    </v-flex>-->
                     <v-flex>
-                      <!-- <v-select :items="langs" label="Language"></v-select> -->
                       <v-autocomplete
                         v-model="fromLang"
                         :items="langs"
@@ -48,11 +42,6 @@
                 </v-flex>
                 <v-flex xs6>
                   <v-layout>
-                    <!-- <v-flex>
-                      <v-card color="grey lighten-2" tile flat>
-                        <v-card-text>To:</v-card-text>
-                      </v-card>
-                    </v-flex>-->
                     <v-flex>
                       <v-autocomplete
                         v-model="toLang"
@@ -70,7 +59,7 @@
               </v-layout>
             </v-flex>
 
-            <v-flex d-flex>
+            <v-flex class="mt-1" d-flex>
               <v-layout row wrap>
                 <v-flex xs8>
                   <v-text-field v-model="textToTranslate" label="Type here" outline clearable></v-text-field>
