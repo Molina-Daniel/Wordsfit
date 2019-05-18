@@ -6,9 +6,9 @@
           Add Words
           <i class="fas fa-pencil-alt"></i>
         </h1>
-        <p
+        <!-- <p
           class="text-xs-center mb-0"
-        >Here you can translate and add new words to your lists to practice them later</p>
+        >Here you can translate and add new words to your lists to practice them later</p>-->
       </v-card-text>
     </v-card>
 
