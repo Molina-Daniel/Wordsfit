@@ -17,7 +17,7 @@
         <v-flex d-flex xs12>
           <v-layout row wrap>
             <v-flex d-flex xs12>
-              <v-card color="rgb(255, 0, 0, 0)" tile flat>
+              <v-card color="rgb(255, 255, 255, 0.3)" tile flat>
                 <v-card-text class="text-xs-center title">Choose language</v-card-text>
               </v-card>
             </v-flex>
@@ -30,7 +30,7 @@
                       <v-autocomplete
                         v-model="fromLang"
                         :items="langs"
-                        class="mx-1 font-weight-bold title"
+                        class="mx-1 font-weight-bold"
                         flat
                         hide-no-data
                         hide-details
@@ -116,7 +116,7 @@
         <v-flex d-flex xs12>
           <v-layout row wrap>
             <v-flex d-flex xs12>
-              <v-card color="rgb(255, 0, 0, 0)" tile flat>
+              <v-card color="rgb(255, 255, 255, 0.3)" tile flat>
                 <v-card-text class="text-xs-center title">Choose a list where save it:</v-card-text>
               </v-card>
             </v-flex>

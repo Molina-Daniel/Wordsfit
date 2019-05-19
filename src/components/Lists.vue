@@ -10,13 +10,13 @@
       </v-card-text>
     </v-card>
 
-    <v-container color="rgb(255, 0, 0, 0)" fluid grid-list-sm>
+    <v-container color="rgb(255, 255, 255, 0.7)" fluid grid-list-sm>
       <v-layout row wrap>
         <v-flex d-flex xs12>
           <v-layout row wrap>
             <v-flex d-flex xs12>
-              <v-card color="rgb(255, 0, 0, 0)" tile flat>
-                <v-card-text class="text-xs-center">Choose a list to Workout:</v-card-text>
+              <v-card color="rgb(255, 255, 255, 0.3)" tile flat>
+                <v-card-text class="text-xs-center title">Choose a list to Workout:</v-card-text>
               </v-card>
             </v-flex>
 
@@ -25,8 +25,8 @@
                 <v-flex xs8>
                   <v-layout>
                     <v-flex>
-                      <v-card color="rgb(255, 0, 0, 0)" tile flat>
-                        <v-card-text>Lists:</v-card-text>
+                      <v-card color="rgb(255, 255, 255, 0)" tile flat>
+                        <v-card-text class="subheading font-weight-bold">Lists:</v-card-text>
                       </v-card>
                     </v-flex>
                     <v-flex>
@@ -66,8 +66,8 @@
         <v-flex d-flex xs12>
           <v-layout row wrap>
             <v-flex d-flex xs12>
-              <v-card color="rgb(255, 0, 0, 0)" tile flat>
-                <v-card-text class="text-xs-center">Or create a new one:</v-card-text>
+              <v-card color="rgb(255, 255, 255, 0.3)" tile flat>
+                <v-card-text class="text-xs-center title">Or create a new one:</v-card-text>
               </v-card>
             </v-flex>
 
@@ -77,7 +77,7 @@
                   <v-layout>
                     <v-flex>
                       <v-card color="rgb(255, 0, 0, 0)" tile flat>
-                        <v-card-text>Name:</v-card-text>
+                        <v-card-text class="subheading font-weight-bold">Name:</v-card-text>
                       </v-card>
                     </v-flex>
                     <v-flex>

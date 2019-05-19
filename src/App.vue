@@ -14,6 +14,10 @@
       </router-link>
     </v-toolbar>
 
+    <v-navigatio-drawer class="indigo" v-model="drawer">
+      <p>test</p>
+    </v-navigatio-drawer>
+
     <v-layout id="logo" class="pt-5" row>
       <v-flex xs12 class="text-xs-center">
         <img alt="logo" src="./assets/wordsfit_logo70.png">
@@ -42,7 +46,8 @@ export default {
   name: "App",
   data() {
     return {
-      src: "./assets/wordsfit_logo.png"
+      src: "./assets/wordsfit_logo.png",
+      drawer: null
     };
   }
 };

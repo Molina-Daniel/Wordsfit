@@ -15,7 +15,7 @@
         <v-flex d-flex xs12>
           <v-layout row wrap>
             <v-flex d-flex xs12>
-              <v-card color="rgb(255, 0, 0, 0)" tile flat>
+              <v-card color="rgb(255, 255, 255, 0.3)" tile flat>
                 <v-card-text class="text-xs-center title">Choose a list to Workout:</v-card-text>
               </v-card>
             </v-flex>
@@ -26,14 +26,14 @@
                   <v-layout>
                     <v-flex>
                       <v-card color="rgb(255, 0, 0, 0)" tile flat>
-                        <v-card-text class="subheading">Lists:</v-card-text>
+                        <v-card-text class="subheading font-weight-bold">Lists:</v-card-text>
                       </v-card>
                     </v-flex>
                     <v-flex>
                       <v-autocomplete
                         v-model="list"
                         :items="lists"
-                        class="mx-1 font-weight-bold"
+                        class="mx-1"
                         flat
                         hide-no-data
                         hide-details
