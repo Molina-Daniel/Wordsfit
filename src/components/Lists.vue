@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-card class="indigo lighten-2 mt-2" flat>
+    <v-card color="rgb(255, 0, 0, 0)" flat>
       <v-card-text>
         <h1 class="text-xs-center">
           Lists
@@ -10,12 +10,12 @@
       </v-card-text>
     </v-card>
 
-    <v-container class="indigo lighten-2" fluid grid-list-sm>
+    <v-container color="rgb(255, 0, 0, 0)" fluid grid-list-sm>
       <v-layout row wrap>
         <v-flex d-flex xs12>
-          <v-layout class="amber lighten-2" row wrap>
+          <v-layout row wrap>
             <v-flex d-flex xs12>
-              <v-card color="amber lighten-2" tile flat>
+              <v-card color="rgb(255, 0, 0, 0)" tile flat>
                 <v-card-text class="text-xs-center">Choose a list to Workout:</v-card-text>
               </v-card>
             </v-flex>
@@ -25,7 +25,7 @@
                 <v-flex xs8>
                   <v-layout>
                     <v-flex>
-                      <v-card color="amber lighten-2" tile flat>
+                      <v-card color="rgb(255, 0, 0, 0)" tile flat>
                         <v-card-text>Lists:</v-card-text>
                       </v-card>
                     </v-flex>
@@ -46,7 +46,13 @@
                 <v-flex xs4>
                   <v-layout>
                     <v-flex>
-                      <v-btn @click="getList" class="px-2" dark round color="indigo">Show list!</v-btn>
+                      <v-btn
+                        @click="getList"
+                        class="px-2"
+                        dark
+                        round
+                        color="red darken-4"
+                      >Show list!</v-btn>
                     </v-flex>
                   </v-layout>
                 </v-flex>
@@ -58,9 +64,9 @@
 
       <v-layout row wrap>
         <v-flex d-flex xs12>
-          <v-layout class="amber lighten-2" row wrap>
+          <v-layout row wrap>
             <v-flex d-flex xs12>
-              <v-card color="amber lighten-2" tile flat>
+              <v-card color="rgb(255, 0, 0, 0)" tile flat>
                 <v-card-text class="text-xs-center">Or create a new one:</v-card-text>
               </v-card>
             </v-flex>
@@ -70,7 +76,7 @@
                 <v-flex xs8>
                   <v-layout>
                     <v-flex>
-                      <v-card color="amber lighten-2" tile flat>
+                      <v-card color="rgb(255, 0, 0, 0)" tile flat>
                         <v-card-text>Name:</v-card-text>
                       </v-card>
                     </v-flex>
@@ -82,7 +88,7 @@
                 <v-flex xs4>
                   <v-layout>
                     <v-flex>
-                      <v-btn @click="newList" dark round color="indigo">Create!</v-btn>
+                      <v-btn @click="newList" dark round color="red darken-4">Create!</v-btn>
                     </v-flex>
                   </v-layout>
                 </v-flex>
@@ -92,10 +98,10 @@
         </v-flex>
       </v-layout>
 
-      <v-card class="amber darken-2">
+      <v-card color="rgb(255, 255, 255, 0.7)">
         <v-card-text>
           <p v-for="(word, i) in words" :key="word">
-            {{ word }} =
+            <strong>{{ word }}</strong> =
             <span v-for="answer in answers[i]" :key="answer">{{ answer+", " }}</span>
           </p>
         </v-card-text>

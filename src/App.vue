@@ -1,6 +1,6 @@
 <template>
   <v-app class="indigo lighten-2" id="back">
-    <v-toolbar color="rgb(255, 0, 0, 0)" class="ma-0 pa-0" height row flat app>
+    <v-toolbar color="rgb(255, 0, 0, 0)" class="ma-0 pa-0" row flat app>
       <v-btn class="ma-0 pa-0" flat>
         <v-icon left>fas fa-bars</v-icon>
       </v-btn>
@@ -14,7 +14,11 @@
       </router-link>
     </v-toolbar>
 
-    <img class="pt-5" alt="logo" src="./assets/wordsfit_logo80.png">
+    <v-layout id="logo" class="pt-5" row>
+      <v-flex xs12 class="text-xs-center">
+        <img alt="logo" src="./assets/wordsfit_logo70.png">
+      </v-flex>
+    </v-layout>
 
     <v-content class="pt-0">
       <router-view/>
@@ -51,12 +55,13 @@ export default {
   /* width: 100wh; */
   /* height: 90vh; */
   color: #fff;
-  background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+  background: linear-gradient(-45deg, #fff886, #f072b6, #23bad5, #23d5ab);
   background-size: 400% 400%;
-  -webkit-animation: Gradient 15s ease infinite;
-  -moz-animation: Gradient 15s ease infinite;
-  animation: Gradient 15s ease infinite;
+  -webkit-animation: Gradient 5s ease infinite;
+  -moz-animation: Gradient 5s ease infinite;
+  animation: Gradient 5s ease infinite;
 }
+/* #ee7752, #e73c7e, #23a6d5, #23d5ab */
 
 @-webkit-keyframes Gradient {
   0% {
@@ -92,5 +97,14 @@ export default {
   100% {
     background-position: 0% 50%;
   }
+}
+
+#logo {
+  max-height: 135px;
+  /* overflow-y: auto; */
+}
+
+a {
+  text-decoration: none;
 }
 </style>

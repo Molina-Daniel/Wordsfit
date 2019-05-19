@@ -10,13 +10,13 @@
       </v-card-text>
     </v-card>
 
-    <v-container class="amber lighten-2 mt-2" fluid grid-list-sm>
+    <v-container color="rgb(255, 0, 0, 0)" fluid grid-list-sm>
       <v-layout row wrap>
         <v-flex d-flex xs12>
-          <v-layout class="amber lighten-2" row wrap>
+          <v-layout row wrap>
             <v-flex d-flex xs12>
-              <v-card color="amber lighten-2" tile flat>
-                <v-card-text class="text-xs-center">Choose a list to Workout:</v-card-text>
+              <v-card color="rgb(255, 0, 0, 0)" tile flat>
+                <v-card-text class="text-xs-center title">Choose a list to Workout:</v-card-text>
               </v-card>
             </v-flex>
 
@@ -25,15 +25,15 @@
                 <v-flex xs8>
                   <v-layout>
                     <v-flex>
-                      <v-card color="amber lighten-2" tile flat>
-                        <v-card-text>Lists:</v-card-text>
+                      <v-card color="rgb(255, 0, 0, 0)" tile flat>
+                        <v-card-text class="subheading">Lists:</v-card-text>
                       </v-card>
                     </v-flex>
                     <v-flex>
                       <v-autocomplete
                         v-model="list"
                         :items="lists"
-                        class="mx-1"
+                        class="mx-1 font-weight-bold"
                         flat
                         hide-no-data
                         hide-details
@@ -46,7 +46,8 @@
                 <v-flex xs4>
                   <v-layout>
                     <v-flex>
-                      <v-btn @click="getlist" dark round color="indigo">Train!</v-btn>
+                      <v-btn @click="getlist" round dark color="red darken-4
+">Train!</v-btn>
                     </v-flex>
                   </v-layout>
                 </v-flex>
@@ -56,18 +57,27 @@
         </v-flex>
       </v-layout>
 
-      <v-layout class="amber lighten-2 mt-3" align-center justify-center row>
+      <v-layout class="mt-3" align-center justify-center row>
         <v-flex xs5>
-          <v-textarea v-model="word" name="input-7-1" label="Word" height="75" outline readonly></v-textarea>
+          <v-textarea
+            v-model="word"
+            name="input-7-1"
+            label="Word"
+            class="font-weight-bold"
+            height="75"
+            outline
+            readonly
+          ></v-textarea>
         </v-flex>
         <v-flex xs2>
-          <v-card-text class="text-xs-center">=</v-card-text>
+          <v-card flat color="rgb(255, 0, 0, 0)" class="text-xs-center display-2 mb-4">=</v-card>
         </v-flex>
         <v-flex xs5>
           <v-textarea
             v-model="answer"
             name="input-7-1"
             label="Translation"
+            class="font-weight-bold"
             height="75"
             outline
             hint="Introduce any translation saved"
@@ -96,12 +106,12 @@
         </v-flex>
       </v-layout>-->
 
-      <v-layout class="amber lighten-2 text-xs-center" row>
+      <v-layout class="text-xs-center" row>
         <v-flex>
-          <v-btn @click="checkAnswer" class="px-2" dark round color="indigo">Check!</v-btn>
+          <v-btn @click="checkAnswer" class="px-2" round dark color="red darken-4">Check!</v-btn>
         </v-flex>
         <v-flex>
-          <v-btn @click="askRandomWord" class="px-2" dark round color="indigo">Start / Next!</v-btn>
+          <v-btn @click="askRandomWord" class="px-2" round dark color="red darken-4">Start / Next!</v-btn>
         </v-flex>
       </v-layout>
 

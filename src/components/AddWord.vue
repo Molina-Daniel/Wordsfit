@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-card class="indigo lighten-2 mt-2" flat>
+    <v-card color="rgb(255, 0, 0, 0)" class="mt-2" flat>
       <v-card-text>
         <h1 class="text-xs-center">
           Add Words
@@ -12,13 +12,13 @@
       </v-card-text>
     </v-card>
 
-    <v-container class="amber lighten-2 mt-2" fluid grid-list-sm>
+    <v-container fluid grid-list-sm>
       <v-layout row wrap>
         <v-flex d-flex xs12>
-          <v-layout class="amber lighten-2" row wrap>
+          <v-layout row wrap>
             <v-flex d-flex xs12>
-              <v-card class="amber lighten-2" light tile flat>
-                <v-card-text class="text-xs-center">Choose language</v-card-text>
+              <v-card color="rgb(255, 0, 0, 0)" tile flat>
+                <v-card-text class="text-xs-center title">Choose language</v-card-text>
               </v-card>
             </v-flex>
 
@@ -30,7 +30,7 @@
                       <v-autocomplete
                         v-model="fromLang"
                         :items="langs"
-                        class="mx-1"
+                        class="mx-1 font-weight-bold title"
                         flat
                         hide-no-data
                         hide-details
@@ -46,7 +46,7 @@
                       <v-autocomplete
                         v-model="toLang"
                         :items="langs"
-                        class="mx-1"
+                        class="mx-1 font-weight-bold"
                         flat
                         hide-no-data
                         hide-details
@@ -62,10 +62,22 @@
             <v-flex class="mt-1" d-flex>
               <v-layout row wrap>
                 <v-flex xs8>
-                  <v-text-field v-model="textToTranslate" label="Type here" outline clearable></v-text-field>
+                  <v-text-field
+                    class="font-weight-bold"
+                    v-model="textToTranslate"
+                    label="Type here"
+                    outline
+                    clearable
+                  ></v-text-field>
                 </v-flex>
                 <v-flex xs4>
-                  <v-btn @click="translateMe" class="px-2" outline color="indigo">Translate!</v-btn>
+                  <v-btn
+                    @click="translateMe"
+                    class="px-2"
+                    round
+                    dark
+                    color="red darken-4"
+                  >Translate!</v-btn>
                 </v-flex>
               </v-layout>
             </v-flex>
@@ -73,31 +85,39 @@
         </v-flex>
       </v-layout>
 
-      <v-layout class="amber lighten-2" align-center justify-center row>
+      <v-layout align-center justify-center row>
         <v-flex xs5>
           <v-textarea
             v-model="currentWord"
             name="input-7-1"
             label="Your words"
+            class="font-weight-bold"
             height="75"
             outline
             readonly
           ></v-textarea>
         </v-flex>
         <v-flex xs2>
-          <v-card-text class="text-xs-center">=</v-card-text>
+          <v-card flat color="rgb(255, 0, 0, 0)" class="text-xs-center display-2 mb-4">=</v-card>
         </v-flex>
         <v-flex xs5>
-          <v-textarea v-model="translation" name="input-7-1" label="Word" height="75" outline></v-textarea>
+          <v-textarea
+            v-model="translation"
+            name="input-7-1"
+            label="Word"
+            class="font-weight-bold"
+            height="75"
+            outline
+          ></v-textarea>
         </v-flex>
       </v-layout>
 
       <v-layout row wrap>
         <v-flex d-flex xs12>
-          <v-layout class="amber lighten-2" row wrap>
+          <v-layout row wrap>
             <v-flex d-flex xs12>
-              <v-card class="amber lighten-2" tile flat>
-                <v-card-text class="text-xs-center">Choose a list where save it:</v-card-text>
+              <v-card color="rgb(255, 0, 0, 0)" tile flat>
+                <v-card-text class="text-xs-center title">Choose a list where save it:</v-card-text>
               </v-card>
             </v-flex>
 
@@ -109,7 +129,7 @@
                       <v-autocomplete
                         v-model="list"
                         :items="lists"
-                        class="mx-1"
+                        class="mx-1 font-weight-bold"
                         flat
                         prefix="List:"
                         solo-inverted
@@ -120,7 +140,7 @@
                 <v-flex xs4>
                   <v-layout>
                     <v-flex>
-                      <v-btn @click="addWord" class="px-2" outline color="indigo">Save!</v-btn>
+                      <v-btn @click="addWord" class="px-2" round dark color="red darken-4">Save!</v-btn>
                     </v-flex>
                   </v-layout>
                 </v-flex>
