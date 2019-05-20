@@ -105,7 +105,7 @@
 
     <v-layout id="logo" class="pt-5" row>
       <v-flex xs12 class="text-xs-center">
-        <img alt="logo" src="./assets/wordsfit_logo70.png">
+        <img alt="logo" src="./assets/wordsfit_title70.png">
       </v-flex>
     </v-layout>
 
