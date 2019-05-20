@@ -42,7 +42,7 @@
           <div class="text-xs-center">
             <v-btn large round dark color="red darken-4
 ">
-              <span>Supplements Shop</span>
+              <span>Chat Rooms</span>
               <v-icon right>fas fa-comments</v-icon>
             </v-btn>
           </div>

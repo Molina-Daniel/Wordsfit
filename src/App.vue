@@ -1,22 +1,107 @@
 <template>
   <v-app class="indigo lighten-2" id="back">
-    <v-toolbar color="rgb(255, 0, 0, 0)" class="ma-0 pa-0" row flat app>
-      <v-btn class="ma-0 pa-0" flat>
+    <v-toolbar color="rgb(255, 255, 255, 0)" class="ma-0 pa-0" row flat app>
+      <v-toolbar-side-icon @click="drawer = !drawer"></v-toolbar-side-icon>
+      <!-- <v-btn class="ma-0 pa-0" flat>
         <v-icon left>fas fa-bars</v-icon>
-      </v-btn>
+      </v-btn>-->
       <v-spacer></v-spacer>
       <v-toolbar-title class="header"></v-toolbar-title>
       <v-spacer></v-spacer>
+      <!-- <v-toolbar-items> -->
       <router-link to="/home">
         <v-btn flat>
           <v-icon right>fas fa-home</v-icon>
         </v-btn>
       </router-link>
+      <!-- </v-toolbar-items> -->
     </v-toolbar>
 
-    <v-navigatio-drawer class="indigo" v-model="drawer">
-      <p>test</p>
-    </v-navigatio-drawer>
+    <v-navigation-drawer class="transparent" width="200" v-model="drawer" absolute temporary>
+      <v-list class="pa-1 grey lighten-1">
+        <v-list-tile avatar>
+          <v-list-tile-avatar>
+            <img src="https://randomuser.me/api/portraits/men/85.jpg">
+          </v-list-tile-avatar>
+
+          <v-list-tile-content>
+            <v-list-tile-title>John Leider</v-list-tile-title>
+          </v-list-tile-content>
+        </v-list-tile>
+      </v-list>
+
+      <v-list class="pt-0 grey lighten-1" dense>
+        <v-divider></v-divider>
+
+        <router-link to="/workout">
+          <v-list-tile>
+            <v-list-tile-action>
+              <v-icon>fas fa-dumbbell</v-icon>
+            </v-list-tile-action>
+
+            <v-list-tile-content>
+              <v-list-tile-title>Workout</v-list-tile-title>
+            </v-list-tile-content>
+          </v-list-tile>
+        </router-link>
+
+        <v-divider></v-divider>
+
+        <router-link to="/addword">
+          <v-list-tile>
+            <v-list-tile-action>
+              <v-icon>fas fa-pencil-alt</v-icon>
+            </v-list-tile-action>
+
+            <v-list-tile-content>
+              <v-list-tile-title>Add Words</v-list-tile-title>
+            </v-list-tile-content>
+          </v-list-tile>
+        </router-link>
+
+        <v-divider></v-divider>
+
+        <router-link to="/lists">
+          <v-list-tile>
+            <v-list-tile-action>
+              <v-icon>fas fa-clipboard-list</v-icon>
+            </v-list-tile-action>
+
+            <v-list-tile-content>
+              <v-list-tile-title>Workout Routines</v-list-tile-title>
+            </v-list-tile-content>
+          </v-list-tile>
+        </router-link>
+
+        <v-divider></v-divider>
+
+        <router-link to="/chats">
+          <v-list-tile>
+            <v-list-tile-action>
+              <v-icon>fas fa-comments</v-icon>
+            </v-list-tile-action>
+
+            <v-list-tile-content>
+              <v-list-tile-title>Chat Rooms</v-list-tile-title>
+            </v-list-tile-content>
+          </v-list-tile>
+        </router-link>
+
+        <v-divider></v-divider>
+
+        <router-link to="/games">
+          <v-list-tile>
+            <v-list-tile-action>
+              <v-icon>fas fa-gamepad</v-icon>
+            </v-list-tile-action>
+
+            <v-list-tile-content>
+              <v-list-tile-title>Competitions</v-list-tile-title>
+            </v-list-tile-content>
+          </v-list-tile>
+        </router-link>
+      </v-list>
+    </v-navigation-drawer>
 
     <v-layout id="logo" class="pt-5" row>
       <v-flex xs12 class="text-xs-center">
@@ -47,7 +132,7 @@ export default {
   data() {
     return {
       src: "./assets/wordsfit_logo.png",
-      drawer: null
+      drawer: false
     };
   }
 };
