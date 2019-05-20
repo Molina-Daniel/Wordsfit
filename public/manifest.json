@@ -7,8 +7,8 @@
   "background_color": "#1c1c1c",
   "icons": [
     {
-      "src": "../src/assets/wordsfit_logo70.png",
-      "sizes": "354x93",
+      "src": "./wordsfit_logo144px.png",
+      "sizes": "239x144",
       "type": "image/png"
     }
   ]
