@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-card color="rgb(255, 0, 0, 0)" class="mt-2" flat>
+    <v-card color="rgb(255, 255, 255, 0)" class="mt-2" flat>
       <v-card-text>
         <h1 class="text-xs-center">
           Workout
@@ -85,27 +85,6 @@
         </v-flex>
       </v-layout>
 
-      <!-- <v-layout align-center justify-center row>
-        <v-flex xs5>
-          <v-card tile flat>
-            <v-card-text class="text-xs-center">{{ word }}</v-card-text>
-          </v-card>
-        </v-flex>
-        <v-flex xs2>
-          <v-card-text class="text-xs-center">=</v-card-text>
-        </v-flex>
-        <v-flex xs5>
-          <v-text-field
-            hint="You can change the translation"
-            persistent-hint
-            v-model="answer"
-            label="Translation"
-            outline
-            clearable
-          ></v-text-field>
-        </v-flex>
-      </v-layout>-->
-
       <v-layout class="text-xs-center" row>
         <v-flex>
           <v-btn @click="checkAnswer" class="px-2" round dark color="red darken-4">Check!</v-btn>
@@ -115,42 +94,29 @@
         </v-flex>
       </v-layout>
 
-      <v-card v-if="result">
+      <v-snackbar
+        class="mt-5 font-weight-bold"
+        v-model="snackbar"
+        :color="color"
+        :bottom="y === 'bottom'"
+        :left="x === 'left'"
+        :multi-line="mode === 'multi-line'"
+        :right="x === 'right'"
+        :timeout="timeout"
+        :top="y === 'top'"
+        :vertical="mode === 'vertical'"
+      >
+        {{ result }}
+        <v-btn dark flat @click="snackbar = false">Close</v-btn>
+      </v-snackbar>
+
+      <!-- <v-card color="rgb(255, 255, 255, 0.5)" v-if="result">
         <v-card-text>
           <h1 class="text-xs-center">{{ result }}</h1>
         </v-card-text>
-      </v-card>
+      </v-card>-->
     </v-container>
   </div>
-  <!-- <div>
-      <Navbar/>
-    </div>
-    <div>
-      <h5>Here you can train with vocabulary from your lists</h5>
-    </div>
-
-    <div>
-      <p>Choose the list to Workout:</p>
-      <label for="listSelect">List:</label>
-      <select v-model="list" name="listSelect" id="listSelect">
-        <option value="general">General</option>
-      </select>
-      <button @click="getlist">Train!</button>
-    </div>
-
-    <div>
-      <label for="answer">{{ word }} =</label>
-      <input type="text" name="answer" id="answer" v-model="answer">
-      <button @click="checkAnswer">Check!</button>
-    </div>
-
-    <div>
-      <button class="mt" @click="askRandomWord">Start / Next One</button>
-    </div>
-
-    <div>
-      <h2>{{ result }}</h2>
-  </div>-->
 </template>
 
 <script>
@@ -169,11 +135,17 @@ export default {
       list: "general",
       word: null,
       answer: null,
-      result: null,
       words: null,
       wordsAndAnswers: null,
       index: null,
-      answers: null
+      answers: null,
+      snackbar: false,
+      y: "top",
+      x: null,
+      mode: "multi-line",
+      timeout: 2000,
+      result: null,
+      color: null
     };
   },
   computed: {
@@ -216,9 +188,13 @@ export default {
     checkAnswer() {
       this.getAnswers();
       if (this.answers.includes(this.answer.toLowerCase())) {
-        this.result = "CORRECT!!";
+        this.result = "CORRECT! Keep going!";
+        this.color = "success";
+        this.snackbar = true;
       } else {
-        this.result = "FAIL!! TRY AGAIN";
+        this.result = "FAIL! Try again!";
+        this.color = "red darken-1";
+        this.snackbar = true;
       }
     }
   },

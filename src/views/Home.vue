@@ -31,7 +31,7 @@
           <div class="text-xs-center">
             <v-btn large round dark color="red darken-4
 ">
-              <span>Workout Routines</span>
+              <span>Exercise Lists</span>
               <v-icon right>fas fa-clipboard-list</v-icon>
             </v-btn>
           </div>

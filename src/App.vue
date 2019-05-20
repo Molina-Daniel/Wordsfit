@@ -18,7 +18,7 @@
     </v-toolbar>
 
     <v-navigation-drawer class="transparent" width="200" v-model="drawer" absolute temporary>
-      <v-list class="pa-1 grey lighten-1">
+      <v-list class="pa-1 blue-grey lighten-2">
         <v-list-tile avatar>
           <v-list-tile-avatar>
             <img src="https://randomuser.me/api/portraits/men/85.jpg">
@@ -30,13 +30,13 @@
         </v-list-tile>
       </v-list>
 
-      <v-list class="pt-0 grey lighten-1" dense>
+      <v-list class="pt-0 blue-grey lighten-4" dense>
         <v-divider></v-divider>
 
         <router-link to="/workout">
           <v-list-tile>
             <v-list-tile-action>
-              <v-icon>fas fa-dumbbell</v-icon>
+              <v-icon color="black">fas fa-dumbbell</v-icon>
             </v-list-tile-action>
 
             <v-list-tile-content>
@@ -50,7 +50,7 @@
         <router-link to="/addword">
           <v-list-tile>
             <v-list-tile-action>
-              <v-icon>fas fa-pencil-alt</v-icon>
+              <v-icon color="black">fas fa-pencil-alt</v-icon>
             </v-list-tile-action>
 
             <v-list-tile-content>
@@ -64,11 +64,11 @@
         <router-link to="/lists">
           <v-list-tile>
             <v-list-tile-action>
-              <v-icon>fas fa-clipboard-list</v-icon>
+              <v-icon color="black">fas fa-clipboard-list</v-icon>
             </v-list-tile-action>
 
             <v-list-tile-content>
-              <v-list-tile-title>Workout Routines</v-list-tile-title>
+              <v-list-tile-title>Exercise Lists</v-list-tile-title>
             </v-list-tile-content>
           </v-list-tile>
         </router-link>
@@ -78,7 +78,7 @@
         <router-link to="/chats">
           <v-list-tile>
             <v-list-tile-action>
-              <v-icon>fas fa-comments</v-icon>
+              <v-icon color="black">fas fa-comments</v-icon>
             </v-list-tile-action>
 
             <v-list-tile-content>
@@ -92,7 +92,7 @@
         <router-link to="/games">
           <v-list-tile>
             <v-list-tile-action>
-              <v-icon>fas fa-gamepad</v-icon>
+              <v-icon color="black">fas fa-gamepad</v-icon>
             </v-list-tile-action>
 
             <v-list-tile-content>
@@ -160,9 +160,9 @@ export default {
   color: #fff;
   background: linear-gradient(-45deg, #fff886, #f072b6, #23bad5, #23d5ab);
   background-size: 400% 400%;
-  -webkit-animation: Gradient 5s ease infinite;
-  -moz-animation: Gradient 5s ease infinite;
-  animation: Gradient 5s ease infinite;
+  -webkit-animation: Gradient 10s ease infinite;
+  -moz-animation: Gradient 10s ease infinite;
+  animation: Gradient 10s ease infinite;
 }
 /* #ee7752, #e73c7e, #23a6d5, #23d5ab */
 
