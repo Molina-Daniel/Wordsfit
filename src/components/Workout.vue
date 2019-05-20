@@ -21,35 +21,19 @@
             </v-flex>
 
             <v-flex d-flex>
-              <v-layout row justify-space-between>
-                <v-flex xs8>
-                  <v-layout>
-                    <v-flex>
-                      <v-card color="rgb(255, 0, 0, 0)" tile flat>
-                        <v-card-text class="subheading font-weight-bold">Lists:</v-card-text>
-                      </v-card>
-                    </v-flex>
-                    <v-flex>
-                      <v-autocomplete
-                        v-model="list"
-                        :items="lists"
-                        class="mx-1"
-                        flat
-                        hide-no-data
-                        hide-details
-                        label="Lists"
-                        solo-inverted
-                      ></v-autocomplete>
-                    </v-flex>
-                  </v-layout>
-                </v-flex>
-                <v-flex xs4>
-                  <v-layout>
-                    <v-flex>
-                      <v-btn @click="getlist" round dark color="red darken-4
-">Train!</v-btn>
-                    </v-flex>
-                  </v-layout>
+              <v-layout row align-center justify-center fill-height>
+                <v-flex xs12>
+                  <v-select
+                    v-model="list"
+                    :items="lists"
+                    @change="getlist()"
+                    label="Lists"
+                    class="font-weight-bold mt-2"
+                    hide-details
+                    outline
+                    single-line
+                    :menu-props="{ auto: true }"
+                  ></v-select>
                 </v-flex>
               </v-layout>
             </v-flex>
@@ -95,7 +79,7 @@
       </v-layout>
 
       <v-snackbar
-        class="mt-5 font-weight-bold"
+        class="mt-5 title"
         v-model="snackbar"
         :color="color"
         :bottom="y === 'bottom'"
@@ -106,6 +90,8 @@
         :top="y === 'top'"
         :vertical="mode === 'vertical'"
       >
+        <v-icon v-if="color === 'success'">fas fa-check-circle</v-icon>
+        <v-icon v-else>fas fa-times-circle</v-icon>
         {{ result }}
         <v-btn dark flat @click="snackbar = false">Close</v-btn>
       </v-snackbar>
@@ -132,7 +118,7 @@ export default {
   data() {
     return {
       userID: "dmolcap@gmail.com",
-      list: "general",
+      list: null,
       word: null,
       answer: null,
       words: null,
@@ -167,6 +153,7 @@ export default {
           // this.answers = Object.values(doc.data());
           this.wordsAndAnswers = Object.entries(doc.data());
           // this.checkAnswer();
+          this.askRandomWord();
           console.log(this.words);
           console.log(this.wordsAndAnswers);
           console.log(this.wordsAndAnswers[0][1]);
@@ -175,7 +162,6 @@ export default {
     },
     askRandomWord() {
       this.word = this.words[Math.floor(Math.random() * this.words.length)];
-      this.result = null;
       this.answer = null;
     },
     getAnswers() {
@@ -191,6 +177,7 @@ export default {
         this.result = "CORRECT! Keep going!";
         this.color = "success";
         this.snackbar = true;
+        this.askRandomWord();
       } else {
         this.result = "FAIL! Try again!";
         this.color = "red darken-1";
@@ -199,7 +186,7 @@ export default {
     }
   },
   created() {
-    this.getlist();
+    // this.getlist();
     this.$store.dispatch("getAllLists");
   }
 };
