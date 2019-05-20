@@ -1,6 +1,6 @@
 <template>
   <v-app class="indigo lighten-2" id="back">
-    <v-toolbar color="rgb(255, 255, 255, 0)" class="ma-0 pa-0" row flat app>
+    <v-toolbar :color="toolbarColor" class="ma-0 pa-0" row flat app>
       <v-toolbar-side-icon @click="drawer = !drawer"></v-toolbar-side-icon>
       <!-- <v-btn class="ma-0 pa-0" flat>
         <v-icon left>fas fa-bars</v-icon>
@@ -132,8 +132,21 @@ export default {
   data() {
     return {
       src: "./assets/wordsfit_logo.png",
-      drawer: false
+      drawer: null,
+      toolbarColor: "rgb(255, 255, 255, 0)"
     };
+  },
+  methods: {
+    handleScroll(event) {
+      if (window.scrollY > 0) {
+        this.toolbarColor = "rgb(255, 255, 255, 0.7)";
+      } else {
+        this.toolbarColor = "rgb(255, 255, 255, 0)";
+      }
+    }
+  },
+  created() {
+    window.addEventListener("scroll", this.handleScroll);
   }
 };
 </script>
