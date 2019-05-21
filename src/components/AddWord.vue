@@ -27,32 +27,30 @@
                 <v-flex xs6>
                   <v-layout>
                     <v-flex>
-                      <v-autocomplete
+                      <v-select
                         v-model="fromLang"
                         :items="langs"
-                        class="mx-1 font-weight-bold"
-                        flat
-                        hide-no-data
-                        hide-details
                         label="From"
-                        solo-inverted
-                      ></v-autocomplete>
+                        class="font-weight-bold mt-1"
+                        hide-details
+                        outline
+                        :menu-props="{ auto: true }"
+                      ></v-select>
                     </v-flex>
                   </v-layout>
                 </v-flex>
                 <v-flex xs6>
                   <v-layout>
                     <v-flex>
-                      <v-autocomplete
+                      <v-select
                         v-model="toLang"
                         :items="langs"
-                        class="mx-1 font-weight-bold"
-                        flat
-                        hide-no-data
-                        hide-details
                         label="To"
-                        solo-inverted
-                      ></v-autocomplete>
+                        class="font-weight-bold mt-1"
+                        hide-details
+                        outline
+                        :menu-props="{ auto: true }"
+                      ></v-select>
                     </v-flex>
                   </v-layout>
                 </v-flex>
@@ -63,21 +61,16 @@
               <v-layout row wrap>
                 <v-flex xs8>
                   <v-text-field
-                    class="font-weight-bold"
                     v-model="textToTranslate"
                     label="Type here"
                     outline
+                    hide-details
+                    single-line
                     clearable
                   ></v-text-field>
                 </v-flex>
                 <v-flex xs4>
-                  <v-btn
-                    @click="translateMe"
-                    class="px-2"
-                    round
-                    dark
-                    color="red darken-4"
-                  >Translate!</v-btn>
+                  <v-btn @click="translateMe" class="px-2" round dark color="red darken-4">Translate</v-btn>
                 </v-flex>
               </v-layout>
             </v-flex>
@@ -90,8 +83,8 @@
           <v-textarea
             v-model="currentWord"
             name="input-7-1"
-            label="Your words"
-            class="font-weight-bold"
+            label="You typed"
+            class="font-weight-bold mt-2"
             height="75"
             outline
             readonly
@@ -104,8 +97,8 @@
           <v-textarea
             v-model="translation"
             name="input-7-1"
-            label="Word"
-            class="font-weight-bold"
+            label="Translation"
+            class="font-weight-bold mt-2"
             height="75"
             outline
           ></v-textarea>
@@ -126,14 +119,16 @@
                 <v-flex xs8>
                   <v-layout>
                     <v-flex>
-                      <v-autocomplete
+                      <v-select
                         v-model="list"
                         :items="lists"
-                        class="mx-1 font-weight-bold"
-                        flat
-                        prefix="List:"
-                        solo-inverted
-                      ></v-autocomplete>
+                        label="Lists"
+                        class="font-weight-bold mt-1"
+                        hide-details
+                        outline
+                        single-line
+                        :menu-props="{ auto: true }"
+                      ></v-select>
                     </v-flex>
                   </v-layout>
                 </v-flex>
@@ -151,42 +146,6 @@
       </v-layout>
     </v-container>
   </div>
-  <!-- <div>
-    <div>
-      <Navbar/>
-    </div>
-    <div>
-      <h5>Here you can translate and add new words to your lists to practice them later</h5>
-    </div>
-    <div class="margintop">
-      <form @submit.prevent="translateMe" action="get">
-        <input
-          v-model="textToTranslate"
-          type="text"
-          name="textToTranslate"
-          id="textToTranslate"
-          placeholder="Type a word to translate..."
-        >
-        <button type="submit" name="textToTranslate" id="translate">Translate!</button>
-      </form>
-    </div>
-
-    <div>
-      <p>
-        <label for="translation">{{ currentWord }} =</label>
-        <input v-model="translation" type="text" name="translation" id="translation">
-      </p>
-    </div>
-
-    <div>
-      <p>Choose where to save this:</p>
-      <label for="saveInList">List:</label>
-      <select v-model="list" name="saveInList" id="listSelect">
-        <option value="general">General</option>
-      </select>
-      <button @click="addWord">Save!</button>
-    </div>
-  </div>-->
 </template>
 
 <script>

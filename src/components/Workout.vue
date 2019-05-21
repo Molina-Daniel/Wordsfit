@@ -20,8 +20,8 @@
               </v-card>
             </v-flex>
 
-            <v-flex d-flex>
-              <v-layout row align-center justify-center fill-height>
+            <v-flex>
+              <v-layout row>
                 <v-flex xs12>
                   <v-select
                     v-model="list"
@@ -71,10 +71,10 @@
 
       <v-layout class="text-xs-center" row>
         <v-flex>
-          <v-btn @click="checkAnswer" class="px-2" round dark color="red darken-4">Check!</v-btn>
+          <v-btn @click="checkAnswer" class="px-2" round dark color="red darken-4">Check</v-btn>
         </v-flex>
         <v-flex>
-          <v-btn @click="askRandomWord" class="px-2" round dark color="red darken-4">Start / Next!</v-btn>
+          <v-btn @click="askRandomWord" class="px-2" round dark color="red darken-4">Next</v-btn>
         </v-flex>
       </v-layout>
 

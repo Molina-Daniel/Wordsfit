@@ -16,45 +16,24 @@
           <v-layout row wrap>
             <v-flex d-flex xs12>
               <v-card color="rgb(255, 255, 255, 0.3)" tile flat>
-                <v-card-text class="text-xs-center title">Choose a list to Workout:</v-card-text>
+                <v-card-text class="text-xs-center title">Choose one of your lists:</v-card-text>
               </v-card>
             </v-flex>
 
             <v-flex d-flex>
-              <v-layout row justify-space-between>
-                <v-flex xs8>
-                  <v-layout>
-                    <v-flex>
-                      <v-card color="rgb(255, 255, 255, 0)" tile flat>
-                        <v-card-text class="subheading font-weight-bold">Lists:</v-card-text>
-                      </v-card>
-                    </v-flex>
-                    <v-flex>
-                      <v-autocomplete
-                        v-model="list"
-                        :items="lists"
-                        class="mx-1"
-                        flat
-                        hide-no-data
-                        hide-details
-                        label="Lists"
-                        solo-inverted
-                      ></v-autocomplete>
-                    </v-flex>
-                  </v-layout>
-                </v-flex>
-                <v-flex xs4>
-                  <v-layout>
-                    <v-flex>
-                      <v-btn
-                        @click="getList"
-                        class="px-2"
-                        dark
-                        round
-                        color="red darken-4"
-                      >Show list!</v-btn>
-                    </v-flex>
-                  </v-layout>
+              <v-layout row>
+                <v-flex xs12>
+                  <v-select
+                    v-model="list"
+                    :items="lists"
+                    @change="getList()"
+                    label="Lists"
+                    class="font-weight-bold mt-1"
+                    hide-details
+                    outline
+                    single-line
+                    :menu-props="{ auto: true }"
+                  ></v-select>
                 </v-flex>
               </v-layout>
             </v-flex>
@@ -72,25 +51,19 @@
             </v-flex>
 
             <v-flex d-flex>
-              <v-layout row justify-space-between>
+              <v-layout row align-center>
                 <v-flex xs8>
-                  <v-layout>
-                    <v-flex>
-                      <v-card color="rgb(255, 0, 0, 0)" tile flat>
-                        <v-card-text class="subheading font-weight-bold">Name:</v-card-text>
-                      </v-card>
-                    </v-flex>
-                    <v-flex>
-                      <v-text-field v-model="newListName" label="Type here" outline clearable></v-text-field>
-                    </v-flex>
-                  </v-layout>
+                  <v-text-field
+                    v-model="newListName"
+                    label="Type a name"
+                    class="mt-1"
+                    hide-details
+                    outline
+                    clearable
+                  ></v-text-field>
                 </v-flex>
                 <v-flex xs4>
-                  <v-layout>
-                    <v-flex>
-                      <v-btn @click="newList" dark round color="red darken-4">Create!</v-btn>
-                    </v-flex>
-                  </v-layout>
+                  <v-btn @click="newList" dark round color="red darken-4">Create!</v-btn>
                 </v-flex>
               </v-layout>
             </v-flex>
@@ -98,7 +71,7 @@
         </v-flex>
       </v-layout>
 
-      <v-card color="rgb(255, 255, 255, 0.7)">
+      <v-card v-if="words" color="rgb(255, 255, 255, 0.7)">
         <v-card-text>
           <p v-for="(word, i) in words" :key="word">
             <strong>{{ word }}</strong> =
@@ -108,33 +81,6 @@
       </v-card>
     </v-container>
   </div>
-  <!-- <div>
-      <Navbar/>
-    </div>
-    <div>
-      <h5>Here you can check your lists, create new ones and modify them.</h5>
-    </div>
-
-    <div>
-      <p>Choose a list:</p>
-      <label for="saveInList">List:</label>
-      <select v-model="list" name="saveInList" id="listSelect">
-        <option value="general">General</option>
-        <option v-for="list in listNames" :value="list" :key="list">{{ list | capitalize }}</option>
-      </select>
-      <button @click="getList">Show list</button>
-    </div>
-
-    <div class="mt">
-      <p>Or create a new one:</p>
-      <label for="newList">Name:</label>
-      <input v-model="newListName" type="text" name="newList" id="newList">
-      <button @click="newList">Create!</button>
-    </div>
-
-    <div>
-      <p v-for="word in words" :key="word">{{ word }}</p>
-  </div>-->
 </template>
 
 <script>
@@ -150,7 +96,7 @@ export default {
   data() {
     return {
       userID: "dmolcap@gmail.com",
-      list: "general",
+      list: null,
       words: null,
       answers: null,
       newListName: null
@@ -212,7 +158,7 @@ export default {
   },
   mounted() {
     // this.getAllLists();
-    this.getList();
+    // this.getList();
     this.$store.dispatch("getAllLists");
   },
   filters: {
