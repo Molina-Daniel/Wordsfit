@@ -71,7 +71,7 @@
         </v-flex>
       </v-layout>
 
-      <v-card v-if="words" color="rgb(255, 255, 255, 0.7)">
+      <v-card class="mt-1" v-if="words.length > 0" color="rgb(255, 255, 255, 0.7)">
         <v-card-text>
           <p v-for="(word, i) in words" :key="word">
             <strong>{{ word }}</strong> =
@@ -97,7 +97,7 @@ export default {
     return {
       userID: "dmolcap@gmail.com",
       list: null,
-      words: null,
+      words: [],
       answers: null,
       newListName: null
     };
@@ -134,9 +134,18 @@ export default {
         .then(doc => {
           // Retrieve the keys form the object
           this.words = Object.keys(doc.data());
+          // Remove default key 'userID' from the array
+          let existIndex = this.words.indexOf(this.userID);
+          console.log(existIndex);
+          this.words.splice(existIndex, 1);
+          // Retrieve the values form the object
           this.answers = Object.values(doc.data());
+          // Remove default value 'userID' from the array
+          let trueIndex = this.answers.indexOf(this.userID);
+          this.answers.splice(trueIndex, 1);
           // this.wordsAndAnswers = Object.entries(doc.data());
           // this.checkAnswer();
+          console.log(this.words);
           console.log(this.answers);
         })
         .catch(error => console.log("Error getting document:", error));
@@ -147,7 +156,7 @@ export default {
         .collection("lists")
         .doc(this.newListName)
         .set({
-          exist: true
+          [this.userID]: this.userID
         })
         .then(() => {
           this.newListName = "";

@@ -95,12 +95,6 @@
         {{ result }}
         <v-btn dark flat @click="snackbar = false">Close</v-btn>
       </v-snackbar>
-
-      <!-- <v-card color="rgb(255, 255, 255, 0.5)" v-if="result">
-        <v-card-text>
-          <h1 class="text-xs-center">{{ result }}</h1>
-        </v-card-text>
-      </v-card>-->
     </v-container>
   </div>
 </template>
