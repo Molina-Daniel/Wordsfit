@@ -144,13 +144,13 @@ export default {
         .then(doc => {
           // Retrieve the keys form the object
           this.words = Object.keys(doc.data());
-          // this.answers = Object.values(doc.data());
+          // Remove default key 'userID' from the array
+          let userIDIndex = this.words.indexOf(this.userID);
+          this.words.splice(userIDIndex, 1);
+
+          // Retrieve the values form the object
           this.wordsAndAnswers = Object.entries(doc.data());
-          // this.checkAnswer();
           this.askRandomWord();
-          console.log(this.words);
-          console.log(this.wordsAndAnswers);
-          console.log(this.wordsAndAnswers[0][1]);
         })
         .catch(error => console.log("Error getting document:", error));
     },

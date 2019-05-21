@@ -80,6 +80,24 @@
         </v-card-text>
       </v-card>
     </v-container>
+
+    <v-snackbar
+      class="mt-5 title"
+      v-model="snackbar"
+      :color="color"
+      :bottom="y === 'bottom'"
+      :left="x === 'left'"
+      :multi-line="mode === 'multi-line'"
+      :right="x === 'right'"
+      :timeout="timeout"
+      :top="y === 'top'"
+      :vertical="mode === 'vertical'"
+    >
+      <v-icon v-if="color === 'success'">fas fa-check-circle</v-icon>
+      <v-icon v-else>fas fa-times-circle</v-icon>
+      {{ newListMsg }}
+      <v-btn dark flat @click="snackbar = false">Close</v-btn>
+    </v-snackbar>
   </div>
 </template>
 
@@ -99,7 +117,14 @@ export default {
       list: null,
       words: [],
       answers: null,
-      newListName: null
+      newListName: null,
+      snackbar: false,
+      y: "top",
+      x: null,
+      mode: "multi-line",
+      timeout: 2000,
+      newListMsg: null,
+      color: null
     };
   },
   computed: {
@@ -135,18 +160,15 @@ export default {
           // Retrieve the keys form the object
           this.words = Object.keys(doc.data());
           // Remove default key 'userID' from the array
-          let existIndex = this.words.indexOf(this.userID);
-          console.log(existIndex);
-          this.words.splice(existIndex, 1);
+          let userIDIndex = this.words.indexOf(this.userID);
+          this.words.splice(userIDIndex, 1);
           // Retrieve the values form the object
           this.answers = Object.values(doc.data());
           // Remove default value 'userID' from the array
-          let trueIndex = this.answers.indexOf(this.userID);
-          this.answers.splice(trueIndex, 1);
+          this.answers.splice(userIDIndex, 1);
           // this.wordsAndAnswers = Object.entries(doc.data());
           // this.checkAnswer();
-          console.log(this.words);
-          console.log(this.answers);
+          // console.log(this.answers);
         })
         .catch(error => console.log("Error getting document:", error));
     },
@@ -159,8 +181,11 @@ export default {
           [this.userID]: this.userID
         })
         .then(() => {
+          this.newListMsg = "New list created!";
+          this.color = "success";
+          this.snackbar = true;
           this.newListName = "";
-          console.log("New list created!");
+          this.$store.dispatch("getAllLists");
         })
         .catch(error => console.error("Error merging: ", error));
     }
