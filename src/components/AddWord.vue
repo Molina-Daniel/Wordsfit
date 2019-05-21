@@ -6,9 +6,9 @@
           Add Words
           <i class="fas fa-pencil-alt"></i>
         </h1>
-        <!-- <p
+        <p
           class="text-xs-center mb-0"
-        >Here you can translate and add new words to your lists to practice them later</p>-->
+        >Here you can translate and add new words to your lists to practice them later</p>
       </v-card-text>
     </v-card>
 
@@ -290,8 +290,6 @@ export default {
     translateMe() {
       translate(this.textToTranslate, { from: this.fromLang, to: this.toLang })
         .then(res => {
-          // I do not eat six days
-          console.log(res.text);
           this.translation = res.text.toLowerCase();
           this.getCurrentWord();
           this.textToTranslate = "";

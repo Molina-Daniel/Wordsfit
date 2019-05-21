@@ -17,7 +17,35 @@
       <!-- </v-toolbar-items> -->
     </v-toolbar>
 
-    <v-navigation-drawer class="transparent" width="200" v-model="drawer" absolute temporary>
+    <v-layout id="logo" class="pt-5" row>
+      <v-flex xs12 class="text-xs-center">
+        <img alt="logo" src="./assets/wordsfit_title70.png">
+      </v-flex>
+    </v-layout>
+
+    <v-content class="pt-0">
+      <router-view/>
+    </v-content>
+
+    <v-footer color="rgb(255, 0, 0, 0)" class="pa-3">
+      <v-spacer></v-spacer>
+      <p class="ma-0">
+        &copy; {{ new Date().getFullYear() }} | Made with
+        <v-icon color="red" small>fas fa-heart</v-icon>
+        <span></span> by
+        <a href="https://github.com/Molina-Daniel" target="_blank" rel="github">Daniel Molina</a>
+      </p>
+      <v-spacer></v-spacer>
+    </v-footer>
+
+    <v-navigation-drawer
+      class="transparent"
+      width="200"
+      height="auto"
+      v-model="drawer"
+      temporary
+      fixed
+    >
       <v-list class="pa-1 blue-grey lighten-2">
         <v-list-tile avatar>
           <v-list-tile-avatar>
@@ -102,27 +130,6 @@
         </router-link>
       </v-list>
     </v-navigation-drawer>
-
-    <v-layout id="logo" class="pt-5" row>
-      <v-flex xs12 class="text-xs-center">
-        <img alt="logo" src="./assets/wordsfit_title70.png">
-      </v-flex>
-    </v-layout>
-
-    <v-content class="pt-0">
-      <router-view/>
-    </v-content>
-
-    <v-footer color="rgb(255, 0, 0, 0)" class="pa-3">
-      <v-spacer></v-spacer>
-      <p class="ma-0">
-        &copy; {{ new Date().getFullYear() }} | Made with
-        <v-icon color="red" small>fas fa-heart</v-icon>
-        <span></span> by
-        <a href="https://github.com/Molina-Daniel" target="_blank" rel="github">Daniel Molina</a>
-      </p>
-      <v-spacer></v-spacer>
-    </v-footer>
   </v-app>
 </template>
 
