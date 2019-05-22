@@ -149,7 +149,7 @@
 </template>
 
 <script>
-import Navbar from "@/views/Navbar.vue";
+import Navbar from "@/components/Navbar.vue";
 import firebase from "firebase";
 import db from "@/db/firebaseInit";
 import translate, { setCORS } from "google-translate-api-browser";
