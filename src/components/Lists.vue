@@ -191,8 +191,6 @@ export default {
     }
   },
   mounted() {
-    // this.getAllLists();
-    // this.getList();
     this.$store.dispatch("getAllLists");
   },
   filters: {

@@ -17,23 +17,19 @@
         </template>
 
         <v-list class="blue-grey lighten-4">
-          <v-list-tile>
+          <v-list-tile v-if="!isLoggedIn">
             <router-link to="/login">
               <v-list-tile-title>Log In</v-list-tile-title>
             </router-link>
           </v-list-tile>
 
-          <v-divider></v-divider>
-
-          <v-list-tile>
+          <v-list-tile v-if="!isLoggedIn">
             <router-link to="/registration">
               <v-list-tile-title>Registration</v-list-tile-title>
             </router-link>
           </v-list-tile>
 
-          <v-divider></v-divider>
-
-          <v-list-tile>
+          <v-list-tile v-if="isLoggedIn">
             <v-list-tile-title @click="logout()">Log Out</v-list-tile-title>
           </v-list-tile>
         </v-list>
@@ -190,12 +186,16 @@ export default {
         .signOut()
         .then(() => {
           alert(`Successfully logged out!`);
-          this.$router.push("/");
+          this.$router.go({ path: this.$router.path });
         });
     }
   },
   created() {
     window.addEventListener("scroll", this.handleScroll);
+    if (firebase.auth().currentUser) {
+      this.isLoggedIn = true;
+      this.currentUser = firebase.auth().currentUser.email;
+    }
   }
 };
 </script>
