@@ -1,42 +1,65 @@
 <template>
-  <div>
-    <div class="margintop">
-      <img class="logo" alt="Vue logo" src="../assets/logo100px.png">
-    </div>
-    <div class="margintop">
-      <label for="email">Email:</label>
-      <div class="margintop">
-        <input v-model="email" type="text" name="email" id="email">
-      </div>
-    </div>
-    <div class="margintop">
-      <label for="password">Password:</label>
-      <div class="margintop">
-        <input v-model="password" type="password" name="password" id="password">
-      </div>
-      <button @click="login" class="margintop">Log In!</button>
-    </div>
+  <v-container fluid fill-height class="loginOverlay">
+    <v-layout flex align-center justify-center>
+      <v-flex xs12 sm4 elevation-6>
+        <!-- <v-toolbar class="blue darken-4">
+          <v-toolbar-title class="white--text">
+            <h4>Sign In</h4>
+          </v-toolbar-title>
+          <v-toolbar-items></v-toolbar-items>
+        </v-toolbar>-->
+        <v-card color="rgb(255, 255, 255, 0.6)">
+          <v-card-title primary-title>
+            <div class="headline">Log In</div>
+          </v-card-title>
 
-    <div>
-      <p>
-        <a href>Did you forget your password? Click here!</a>
-      </p>
-    </div>
+          <v-layout>
+            <v-flex class="text-xs-center">
+              <v-btn dark color="#DD4B39">
+                <v-icon left>fab fa-google</v-icon>Log in with Google
+              </v-btn>
+              <v-btn dark color="#444444">
+                <v-icon left>fab fa-github</v-icon>Log in with Github
+              </v-btn>
+            </v-flex>
+          </v-layout>
 
-    <div class="margintop">
-      <p>Or Log In with:</p>
-      <button>Google</button>
-      <button>Facebook</button>
-      <button>Twitter</button>
-      <button>Github</button>
-    </div>
-    <div class="margintop">
-      <p>Not a member yet?</p>
-      <router-link to="/registration">
-        <button>Sign In!</button>
-      </router-link>
-    </div>
-  </div>
+          <v-card-text class="pt-1">
+            <div>
+              <v-form v-model="valid" ref="form">
+                <v-text-field
+                  label="Enter your e-mail address"
+                  v-model="email"
+                  :rules="emailRules"
+                  required
+                ></v-text-field>
+                <v-text-field
+                  label="Enter your password"
+                  v-model="password"
+                  min="8"
+                  :append-icon="e1 ? 'far fa-eye-slash' : 'far fa-eye'"
+                  @click:append="() => (e1 = !e1)"
+                  :type="e1 ? 'password' : 'text'"
+                  :rules="passwordRules"
+                  counter
+                  required
+                ></v-text-field>
+                <v-layout justify-space-between>
+                  <v-btn
+                    @click="submit"
+                    :class=" { 'red darken-4 white--text' : valid }"
+                    :disabled="!valid"
+                    round
+                  >Login</v-btn>
+                  <a href>Forgot Password</a>
+                </v-layout>
+              </v-form>
+            </div>
+          </v-card-text>
+        </v-card>
+      </v-flex>
+    </v-layout>
+  </v-container>
 </template>
 
 <script>
@@ -46,8 +69,17 @@ export default {
   name: "login",
   data() {
     return {
-      email: null,
-      password: null
+      valid: false,
+      e1: true,
+      password: "",
+      passwordRules: [v => !!v || "Password is required"],
+      email: "",
+      emailRules: [
+        v => !!v || "E-mail is required",
+        v =>
+          /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(v) ||
+          "E-mail must be valid"
+      ]
     };
   },
   methods: {

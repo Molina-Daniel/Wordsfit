@@ -8,20 +8,19 @@
           </v-toolbar-title>
           <v-toolbar-items></v-toolbar-items>
         </v-toolbar>-->
-        <v-card>
+        <v-card color="rgb(255, 255, 255, 0.6)">
           <v-card-title primary-title>
-            <div>
-              <div class="headline">Registration</div>
-            </div>
+            <div class="headline">Registration</div>
           </v-card-title>
 
           <v-layout>
-            <v-flex>
-              <v-card-actions>
-                <v-btn color="#DD4B39">
-                  <v-icon left>fab fa-google</v-icon>Sign in with Google
-                </v-btn>
-              </v-card-actions>
+            <v-flex class="text-xs-center">
+              <v-btn dark color="#DD4B39">
+                <v-icon left>fab fa-google</v-icon>Sign in with Google
+              </v-btn>
+              <v-btn dark color="#444444">
+                <v-icon left>fab fa-github</v-icon>Sign in with Github
+              </v-btn>
             </v-flex>
           </v-layout>
 
@@ -38,7 +37,7 @@
                   label="Enter your password"
                   v-model="password"
                   min="8"
-                  :append-icon="e1 ? 'far fa-eye' : 'far fa-eye-slash'"
+                  :append-icon="e1 ? 'far fa-eye-slash' : 'far fa-eye'"
                   @click:append="() => (e1 = !e1)"
                   :type="e1 ? 'password' : 'text'"
                   :rules="passwordRules"
@@ -48,9 +47,11 @@
                 <v-layout justify-space-between>
                   <v-btn
                     @click="submit"
-                    :class=" { 'blue darken-4 white--text' : valid, disabled: !valid }"
+                    :class=" { 'red darken-4 white--text' : valid }"
+                    :disabled="!valid"
+                    round
                   >Login</v-btn>
-                  <a href>Forgot Password</a>
+                  <a href>Have an account already? Sign In!</a>
                 </v-layout>
               </v-form>
             </div>
@@ -69,7 +70,7 @@ export default {
   data() {
     return {
       valid: false,
-      e1: false,
+      e1: true,
       password: "",
       passwordRules: [v => !!v || "Password is required"],
       email: "",
