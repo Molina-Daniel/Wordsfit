@@ -22,10 +22,19 @@
               <v-list-tile-title>Log In</v-list-tile-title>
             </router-link>
           </v-list-tile>
+
+          <v-divider></v-divider>
+
           <v-list-tile>
             <router-link to="/registration">
               <v-list-tile-title>Registration</v-list-tile-title>
             </router-link>
+          </v-list-tile>
+
+          <v-divider></v-divider>
+
+          <v-list-tile>
+            <v-list-tile-title @click="logout()">Log Out</v-list-tile-title>
           </v-list-tile>
         </v-list>
       </v-menu>
@@ -154,13 +163,17 @@
 </template>
 
 <script>
+import firebase from "firebase";
+
 export default {
   name: "App",
   data() {
     return {
       src: "./assets/wordsfit_logo.png",
       drawer: null,
-      toolbarColor: "rgb(255, 255, 255, 0)"
+      toolbarColor: "rgb(255, 255, 255, 0)",
+      isLoggedIn: false,
+      currentUser: false
     };
   },
   methods: {
@@ -170,6 +183,15 @@ export default {
       } else {
         this.toolbarColor = "rgb(255, 255, 255, 0)";
       }
+    },
+    logout() {
+      firebase
+        .auth()
+        .signOut()
+        .then(() => {
+          alert(`Successfully logged out!`);
+          this.$router.push("/");
+        });
     }
   },
   created() {
