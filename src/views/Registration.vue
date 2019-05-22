@@ -44,14 +44,16 @@
                   counter
                   required
                 ></v-text-field>
-                <v-layout justify-space-between>
+                <v-layout align-center justify-space-between>
                   <v-btn
-                    @click="submit"
+                    @click="register"
                     :class=" { 'red darken-4 white--text' : valid }"
                     :disabled="!valid"
                     round
-                  >Login</v-btn>
-                  <a href>Have an account already? Sign In!</a>
+                  >Sign in</v-btn>
+                  <router-link to="/login">
+                    <p class="ma-0">Have an account already? Log In!</p>
+                  </router-link>
                 </v-layout>
               </v-form>
             </div>
@@ -83,13 +85,13 @@ export default {
     };
   },
   methods: {
-    register(e) {
+    register() {
       firebase
         .auth()
         .createUserWithEmailAndPassword(this.email, this.password)
         .then(user => {
           alert(`Account created for ${this.email}`);
-          this.$router.push("/home");
+          this.$router.push("/");
         })
         .catch(error => {
           alert(error.message);
@@ -98,9 +100,20 @@ export default {
 
       // e.preventDefault();
     },
-    submit() {
+    register() {
       if (this.$refs.form.validate()) {
-        this.$refs.form.$el.submit();
+        // this.$refs.form.$el.submit();
+        firebase
+          .auth()
+          .createUserWithEmailAndPassword(this.email, this.password)
+          .then(user => {
+            alert(`Account created for ${this.email}`);
+            this.$router.push("/");
+          })
+          .catch(error => {
+            alert(error.message);
+            console.log(error.code);
+          });
       }
     },
     clear() {

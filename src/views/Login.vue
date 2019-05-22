@@ -44,14 +44,21 @@
                   counter
                   required
                 ></v-text-field>
-                <v-layout justify-space-between>
-                  <v-btn
-                    @click="submit"
-                    :class=" { 'red darken-4 white--text' : valid }"
-                    :disabled="!valid"
-                    round
-                  >Login</v-btn>
-                  <a href>Forgot Password</a>
+                <v-layout align-center justify-space-between row>
+                  <v-flex>
+                    <v-btn
+                      @click="login"
+                      :class=" { 'red darken-4 white--text' : valid }"
+                      :disabled="!valid"
+                      round
+                    >Login</v-btn>
+                  </v-flex>
+                  <v-flex>
+                    <a href>Forgot Password</a>
+                    <router-link to="/registration">
+                      <p class="ma-0">No account yet? Sign In!</p>
+                    </router-link>
+                  </v-flex>
                 </v-layout>
               </v-form>
             </div>
@@ -89,7 +96,7 @@ export default {
         .signInWithEmailAndPassword(this.email, this.password)
         .then(user => {
           alert(`You are logged in as ${this.email}`);
-          this.$router.push("/home");
+          this.$router.push("/");
         })
         .catch(error => {
           alert(error.message);

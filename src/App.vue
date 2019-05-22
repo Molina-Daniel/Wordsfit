@@ -9,34 +9,33 @@
       <v-toolbar-title class="header"></v-toolbar-title>
       <v-spacer></v-spacer>
       <!-- <v-toolbar-items> -->
+      <v-menu bottom origin="center center" transition="scale-transition" offset-y>
+        <template v-slot:activator="{ on }">
+          <v-btn icon v-on="on">
+            <v-icon>fas fa-user</v-icon>
+          </v-btn>
+        </template>
+
+        <v-list class="blue-grey lighten-4">
+          <v-list-tile>
+            <router-link to="/login">
+              <v-list-tile-title>Log In</v-list-tile-title>
+            </router-link>
+          </v-list-tile>
+          <v-list-tile>
+            <router-link to="/registration">
+              <v-list-tile-title>Registration</v-list-tile-title>
+            </router-link>
+          </v-list-tile>
+        </v-list>
+      </v-menu>
       <router-link to="/home">
-        <v-btn flat>
-          <v-icon right>fas fa-home</v-icon>
+        <v-btn icon>
+          <v-icon>fas fa-home</v-icon>
         </v-btn>
       </router-link>
       <!-- </v-toolbar-items> -->
     </v-toolbar>
-
-    <v-layout id="logo" class="pt-5" row>
-      <v-flex xs12 class="text-xs-center">
-        <img alt="logo" src="./assets/wordsfit_title70.png">
-      </v-flex>
-    </v-layout>
-
-    <v-content class="pt-0">
-      <router-view/>
-    </v-content>
-
-    <v-footer color="rgb(255, 0, 0, 0)" class="pa-3">
-      <v-spacer></v-spacer>
-      <p class="ma-0">
-        &copy; {{ new Date().getFullYear() }} | Made with
-        <v-icon color="red" small>fas fa-heart</v-icon>
-        <span></span> by
-        <a href="https://github.com/Molina-Daniel" target="_blank" rel="github">Daniel Molina</a>
-      </p>
-      <v-spacer></v-spacer>
-    </v-footer>
 
     <v-navigation-drawer
       class="transparent"
@@ -130,6 +129,27 @@
         </router-link>
       </v-list>
     </v-navigation-drawer>
+
+    <v-layout id="logo" class="pt-5" row>
+      <v-flex xs12 class="text-xs-center">
+        <img alt="logo" src="./assets/wordsfit_title70.png">
+      </v-flex>
+    </v-layout>
+
+    <v-content class="pt-0">
+      <router-view/>
+    </v-content>
+
+    <v-footer color="rgb(255, 0, 0, 0)" class="pa-3">
+      <v-spacer></v-spacer>
+      <p class="ma-0">
+        &copy; {{ new Date().getFullYear() }} | Made with
+        <v-icon color="red" small>fas fa-heart</v-icon>
+        <span></span> by
+        <a href="https://github.com/Molina-Daniel" target="_blank" rel="github">Daniel Molina</a>
+      </p>
+      <v-spacer></v-spacer>
+    </v-footer>
   </v-app>
 </template>
 
