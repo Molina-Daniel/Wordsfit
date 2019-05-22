@@ -6,7 +6,7 @@
           Lists
           <i class="fas fa-clipboard-list"></i>
         </h1>
-        <p class="text-xs-center ma-0">Here you can train with vocabulary from your lists</p>
+        <p class="text-xs-center ma-0">Here you can check, create and modify your lists.</p>
       </v-card-text>
     </v-card>
 
