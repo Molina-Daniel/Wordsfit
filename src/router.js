@@ -77,10 +77,14 @@ let router = new Router({
 // Nav Guards
 
 router.beforeEach((to, from, next) => {
+  const currentUser = firebase.auth().currentUser;
+  const requiresAuth = to.matched.some(record => record.meta.requiresAuth);
+  const requiresGuest = to.matched.some(record => record.meta.requiresGuest);
+
   // Check for requiresAuth guard
-  if (to.matched.some(record => record.meta.requiresAuth)) {
+  if (requiresAuth) {
     // Check if NO logged user
-    if (!firebase.auth().currentUser) {
+    if (!currentUser) {
       // Go to login
       next({
         path: '/login',
@@ -92,9 +96,9 @@ router.beforeEach((to, from, next) => {
       // Proceed to route
       next();
     }
-  } else if (to.matched.some(record => record.meta.requiresGuest)) {
+  } else if (requiresGuest) {
     // Check if NO logged user
-    if (firebase.auth().currentUser) {
+    if (currentUser) {
       // Go to login
       next({
         path: '/',
