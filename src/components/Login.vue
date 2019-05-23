@@ -41,7 +41,7 @@
                 <v-layout align-center justify-space-between row>
                   <v-flex>
                     <v-btn
-                      @click="login"
+                      @click="loginPassword"
                       :class=" { 'red darken-4 white--text' : valid }"
                       :disabled="!valid"
                       round
@@ -84,7 +84,7 @@ export default {
     };
   },
   methods: {
-    login(e) {
+    loginPassword(e) {
       firebase
         .auth()
         .signInWithEmailAndPassword(this.email, this.password)
@@ -100,6 +100,9 @@ export default {
         });
 
       e.preventDefault();
+    },
+    loginGoogle() {
+      
     }
   }
 };
