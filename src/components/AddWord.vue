@@ -70,7 +70,13 @@
                   ></v-text-field>
                 </v-flex>
                 <v-flex xs4>
-                  <v-btn @click="translateMe" class="px-2" round dark color="red darken-4">Translate</v-btn>
+                  <v-btn
+                    @click="translateMe()"
+                    class="px-2"
+                    round
+                    dark
+                    color="red darken-4"
+                  >Translate</v-btn>
                 </v-flex>
               </v-layout>
             </v-flex>
@@ -288,7 +294,7 @@ export default {
   },
   methods: {
     getUserID() {
-      this.userID = firebase.auth().currentUser;
+      this.userID = this.$store.getters.getUserID;
     },
     translateMe() {
       translate(this.textToTranslate, { from: this.fromLang, to: this.toLang })
@@ -318,10 +324,12 @@ export default {
         .catch(error => console.error("Error merging: ", error));
     }
   },
-  mounted() {
-    this.$store.dispatch("getAllLists");
-  },
+  // mounted() {
+  //   this.$store.dispatch("getAllLists");
+  // },
   created() {
+    this.$store.dispatch("getUserID");
+    this.$store.dispatch("getAllLists");
     this.getUserID();
   },
   filters: {
