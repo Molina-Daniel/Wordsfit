@@ -65,6 +65,7 @@
 
 <script>
 import firebase from "firebase";
+import db from "@/db/firebaseInit";
 
 export default {
   name: "login",
@@ -89,11 +90,11 @@ export default {
         .auth()
         .signInWithEmailAndPassword(this.email, this.password)
         .then(user => {
-          console.log(user.additionalUserInfo.isNewUser);
-if (user.additionalUserInfo.isNewUser = true) {
-  
-}
-          alert(`You are logged in as ${this.email}`);
+          alert(
+            `Welcome back ${
+              this.email
+            }. It's a pleasure have you in WordsFit again!`
+          );
           // this.$router.go({ path: this.$router.path });
           this.$router.push("/");
           this.$forceUpdate();
@@ -116,12 +117,17 @@ if (user.additionalUserInfo.isNewUser = true) {
           let token = result.credential.accessToken;
           // The signed-in user info.
           let user = result.user;
+          console.log(result);
 
-          alert(
-            `Welcome ${user.displayName}! You logged in with ${
-              user.email
-            } email`
-          );
+          if (result.additionalUserInfo.isNewUser == true) {
+            this.setUserInDB(result);
+          } else {
+            alert(
+              `Welcome back ${
+                user.displayName
+              }. It's a pleasure have you in WordsFit again!`
+            );
+          }
           this.$router.push("/");
           this.$forceUpdate();
         })
@@ -136,6 +142,17 @@ if (user.additionalUserInfo.isNewUser = true) {
 
           alert("Oops. " + errorMessage);
         });
+    },
+    setUserInDB(user) {
+      db.collection("users")
+        .doc(user.user.email)
+        .set({
+          user_id: user.user.email
+        })
+        .then(() => {
+          alert(`Welcome to WordsFit. It's a pleasure have you here!`);
+        })
+        .catch(err => console.log(err));
     }
   }
 };
