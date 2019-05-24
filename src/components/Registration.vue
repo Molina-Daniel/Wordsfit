@@ -9,12 +9,12 @@
 
           <v-layout>
             <v-flex class="text-xs-center">
-              <v-btn dark color="#DD4B39">
+              <v-btn @click="loginGoogle()" dark color="#DD4B39">
                 <v-icon left>fab fa-google</v-icon>Sign in with Google
               </v-btn>
-              <v-btn dark color="#444444">
+              <!-- <v-btn dark color="#444444">
                 <v-icon left>fab fa-github</v-icon>Sign in with Github
-              </v-btn>
+              </v-btn>-->
             </v-flex>
           </v-layout>
 
@@ -60,6 +60,7 @@
 
 <script>
 import firebase from "firebase";
+import db from "@/db/firebaseInit";
 
 export default {
   name: "registration",
@@ -79,29 +80,19 @@ export default {
     };
   },
   methods: {
-    register() {
-      firebase
-        .auth()
-        .createUserWithEmailAndPassword(this.email, this.password)
-        .then(user => {
-          alert(`Account created for ${this.email}`);
-          this.$router.push("/");
-        })
-        .catch(error => {
-          alert(error.message);
-          console.log(error.code);
-        });
-
-      // e.preventDefault();
-    },
-    register() {
+    register(e) {
       if (this.$refs.form.validate()) {
         // this.$refs.form.$el.submit();
         firebase
           .auth()
           .createUserWithEmailAndPassword(this.email, this.password)
           .then(user => {
-            alert(`Account created for ${this.email}`);
+            console.log(user);
+            console.log(user.user.email);
+            console.log(user.additionalUserInfo.isNewUser);
+            if (user.additionalUserInfo.isNewUser == true) {
+              this.setUserInDB(user);
+            }
             // this.$router.go({ path: this.$router.path });
             this.$router.push("/");
             this.$forceUpdate();
@@ -111,9 +102,53 @@ export default {
             console.log(error.code);
           });
       }
+      e.preventDefault();
     },
     clear() {
       this.$refs.form.reset();
+    },
+    loginGoogle() {
+      let provider = new firebase.auth.GoogleAuthProvider();
+
+      firebase
+        .auth()
+        .signInWithPopup(provider)
+        .then(result => {
+          // This gives you a Google Access Token. You can use it to access the Google API.
+          let token = result.credential.accessToken;
+          // The signed-in user info.
+          let user = result.user;
+
+          if (result.additionalUserInfo.isNewUser == true) {
+              this.setUserInDB(result);
+            } else {
+              alert(`Welcome back ${user.displayName}. It's a pleasure have you in WordsFit again!`);
+            }
+          this.$router.push("/");
+          this.$forceUpdate();
+        })
+        .catch(error => {
+          // Handle Errors here.
+          let errorCode = error.code;
+          let errorMessage = error.message;
+          // The email of the user's account used.
+          let email = error.email;
+          // The firebase.auth.AuthCredential type that was used.
+          let credential = error.credential;
+
+          alert("Oops. " + errorMessage);
+        });
+    },
+    setUserInDB(user) {
+      db.collection("users")
+        .doc(user.user.email)
+        .set({
+          user_id: user.user.email
+        })
+        .then(() => {
+          alert(`Welcome to WordsFit. It's a pleasure have you here!`);
+        })
+        .catch(err => console.log(err));
     }
   }
 };

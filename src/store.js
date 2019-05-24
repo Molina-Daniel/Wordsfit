@@ -7,15 +7,21 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    userID: "dmolcap@gmail.com",
+    userID: null,
     listNames: []
   },
   mutations: {
+    setUserID(state, payload) {
+      state.userID = payload;
+    },
     setLists(state, payload) {
       state.listNames.push(payload);
     }
   },
   actions: {
+    getUserID(context) {
+      context.commit("setUserID", firebase.auth().currentUser.email)
+    },
     getAllLists(context) {
       // Get ALL documents from a collection
       db.collection("users")
@@ -29,9 +35,13 @@ export default new Vuex.Store({
           });
         })
         .catch(error => console.log("Error getting document:", error));
-    },
+    }
+
   },
   getters: {
+    getUserID(state) {
+      return state.userID;
+    },
     getLists(state) {
       return state.listNames;
     }

@@ -113,7 +113,7 @@ export default {
   },
   data() {
     return {
-      userID: "dmolcap@gmail.com",
+      userID: null,
       list: null,
       words: [],
       answers: null,
@@ -150,6 +150,9 @@ export default {
     //     })
     //     .catch(error => console.log("Error getting document:", error));
     // },
+    getUserID() {
+      this.userID = this.$store.getters.getUserID;
+    },
     getList() {
       db.collection("users")
         .doc(this.userID)
@@ -191,7 +194,12 @@ export default {
     }
   },
   mounted() {
+    // this.$store.dispatch("getAllLists");
+  },
+  created() {
+    this.$store.dispatch("getUserID");
     this.$store.dispatch("getAllLists");
+    this.getUserID();
   },
   filters: {
     capitalize(value) {

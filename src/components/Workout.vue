@@ -111,7 +111,7 @@ export default {
   },
   data() {
     return {
-      userID: "dmolcap@gmail.com",
+      userID: null,
       list: null,
       word: null,
       answer: null,
@@ -134,6 +134,9 @@ export default {
     }
   },
   methods: {
+    getUserID() {
+      this.userID = this.$store.getters.getUserID;
+    },
     // Get ONE document from a collection
     getlist() {
       db.collection("users")
@@ -179,9 +182,14 @@ export default {
       }
     }
   },
+  // beforeCreate() {
+  //   this.$store.dispatch("getUserID");
+  //   this.$store.dispatch("getAllLists");
+  // },
   created() {
-    // this.getlist();
+    this.$store.dispatch("getUserID");
     this.$store.dispatch("getAllLists");
+    this.getUserID();
   }
 };
 

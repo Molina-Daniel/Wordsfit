@@ -274,7 +274,7 @@ export default {
       ],
       fromLang: null,
       toLang: null,
-      userID: "dmolcap@gmail.com",
+      userID: null,
       textToTranslate: "",
       translation: "",
       currentWord: "",
@@ -287,6 +287,9 @@ export default {
     }
   },
   methods: {
+    getUserID() {
+      this.userID = firebase.auth().currentUser;
+    },
     translateMe() {
       translate(this.textToTranslate, { from: this.fromLang, to: this.toLang })
         .then(res => {
@@ -317,6 +320,9 @@ export default {
   },
   mounted() {
     this.$store.dispatch("getAllLists");
+  },
+  created() {
+    this.getUserID();
   },
   filters: {
     capitalize(value) {
