@@ -151,6 +151,24 @@
         </v-flex>
       </v-layout>
     </v-container>
+
+    <v-snackbar
+      class="mt-5 title"
+      v-model="snackbar"
+      :color="color"
+      :bottom="y === 'bottom'"
+      :left="x === 'left'"
+      :multi-line="mode === 'multi-line'"
+      :right="x === 'right'"
+      :timeout="timeout"
+      :top="y === 'top'"
+      :vertical="mode === 'vertical'"
+    >
+      <v-icon v-if="color === 'success'">fas fa-check-circle</v-icon>
+      <v-icon v-else>fas fa-times-circle</v-icon>
+      {{ newListMsg }}
+      <v-btn dark flat @click="snackbar = false">Close</v-btn>
+    </v-snackbar>
   </div>
 </template>
 
@@ -284,7 +302,14 @@ export default {
       textToTranslate: "",
       translation: "",
       currentWord: "",
-      list: null
+      list: null,
+      snackbar: false,
+      y: "top",
+      x: null,
+      mode: "multi-line",
+      timeout: 2000,
+      newListMsg: null,
+      color: null
     };
   },
   computed: {
@@ -320,8 +345,12 @@ export default {
             this.translation
           )
         })
-        .then(() => console.log("Merge done!"))
-        .catch(error => console.error("Error merging: ", error));
+        .then(() => {
+          this.newListMsg = "Successfully added!";
+          this.color = "success";
+          this.snackbar = true;
+        })
+        .catch(error => console.error("Error adding words: ", error));
     }
   },
   // mounted() {
