@@ -15,8 +15,8 @@
         <v-flex xs12 sm6 offset-sm3>
           <v-card color="rgb(255, 255, 255, 0.5)">
             <v-list class="transparent" two-line subheader>
-              <router-link to="/enchat">
-                <v-list-tile avatar @click>
+              <router-link to="/chat">
+                <v-list-tile avatar>
                   <v-list-tile-avatar>
                     <img alt="england flag" src="../assets/united_kingdom_flag.png">
                   </v-list-tile-avatar>
@@ -36,7 +36,7 @@
 
               <v-divider color="black"></v-divider>
 
-              <v-list-tile avatar @click>
+              <v-list-tile avatar>
                 <v-list-tile-avatar>
                   <img alt="spain flag" src="../assets/spain_flag.png">
                 </v-list-tile-avatar>
@@ -55,7 +55,7 @@
 
               <v-divider color="black"></v-divider>
 
-              <v-list-tile avatar @click>
+              <v-list-tile avatar>
                 <v-list-tile-avatar>
                   <img alt="france flag" src="../assets/france_flag.png">
                 </v-list-tile-avatar>
@@ -74,7 +74,7 @@
 
               <v-divider color="black"></v-divider>
 
-              <v-list-tile avatar @click>
+              <v-list-tile avatar>
                 <v-list-tile-avatar>
                   <img alt="germany flag" src="../assets/germany_flag.png">
                 </v-list-tile-avatar>

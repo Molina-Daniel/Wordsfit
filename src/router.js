@@ -8,6 +8,7 @@ import AddWord from "./components/AddWord.vue";
 import Workout from "./components/Workout.vue";
 import Lists from "./components/Lists.vue";
 import ChatRooms from "./components/ChatRooms.vue";
+import Chat from "./components/Chat.vue";
 import firebase from "firebase";
 
 Vue.use(Router);
@@ -75,6 +76,14 @@ let router = new Router({
       path: "/chatrooms",
       name: "ChatRooms",
       component: ChatRooms,
+      meta: {
+        requiresAuth: true
+      }
+    },
+    {
+      path: "/enchat",
+      name: "Chat",
+      component: Chat,
       meta: {
         requiresAuth: true
       }

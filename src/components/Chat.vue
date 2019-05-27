@@ -1,99 +1,22 @@
 <template>
-  <div>
-    <v-card color="rgb(255, 0, 0, 0)" class="mt-2" flat>
-      <v-card-text>
-        <h1 class="text-xs-center">
-          Chat Rooms
-          <i class="fas fa-comments"></i>
-        </h1>
-        <p class="text-xs-center mb-0">Join the Chat with the language you want practice</p>
-      </v-card-text>
-    </v-card>
+  <v-layout row>
+    <v-flex xs12 sm6 offset-sm3>
+      <v-card class="mt-2" color="rgb(255, 255, 255, 0.7)">
+        <v-card-text>
+          <div v-if="messages.length < 1">No messages yet!</div>
+          <div v-for="message in messages" :key="message.id">
+            <span>[{{ message.name }}]:</span>
+            <span>{{ " "+ message.message }}</span>
+            <span>{{ message.timestamp }}</span>
+          </div>
+        </v-card-text>
 
-    <v-container fluid grid-list-sm>
-      <v-layout row>
-        <v-flex xs12 sm6 offset-sm3>
-          <v-card color="rgb(255, 255, 255, 0.5)">
-            <v-list class="transparent" two-line subheader>
-              <v-list-tile avatar @click>
-                <v-list-tile-avatar>
-                  <img alt="england flag" src="..\assets\united_kingdom_flag.png">
-                </v-list-tile-avatar>
-
-                <v-list-tile-content>
-                  <v-list-tile-title>English</v-list-tile-title>
-                  <v-list-tile-sub-title>This is the English Chat Room</v-list-tile-sub-title>
-                </v-list-tile-content>
-
-                <v-list-tile-action>
-                  <v-btn icon ripple>
-                    <v-icon>fas fa-info-circle</v-icon>
-                  </v-btn>
-                </v-list-tile-action>
-              </v-list-tile>
-
-              <v-divider color="black"></v-divider>
-
-              <v-list-tile avatar @click>
-                <v-list-tile-avatar>
-                  <img alt="spain flag" src="..\assets\spain_flag.png">
-                </v-list-tile-avatar>
-
-                <v-list-tile-content>
-                  <v-list-tile-title>Spanish</v-list-tile-title>
-                  <v-list-tile-sub-title>This is the Spanish Chat Room</v-list-tile-sub-title>
-                </v-list-tile-content>
-
-                <v-list-tile-action>
-                  <v-btn icon ripple>
-                    <v-icon>fas fa-info-circle</v-icon>
-                  </v-btn>
-                </v-list-tile-action>
-              </v-list-tile>
-
-              <v-divider color="black"></v-divider>
-
-              <v-list-tile avatar @click>
-                <v-list-tile-avatar>
-                  <img alt="france flag" src="..\assets\france_flag.png">
-                </v-list-tile-avatar>
-
-                <v-list-tile-content>
-                  <v-list-tile-title>French</v-list-tile-title>
-                  <v-list-tile-sub-title>This is the French Chat Room</v-list-tile-sub-title>
-                </v-list-tile-content>
-
-                <v-list-tile-action>
-                  <v-btn icon ripple>
-                    <v-icon>fas fa-info-circle</v-icon>
-                  </v-btn>
-                </v-list-tile-action>
-              </v-list-tile>
-
-              <v-divider color="black"></v-divider>
-
-              <v-list-tile avatar @click>
-                <v-list-tile-avatar>
-                  <img alt="germany flag" src="..\assets\germany_flag.png">
-                </v-list-tile-avatar>
-
-                <v-list-tile-content>
-                  <v-list-tile-title>German</v-list-tile-title>
-                  <v-list-tile-sub-title>This is the German Chat Room</v-list-tile-sub-title>
-                </v-list-tile-content>
-
-                <v-list-tile-action>
-                  <v-btn icon ripple>
-                    <v-icon>fas fa-info-circle</v-icon>
-                  </v-btn>
-                </v-list-tile-action>
-              </v-list-tile>
-            </v-list>
-          </v-card>
-        </v-flex>
-      </v-layout>
-    </v-container>
-  </div>
+        <v-card-actions>
+          <NewMessage :name="name"/>
+        </v-card-actions>
+      </v-card>
+    </v-flex>
+  </v-layout>
 </template>
 
 <script>
@@ -107,7 +30,9 @@ export default {
     Navbar
   },
   data() {
-    return {};
+    return {
+      messages: []
+    };
   },
   computed: {},
   methods: {},
@@ -116,5 +41,10 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
+/* #chatbox {
+  height: 300px;
+  width: 400px;
+  overflow-y: scroll;
+} */
 </style>
