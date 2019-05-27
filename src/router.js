@@ -81,7 +81,7 @@ let router = new Router({
       }
     },
     {
-      path: "/enchat",
+      path: "/chat",
       name: "Chat",
       component: Chat,
       meta: {
