@@ -111,7 +111,7 @@
 
         <v-divider></v-divider>
 
-        <router-link to="/chats">
+        <router-link to="/chatrooms">
           <v-list-tile>
             <v-list-tile-action>
               <v-icon color="black">fas fa-comments</v-icon>
@@ -145,7 +145,7 @@
 import firebase from "firebase";
 
 export default {
-  name: "navbar",
+  name: "Navbar",
   data() {
     return {
       drawer: null,

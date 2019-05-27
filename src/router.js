@@ -7,6 +7,7 @@ import Home from "./views/Home.vue";
 import AddWord from "./components/AddWord.vue";
 import Workout from "./components/Workout.vue";
 import Lists from "./components/Lists.vue";
+import ChatRooms from "./components/ChatRooms.vue";
 import firebase from "firebase";
 
 Vue.use(Router);
@@ -22,12 +23,12 @@ let router = new Router({
     // },
     {
       path: "/",
-      name: "home",
+      name: "Home",
       component: Home
     },
     {
       path: "/login",
-      name: "login",
+      name: "Login",
       component: Login,
       meta: {
         requiresGuest: true
@@ -35,7 +36,7 @@ let router = new Router({
     },
     {
       path: "/registration",
-      name: "registration",
+      name: "Registration",
       component: Registration,
       meta: {
         requiresGuest: true
@@ -43,12 +44,12 @@ let router = new Router({
     },
     {
       path: "/home",
-      name: "home",
+      name: "Home",
       component: Home
     },
     {
       path: "/addword",
-      name: "addword",
+      name: "AddWord",
       component: AddWord,
       meta: {
         requiresAuth: true
@@ -56,7 +57,7 @@ let router = new Router({
     },
     {
       path: "/workout",
-      name: "workout",
+      name: "Workout",
       component: Workout,
       meta: {
         requiresAuth: true
@@ -64,8 +65,16 @@ let router = new Router({
     },
     {
       path: "/lists",
-      name: "lists",
+      name: "Lists",
       component: Lists,
+      meta: {
+        requiresAuth: true
+      }
+    },
+    {
+      path: "/chatrooms",
+      name: "ChatRooms",
+      component: ChatRooms,
       meta: {
         requiresAuth: true
       }

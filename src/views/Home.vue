@@ -38,7 +38,7 @@
         </router-link>
       </div>
       <div>
-        <router-link to="/chats">
+        <router-link to="/chatrooms">
           <div class="text-xs-center">
             <v-btn large round dark color="red darken-4
 ">
@@ -68,7 +68,7 @@
 import Navbar from "@/components/Navbar.vue";
 
 export default {
-  name: "home",
+  name: "Home",
   components: {
     Navbar
   }
