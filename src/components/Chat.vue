@@ -5,9 +5,9 @@
         <div v-if="messages.length < 1">No messages yet!</div>
         <v-card-text class="messages" v-chat-scroll="{always: false, smooth: true}">
           <div v-for="message in messages" :key="message.id">
-            <span>[{{ message.name }}]:</span>
+            <span class="font-weight-black">[{{ message.name }}]:</span>
             <span>{{ " "+ message.message }}</span>
-            <span class="timestamp">{{ message.timestamp }}</span>
+            <span id="timestamp">{{ message.timestamp }}</span>
           </div>
         </v-card-text>
 
@@ -98,13 +98,17 @@ export default {
   overflow-y: scroll;
 } */
 
-.timestamp {
-  display: block;
-  font-size: 0.7em;
+.messages {
+  max-height: 350px;
+  overflow: auto;
 }
 
-.messages {
-  max-height: 400px;
-  overflow: auto;
+.messages span {
+  font-size: 1.2em;
+}
+
+#timestamp {
+  display: block;
+  font-size: 0.7em;
 }
 </style>
