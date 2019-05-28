@@ -8,11 +8,15 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state: {
     userID: null,
+    userName: null,
     listNames: []
   },
   mutations: {
     setUserID(state, payload) {
       state.userID = payload;
+    },
+    setUserName(state, payload) {
+      state.userName = payload;
     },
     setLists(state, payload) {
       state.listNames.push(payload);
@@ -21,6 +25,9 @@ export default new Vuex.Store({
   actions: {
     getUserID(context) {
       context.commit("setUserID", firebase.auth().currentUser.email)
+    },
+    getUserName(context) {
+      context.commit("setUserName", firebase.auth().currentUser.displayName)
     },
     getAllLists(context) {
       // Get ALL documents from a collection
@@ -41,6 +48,9 @@ export default new Vuex.Store({
   getters: {
     getUserID(state) {
       return state.userID;
+    },
+    getUserName(state) {
+      return state.userName;
     },
     getLists(state) {
       return state.listNames;

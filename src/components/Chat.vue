@@ -12,7 +12,7 @@
         </v-card-text>
 
         <v-card-actions>
-          <NewMessage :name="name"/>
+          <NewMessage :lang="lang"/>
         </v-card-actions>
       </v-card>
     </v-flex>
@@ -34,12 +34,36 @@ export default {
   },
   data() {
     return {
-      lang: null,
       messages: []
     };
   },
   computed: {},
   methods: {
+    timeConverter(timestamp) {
+      var a = new Date(timestamp);
+      var months = [
+        "Jan",
+        "Feb",
+        "Mar",
+        "Apr",
+        "May",
+        "Jun",
+        "Jul",
+        "Aug",
+        "Sep",
+        "Oct",
+        "Nov",
+        "Dec"
+      ];
+      var year = a.getFullYear();
+      var month = months[a.getMonth()];
+      var date = a.getDate();
+      var hour = a.getHours();
+      var min = a.getMinutes();
+      var sec = a.getSeconds();
+      var time = date + " " + month + " " + year + " " + hour + ":" + min;
+      return time;
+    },
     getMessages() {
       db.collection(this.lang + "_chat")
         .orderBy("timestamp")
@@ -47,19 +71,24 @@ export default {
           snapshot.docChanges().forEach(change => {
             if (change.type == "added") {
               let doc = change.doc;
+              console.log(doc.data().timestamp);
               this.messages.push({
                 id: doc.id,
                 name: doc.data().name,
                 message: doc.data().message,
-                timestamp: doc.data().timestamp.toDate()
+                timestamp: this.timeConverter(doc.data().timestamp)
               });
             }
           });
         });
     }
   },
-  mounted() {},
-  created() {}
+  mounted() {
+    console.log(this.lang);
+  },
+  created() {
+    this.getMessages();
+  }
 };
 </script>
 

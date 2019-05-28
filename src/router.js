@@ -84,6 +84,7 @@ let router = new Router({
       path: "/chat",
       name: "Chat",
       component: Chat,
+      props: true,
       meta: {
         requiresAuth: true
       }
