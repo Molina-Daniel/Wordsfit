@@ -28,9 +28,14 @@
                   required
                 ></v-text-field>
                 <v-text-field
+                  label="Enter your name or nick"
+                  v-model="name"
+                  required
+                  :rules="nameRules"
+                ></v-text-field>
+                <v-text-field
                   label="Enter your password"
                   v-model="password"
-                  min="8"
                   :append-icon="e1 ? 'far fa-eye-slash' : 'far fa-eye'"
                   @click:append="() => (e1 = !e1)"
                   :type="e1 ? 'password' : 'text'"
@@ -69,18 +74,27 @@ export default {
       valid: false,
       e1: true,
       password: "",
-      passwordRules: [v => !!v || "Password is required"],
+      passwordRules: [
+        v => !!v || "Password is required",
+        v => v.length > 5 || "Password must be 6 characteres or longer"
+      ],
       email: "",
       emailRules: [
         v => !!v || "E-mail is required",
         v =>
           /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(v) ||
           "E-mail must be valid"
+      ],
+      name: "",
+      nameRules: [
+        v => !!v || "A name or nick is required",
+        v => v.length > 1 || "Name must be min 2 characteres or longer"
       ]
     };
   },
   methods: {
     register(e) {
+      // If Registration with Email and Password
       if (this.$refs.form.validate()) {
         // this.$refs.form.$el.submit();
         firebase
@@ -88,12 +102,14 @@ export default {
           .createUserWithEmailAndPassword(this.email, this.password)
           .then(user => {
             console.log(user);
-            console.log(user.user.email);
+            console.log(user.user.displayName);
             console.log(user.additionalUserInfo.isNewUser);
             if (user.additionalUserInfo.isNewUser == true) {
               this.setUserInDB(user);
+              this.setUserName(user);
             }
             // this.$router.go({ path: this.$router.path });
+            // console.log(firebase.auth().currentUser.displayName);
             this.$router.push("/");
             this.$forceUpdate();
           })
@@ -108,6 +124,7 @@ export default {
       this.$refs.form.reset();
     },
     loginGoogle() {
+      // If Registration with Google account
       let provider = new firebase.auth.GoogleAuthProvider();
 
       firebase
@@ -120,10 +137,14 @@ export default {
           let user = result.user;
 
           if (result.additionalUserInfo.isNewUser == true) {
-              this.setUserInDB(result);
-            } else {
-              alert(`Welcome back ${user.displayName}. It's a pleasure have you in WordsFit again!`);
-            }
+            this.setUserInDB(result);
+          } else {
+            alert(
+              `Welcome back ${
+                user.displayName
+              }. It's a pleasure have you in WordsFit again!`
+            );
+          }
           this.$router.push("/");
           this.$forceUpdate();
         })
@@ -143,12 +164,18 @@ export default {
       db.collection("users")
         .doc(user.user.email)
         .set({
-          user_id: user.user.email
+          user_id: user.user.email,
+          user_name: this.name
         })
         .then(() => {
           alert(`Welcome to WordsFit. It's a pleasure have you here!`);
         })
         .catch(err => console.log(err));
+    },
+    setUserName(user) {
+      user.user.updateProfile({
+        displayName: this.name
+      });
     }
   }
 };

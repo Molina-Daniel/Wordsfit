@@ -34,6 +34,12 @@
           <v-list-tile v-if="isLoggedIn">
             <v-list-tile-title @click="logout()">Log Out</v-list-tile-title>
           </v-list-tile>
+
+          <v-list-tile v-if="isLoggedIn">
+            <router-link to="/profile">
+              <v-list-tile-title class="text--black">Profile</v-list-tile-title>
+            </router-link>
+          </v-list-tile>
         </v-list>
       </v-menu>
       <router-link to="/">
@@ -188,5 +194,9 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
+a {
+  text-decoration: none;
+  color: black;
+}
 </style>

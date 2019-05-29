@@ -27,8 +27,8 @@
                 </span>-->
                 <v-icon color="black" class="mr-1">fas fa-user-tag</v-icon>
                 <span class="title mr-1">Name:</span>
-                <span>dsfsadf asdfsad</span>
-                <v-btn icon v-if="edit == true">
+                <span>{{ userName }}</span>
+                <v-btn class="ma-0" icon v-if="edit == true">
                   <v-icon color="black" class="ml-1">fas fa-edit</v-icon>
                 </v-btn>
               </div>
@@ -36,7 +36,7 @@
                 <v-icon color="black" class="mr-1">fas fa-at</v-icon>
                 <span class="title mr-1">Email:</span>
                 <span>sdfasdf@asdfsad.com</span>
-                <v-btn disabled icon v-if="edit == true">
+                <v-btn class="ma-0" disabled icon v-if="edit == true">
                   <v-icon color="black" class="ml-1">fas fa-edit</v-icon>
                 </v-btn>
               </div>
@@ -44,7 +44,7 @@
                 <v-icon color="black" class="mr-1">fas fa-key</v-icon>
                 <span class="title mr-1">Password:</span>
                 <v-chip>Secret</v-chip>
-                <v-btn icon v-if="edit == true">
+                <v-btn class="ma-0" icon v-if="edit == true">
                   <v-icon color="black" class="ml-1">fas fa-edit</v-icon>
                 </v-btn>
               </div>
@@ -67,19 +67,23 @@ export default {
   },
   data() {
     return {
-      edit: true
+      edit: false,
+      userName: null
     };
   },
   computed: {},
   methods: {
     modify() {
       this.edit = this.edit === false ? true : false;
+    },
+    getUserName() {
+      this.userName = this.$store.getters.getUserName;
     }
   },
   mounted() {},
   created() {
-    this.$store.dispatch("getUserID");
-    this.getUserID();
+    this.$store.dispatch("getUserName");
+    this.getUserName();
   }
 };
 </script>

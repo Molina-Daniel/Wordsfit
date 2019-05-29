@@ -71,6 +71,26 @@ export default {
   name: "Home",
   components: {
     Navbar
+  },
+  data() {
+    return {
+      name: ""
+    }
+  },
+  methods: {
+    getUserName() {
+      this.userName = this.$store.getters.getUserName;
+    },
+    setDisplayName() {
+let user = firebase.auth().currentUser
+    if (user.displayName = null) {
+      
+    }
+    }
+  },
+  created() {
+    this.$store.dispatch("getUserName");
+    this.getUserName();
   }
 };
 </script>
