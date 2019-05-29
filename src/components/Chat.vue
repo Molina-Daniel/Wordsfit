@@ -100,9 +100,9 @@
             </div>
           </v-card-text>
 
-          <v-card-actions>
+          <v-card-text>
             <NewMessage :lang="lang"/>
-          </v-card-actions>
+          </v-card-text>
         </v-card>
       </v-flex>
     </v-layout>
@@ -189,7 +189,7 @@ export default {
 } */
 
 .messages {
-  max-height: 350px;
+  max-height: 300px;
   overflow: auto;
 }
 

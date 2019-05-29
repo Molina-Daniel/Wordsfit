@@ -1,12 +1,21 @@
 <template>
   <div>
-    <v-text-field label="Type here..." v-model="newMessage" required></v-text-field>
+    <v-text-field
+      v-model="newMessage"
+      :append-outer-icon="newMessage ? 'fas fa-paper-plane' : ''"
+      @click:append-outer="sendMessage()"
+      required
+      single-line
+      label="Type here..."
+      type="text"
+    ></v-text-field>
+    <!-- <v-text-field label="Type here..." v-model="newMessage" required></v-text-field>
     <v-btn
       @click="sendMessage()"
       :class=" { 'red darken-4 white--text' : valid }"
       :disabled="!valid"
       round
-    >Send</v-btn>
+    >Send</v-btn>-->
   </div>
 </template>
 
