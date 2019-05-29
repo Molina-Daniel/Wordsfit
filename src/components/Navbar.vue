@@ -66,8 +66,14 @@
             <img src="https://randomuser.me/api/portraits/men/85.jpg">
           </v-list-tile-avatar>-->
 
-          <v-list-tile-content>
+          <v-list-tile-content v-if="userName">
             <v-list-tile-title>{{ userName }}</v-list-tile-title>
+          </v-list-tile-content>
+
+          <v-list-tile-content v-if="!userName">
+            <router-link to="/login">
+              <v-btn>Log In!</v-btn>
+            </router-link>
           </v-list-tile-content>
         </v-list-tile>
       </v-list>
