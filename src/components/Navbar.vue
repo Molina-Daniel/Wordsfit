@@ -194,9 +194,11 @@ export default {
   },
   created() {
     window.addEventListener("scroll", this.handleScroll);
-    this.$store.dispatch("getUserName");
-    this.getUserName();
-    this.isLoggedIn();
+    if (firebase.auth().currentUser) {
+      this.loggedIn = true;
+      this.$store.dispatch("getUserName");
+      this.getUserName();
+    }
   }
 };
 </script>

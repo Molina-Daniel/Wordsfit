@@ -30,7 +30,6 @@
                 <v-text-field
                   label="Enter your password"
                   v-model="password"
-                  min="8"
                   :append-icon="e1 ? 'far fa-eye-slash' : 'far fa-eye'"
                   @click:append="() => (e1 = !e1)"
                   :type="e1 ? 'password' : 'text'"
@@ -48,7 +47,44 @@
                     >Login</v-btn>
                   </v-flex>
                   <v-flex>
-                    <a href>Forgot Password</a>
+                    <!-- Dialog -->
+                    <v-dialog v-model="dialog">
+                      <template v-slot:activator="{ on }">
+                        <a v-on="on">Forgot Password? Restore it!</a>
+                      </template>
+                      <v-card>
+                        <v-card-title>
+                          <span class="headline">Password Restoration</span>
+                        </v-card-title>
+                        <v-card-text>
+                          <v-container grid-list-md>
+                            <v-layout wrap>
+                              <v-flex xs12 sm6 md4>
+                                <p>An email will be send to your existing email account to restore your password</p>
+                                <v-form v-model="validRest" ref="form">
+                                  <v-text-field
+                                    label="Enter your e-mail address"
+                                    v-model="emailRest"
+                                    :rules="emailRules"
+                                    required
+                                  ></v-text-field>
+                                </v-form>
+                              </v-flex>
+                            </v-layout>
+                          </v-container>
+                        </v-card-text>
+                        <v-card-actions>
+                          <v-spacer></v-spacer>
+                          <v-btn dark round color="red darken-4" @click="dialog = false">Cancel</v-btn>
+                          <v-btn
+                            :class=" { 'red darken-4 white--text' : validRest }"
+                            :disabled="!validRest"
+                            round
+                            @click="dialog = resetPass() && false"
+                          >Send</v-btn>
+                        </v-card-actions>
+                      </v-card>
+                    </v-dialog>
                     <router-link to="/registration">
                       <p class="ma-0">No account yet? Sign In!</p>
                     </router-link>
@@ -60,6 +96,9 @@
         </v-card>
       </v-flex>
     </v-layout>
+
+    <!-- Dialog -->
+    <v-layout row justify-center></v-layout>
   </v-container>
 </template>
 
@@ -71,17 +110,23 @@ export default {
   name: "login",
   data() {
     return {
+      dialog: false,
       valid: false,
       e1: true,
       password: "",
-      passwordRules: [v => !!v || "Password is required"],
+      passwordRules: [
+        v => !!v || "Password is required",
+        v => v.length > 5 || "Password must be 6 characteres or longer"
+      ],
       email: "",
       emailRules: [
         v => !!v || "E-mail is required",
         v =>
           /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(v) ||
           "E-mail must be valid"
-      ]
+      ],
+      emailRest: "",
+      validRest: false
     };
   },
   methods: {
@@ -154,6 +199,20 @@ export default {
           alert(`Welcome to WordsFit. It's a pleasure have you here!`);
         })
         .catch(err => console.log(err));
+    },
+    resetPass() {
+      firebase
+        .auth()
+        .sendPasswordResetEmail(this.emailRest)
+        .then(() => {
+          this.newListMsg = "Email send!";
+          this.color = "success";
+          this.snackbar = true;
+        })
+        .catch(error => {
+          console.error("Error recovering password: ", error);
+          alert(error.message);
+        });
     }
   }
 };
