@@ -22,7 +22,7 @@
             <div>
               <v-form v-model="valid" ref="form">
                 <v-text-field
-                  label="Enter your e-mail address"
+                  label="Enter your e-mail account"
                   v-model="email"
                   :rules="emailRules"
                   required

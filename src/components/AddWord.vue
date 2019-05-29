@@ -298,7 +298,7 @@ export default {
       ],
       fromLang: null,
       toLang: null,
-      userID: null,
+      userEmail: null,
       textToTranslate: "",
       translation: "",
       currentWord: "",
@@ -318,8 +318,8 @@ export default {
     }
   },
   methods: {
-    getUserID() {
-      this.userID = this.$store.getters.getUserID;
+    getUserEmail() {
+      this.userEmail = this.$store.getters.getUserEmail;
     },
     translateMe() {
       translate(this.textToTranslate, { from: this.fromLang, to: this.toLang })
@@ -337,7 +337,7 @@ export default {
     },
     addWord() {
       db.collection("users")
-        .doc(this.userID)
+        .doc(this.userEmail)
         .collection("lists")
         .doc(this.list)
         .update({
@@ -357,9 +357,9 @@ export default {
   //   this.$store.dispatch("getAllLists");
   // },
   created() {
-    this.$store.dispatch("getUserID");
+    this.$store.dispatch("getUserEmail");
     this.$store.dispatch("getAllLists");
-    this.getUserID();
+    this.getUserEmail();
   },
   filters: {
     capitalize(value) {

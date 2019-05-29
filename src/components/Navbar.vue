@@ -19,26 +19,26 @@
         </template>
 
         <v-list class="blue-grey lighten-4">
-          <v-list-tile v-if="!isLoggedIn">
+          <v-list-tile v-if="!loggedIn">
             <router-link to="/login">
               <v-list-tile-title>Log In</v-list-tile-title>
             </router-link>
           </v-list-tile>
 
-          <v-list-tile v-if="!isLoggedIn">
+          <v-list-tile v-if="!loggedIn">
             <router-link to="/registration">
               <v-list-tile-title>Registration</v-list-tile-title>
             </router-link>
           </v-list-tile>
 
-          <v-list-tile v-if="isLoggedIn">
-            <v-list-tile-title @click="logout()">Log Out</v-list-tile-title>
-          </v-list-tile>
-
-          <v-list-tile v-if="isLoggedIn">
+          <v-list-tile v-if="loggedIn">
             <router-link to="/profile">
               <v-list-tile-title class="text--black">Profile</v-list-tile-title>
             </router-link>
+          </v-list-tile>
+
+          <v-list-tile v-if="loggedIn">
+            <v-list-tile-title @click="logout()">Log Out</v-list-tile-title>
           </v-list-tile>
         </v-list>
       </v-menu>
@@ -62,12 +62,12 @@
     >
       <v-list class="pa-1 blue-grey lighten-2">
         <v-list-tile avatar>
-          <v-list-tile-avatar>
+          <!-- <v-list-tile-avatar>
             <img src="https://randomuser.me/api/portraits/men/85.jpg">
-          </v-list-tile-avatar>
+          </v-list-tile-avatar>-->
 
           <v-list-tile-content>
-            <v-list-tile-title>{{ currentUser }}</v-list-tile-title>
+            <v-list-tile-title>{{ userName }}</v-list-tile-title>
           </v-list-tile-content>
         </v-list-tile>
       </v-list>
@@ -156,11 +156,19 @@ export default {
     return {
       drawer: null,
       toolbarColor: "rgb(255, 255, 255, 0)",
-      isLoggedIn: false,
-      currentUser: false
+      loggedIn: false,
+      userName: false
     };
   },
   methods: {
+    getUserName() {
+      this.userName = this.$store.getters.getUserName;
+    },
+    isLoggedIn() {
+      if (firebase.auth().currentUser) {
+        this.loggedIn = true;
+      }
+    },
     handleScroll(event) {
       if (window.scrollY > 0) {
         this.toolbarColor = "rgb(255, 255, 255, 0.7)";
@@ -186,10 +194,9 @@ export default {
   },
   created() {
     window.addEventListener("scroll", this.handleScroll);
-    if (firebase.auth().currentUser) {
-      this.isLoggedIn = true;
-      this.currentUser = firebase.auth().currentUser.email;
-    }
+    this.$store.dispatch("getUserName");
+    this.getUserName();
+    this.isLoggedIn();
   }
 };
 </script>

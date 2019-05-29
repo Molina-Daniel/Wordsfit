@@ -113,7 +113,7 @@ export default {
   },
   data() {
     return {
-      userID: null,
+      userEmail: null,
       list: null,
       words: [],
       answers: null,
@@ -150,25 +150,25 @@ export default {
     //     })
     //     .catch(error => console.log("Error getting document:", error));
     // },
-    getUserID() {
-      this.userID = this.$store.getters.getUserID;
+    getUserEmail() {
+      this.userEmail = this.$store.getters.getUserEmail;
     },
     getList() {
       db.collection("users")
-        .doc(this.userID)
+        .doc(this.userEmail)
         .collection("lists")
         .doc(this.list)
         .get()
         .then(doc => {
           // Retrieve the keys form the object
           this.words = Object.keys(doc.data());
-          // Remove default key 'userID' from the array
-          let userIDIndex = this.words.indexOf(this.userID);
-          this.words.splice(userIDIndex, 1);
+          // Remove default key 'userEmail' from the array
+          let userEmailIndex = this.words.indexOf(this.userEmail);
+          this.words.splice(userEmailIndex, 1);
           // Retrieve the values form the object
           this.answers = Object.values(doc.data());
-          // Remove default value 'userID' from the array
-          this.answers.splice(userIDIndex, 1);
+          // Remove default value 'userEmail' from the array
+          this.answers.splice(userEmailIndex, 1);
           // this.wordsAndAnswers = Object.entries(doc.data());
           // this.checkAnswer();
           // console.log(this.answers);
@@ -177,11 +177,11 @@ export default {
     },
     newList() {
       db.collection("users")
-        .doc(this.userID)
+        .doc(this.userEmail)
         .collection("lists")
         .doc(this.newListName)
         .set({
-          [this.userID]: this.userID
+          [this.userEmail]: this.userEmail
         })
         .then(() => {
           this.newListMsg = "New list created!";
@@ -197,9 +197,9 @@ export default {
     // this.$store.dispatch("getAllLists");
   },
   created() {
-    this.$store.dispatch("getUserID");
+    this.$store.dispatch("getUserEmail");
     this.$store.dispatch("getAllLists");
-    this.getUserID();
+    this.getUserEmail();
   },
   filters: {
     capitalize(value) {

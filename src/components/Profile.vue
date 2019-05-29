@@ -21,38 +21,87 @@
             </v-card-actions>
 
             <v-card-title primary-title>
-              <div class="mb-4">
-                <!-- <span>
-                  <i class="fas fa-edit"></i>
-                </span>-->
-                <v-icon color="black" class="mr-1">fas fa-user-tag</v-icon>
-                <span class="title mr-1">Name:</span>
-                <span>{{ userName }}</span>
-                <v-btn class="ma-0" icon v-if="edit == true">
-                  <v-icon color="black" class="ml-1">fas fa-edit</v-icon>
-                </v-btn>
+              <div class="mb-1">
+                <v-form v-model="valid" ref="form">
+                  <v-icon color="black" class="mr-1">fas fa-user-tag</v-icon>
+                  <span class="title mr-1">Name:</span>
+                  <v-text-field
+                    v-model="userName"
+                    :append-outer-icon="edit && valid ? 'fas fa-edit' : ''"
+                    @click:append-outer="changeUserName()"
+                    :readonly="edit == false"
+                    required
+                    :rules="nameRules"
+                    single-line
+                    label="Enter a name or nick"
+                    type="text"
+                  ></v-text-field>
+                </v-form>
               </div>
-              <div class="mb-4">
-                <v-icon color="black" class="mr-1">fas fa-at</v-icon>
-                <span class="title mr-1">Email:</span>
-                <span>sdfasdf@asdfsad.com</span>
-                <v-btn class="ma-0" disabled icon v-if="edit == true">
+              <div class="mb-1">
+                <v-form v-model="valid" ref="form">
+                  <v-icon color="black" class="mr-1">fas fa-at</v-icon>
+                  <span class="title mr-1">Email:</span>
+                  <v-text-field
+                    class="input"
+                    v-model="userEmail"
+                    :append-outer-icon="edit && valid && googleAccount == false ? 'fas fa-edit' : ''"
+                    @click:append-outer="changeUserEmail()"
+                    :readonly="edit == false || googleAccount == true"
+                    :rules="emailRules"
+                    required
+                    single-line
+                    label="Enter an e-mail account"
+                    type="text"
+                  ></v-text-field>
+                </v-form>
+                <!-- <v-btn class="ma-0" icon :disabled="googleAccount" v-if="edit == true">
                   <v-icon color="black" class="ml-1">fas fa-edit</v-icon>
-                </v-btn>
+                </v-btn>-->
               </div>
-              <div class="mb-4">
-                <v-icon color="black" class="mr-1">fas fa-key</v-icon>
-                <span class="title mr-1">Password:</span>
-                <v-chip>Secret</v-chip>
-                <v-btn class="ma-0" icon v-if="edit == true">
-                  <v-icon color="black" class="ml-1">fas fa-edit</v-icon>
-                </v-btn>
+              <div class="mb-1">
+                <v-form v-model="valid" ref="form">
+                  <v-icon color="black" class="mr-1">fas fa-key</v-icon>
+                  <span class="title mr-1">Password:</span>
+                  <v-text-field
+                    v-if="googleAccount == false"
+                    v-model="newPass"
+                    :append-outer-icon="edit ? 'fas fa-edit' : ''"
+                    @click:append-outer="changeUserPass()"
+                    :readonly="edit == false"
+                    :rules="passwordRules"
+                    counter
+                    required
+                    single-line
+                    label="Type new password"
+                    type="text"
+                  ></v-text-field>
+                  <v-chip v-if="googleAccount == true">Secret</v-chip>
+                </v-form>
               </div>
             </v-card-title>
           </v-card>
         </v-flex>
       </v-layout>
     </v-container>
+
+    <v-snackbar
+      class="mt-5 title"
+      v-model="snackbar"
+      :color="color"
+      :bottom="y === 'bottom'"
+      :left="x === 'left'"
+      :multi-line="mode === 'multi-line'"
+      :right="x === 'right'"
+      :timeout="timeout"
+      :top="y === 'top'"
+      :vertical="mode === 'vertical'"
+    >
+      <v-icon v-if="color === 'success'">fas fa-check-circle</v-icon>
+      <v-icon v-else>fas fa-times-circle</v-icon>
+      {{ newListMsg }}
+      <v-btn dark flat @click="snackbar = false">Close</v-btn>
+    </v-snackbar>
   </div>
 </template>
 
@@ -67,8 +116,33 @@ export default {
   },
   data() {
     return {
+      valid: false,
       edit: false,
-      userName: null
+      googleAccount: false,
+      userName: "",
+      nameRules: [
+        v => !!v || "A name or nick is required",
+        v => v.length > 1 || "Name must be min 2 characteres or longer"
+      ],
+      userEmail: "",
+      emailRules: [
+        v => !!v || "E-mail is required",
+        v =>
+          /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(v) ||
+          "E-mail must be valid"
+      ],
+      newPass: "******",
+      passwordRules: [
+        v => !!v || "Password is required",
+        v => v.length > 5 || "Password must be 6 characteres or longer"
+      ],
+      snackbar: false,
+      y: "top",
+      x: null,
+      mode: "multi-line",
+      timeout: 2000,
+      newListMsg: null,
+      color: null
     };
   },
   computed: {},
@@ -78,15 +152,96 @@ export default {
     },
     getUserName() {
       this.userName = this.$store.getters.getUserName;
+    },
+    getUserEmail() {
+      this.userEmail = this.$store.getters.getUserEmail;
+    },
+    checkUserProvider() {
+      let userProvider = firebase.auth().currentUser.providerData[0].providerId;
+      if (userProvider == "google.com") {
+        this.googleAccount = true;
+      }
+    },
+    getUserInfo() {
+      console.log(firebase.auth().currentUser.providerData[0].providerId);
+    },
+    changeUserName() {
+      let user = firebase.auth().currentUser;
+      user
+        .updateProfile({
+          displayName: this.userName
+        })
+        .then(() => {
+          this.newListMsg = "Name changed!";
+          this.color = "success";
+          this.snackbar = true;
+        })
+        .catch(error => {
+          console.error("Error changing email: ", error);
+          alert(error.message);
+        });
+      console.log(user);
+    },
+    changeUserEmail() {
+      let user = firebase.auth().currentUser;
+      user
+        .updateEmail(this.userEmail)
+        .then(() => {
+          this.newListMsg = "Email changed!";
+          this.color = "success";
+          this.snackbar = true;
+        })
+        .catch(error => {
+          console.error("Error changing email: ", error);
+          alert(error.message);
+        });
+      console.log(user);
+    },
+    changeUserPass() {
+      let user = firebase.auth().currentUser;
+      user
+        .updatePassword(this.newPass)
+        .then(() => {
+          this.newListMsg = "Pass changed!";
+          this.color = "success";
+          this.snackbar = true;
+        })
+        .catch(error => {
+          console.error("Error changing password: ", error);
+          alert(error.message);
+          // this.newListMsg = error.message;
+          // this.color = "red darken-1";
+          // this.snackbar = true;
+        });
+      console.log(user);
     }
   },
   mounted() {},
   created() {
     this.$store.dispatch("getUserName");
     this.getUserName();
+    this.$store.dispatch("getUserEmail");
+    this.getUserEmail();
+    this.checkUserProvider();
+    this.getUserInfo();
   }
 };
 </script>
 
-<style>
+<style scoped>
+/* .input {
+  text-decoration: none;
+  color: black;
+} */
+
+.input-group--disabled.checkbox .input-group__input {
+  color: #000 !important;
+}
+
+.input-group--disabled.input-group--select label {
+  color: #000 !important;
+}
+.v-input--is-disabled {
+  color: #000 !important;
+}
 </style>

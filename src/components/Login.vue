@@ -90,6 +90,7 @@ export default {
         .auth()
         .signInWithEmailAndPassword(this.email, this.password)
         .then(user => {
+          console.log(user);
           alert(
             `Welcome back ${
               this.email
