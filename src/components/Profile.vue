@@ -18,6 +18,42 @@
               <v-btn @click="modify()" class round dark color="red darken-4 ">
                 <span v-if="edit == true">Stop</span> &nbsp; Modify
               </v-btn>
+
+              <v-spacer></v-spacer>
+
+              <v-btn
+                @click.stop="dialog = true"
+                class
+                round
+                dark
+                color="red darken-4 "
+              >Delete Account</v-btn>
+
+              <v-dialog v-model="dialog" max-width="290">
+                <v-card>
+                  <v-card-title class="headline">Delete Account</v-card-title>
+
+                  <v-card-text>You are about delete your account in WordsFit. Are you sure?</v-card-text>
+
+                  <v-card-actions>
+                    <v-spacer></v-spacer>
+
+                    <v-btn
+                      color="green darken-1"
+                      flat="flat"
+                      @click="dialog = false"
+                    >NO! Please nooo!</v-btn>
+
+                    <v-btn
+                      dark
+                      round
+                      color="red darken-4"
+                      @click="deleteAcc(); dialog = false"
+                      flat="flat"
+                    >Yeah! Bye bye!</v-btn>
+                  </v-card-actions>
+                </v-card>
+              </v-dialog>
             </v-card-actions>
 
             <v-card-title primary-title>
@@ -45,10 +81,7 @@
                   <v-text-field
                     class="input"
                     v-model="userEmail"
-                    :append-outer-icon="edit && valid && googleAccount == false ? 'fas fa-edit' : ''"
-                    @click:append-outer="changeUserEmail()"
-                    :readonly="edit == false || googleAccount == true"
-                    :rules="emailRules"
+                    readonly
                     required
                     single-line
                     label="Enter an e-mail account"
@@ -73,7 +106,7 @@
                     counter
                     required
                     single-line
-                    label="Type new password"
+                    label="**********"
                     type="text"
                   ></v-text-field>
                   <v-chip v-if="googleAccount == true">Secret</v-chip>
@@ -116,6 +149,7 @@ export default {
   },
   data() {
     return {
+      dialog: false,
       valid: false,
       edit: false,
       googleAccount: false,
@@ -125,12 +159,6 @@ export default {
         v => v.length > 1 || "Name must be min 2 characteres or longer"
       ],
       userEmail: "",
-      emailRules: [
-        v => !!v || "E-mail is required",
-        v =>
-          /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(v) ||
-          "E-mail must be valid"
-      ],
       newPass: "******",
       passwordRules: [
         v => !!v || "Password is required",
@@ -182,21 +210,21 @@ export default {
         });
       console.log(user);
     },
-    changeUserEmail() {
-      let user = firebase.auth().currentUser;
-      user
-        .updateEmail(this.userEmail)
-        .then(() => {
-          this.newListMsg = "Email changed!";
-          this.color = "success";
-          this.snackbar = true;
-        })
-        .catch(error => {
-          console.error("Error changing email: ", error);
-          alert(error.message);
-        });
-      console.log(user);
-    },
+    // changeUserEmail() {
+    //   let user = firebase.auth().currentUser;
+    //   user
+    //     .updateEmail(this.userEmail)
+    //     .then(() => {
+    //       this.newListMsg = "Email changed!";
+    //       this.color = "success";
+    //       this.snackbar = true;
+    //     })
+    //     .catch(error => {
+    //       console.error("Error changing email: ", error);
+    //       alert(error.message);
+    //     });
+    //   console.log(user);
+    // },
     changeUserPass() {
       let user = firebase.auth().currentUser;
       user
@@ -214,6 +242,19 @@ export default {
           // this.snackbar = true;
         });
       console.log(user);
+    },
+    deleteAcc() {
+      firebase
+        .auth()
+        .currentUser.delete()
+        .then(() => {
+          alert(`Your account has been deleted. Hope see you soon!`);
+          this.$router.push("/");
+        })
+        .catch(error => {
+          alert(error.message);
+          console.log(error);
+        });
     }
   },
   mounted() {},

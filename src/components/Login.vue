@@ -46,8 +46,9 @@
                       round
                     >Login</v-btn>
                   </v-flex>
+
+                  <!-- Dialog -->
                   <v-flex>
-                    <!-- Dialog -->
                     <v-dialog v-model="dialog">
                       <template v-slot:activator="{ on }">
                         <a v-on="on">Forgot Password? Restore it!</a>
@@ -80,7 +81,8 @@
                             :class=" { 'red darken-4 white--text' : validRest }"
                             :disabled="!validRest"
                             round
-                            @click="dialog = resetPass() && false"
+                            @click="resetPass(); dialog = false"
+                            @press="dialog = false"
                           >Send</v-btn>
                         </v-card-actions>
                       </v-card>
@@ -97,8 +99,23 @@
       </v-flex>
     </v-layout>
 
-    <!-- Dialog -->
-    <v-layout row justify-center></v-layout>
+    <v-snackbar
+      class="mt-5 title"
+      v-model="snackbar"
+      :color="color"
+      :bottom="y === 'bottom'"
+      :left="x === 'left'"
+      :multi-line="mode === 'multi-line'"
+      :right="x === 'right'"
+      :timeout="timeout"
+      :top="y === 'top'"
+      :vertical="mode === 'vertical'"
+    >
+      <v-icon v-if="color === 'success'">fas fa-check-circle</v-icon>
+      <v-icon v-else>fas fa-times-circle</v-icon>
+      {{ newListMsg }}
+      <v-btn dark flat @click="snackbar = false">Close</v-btn>
+    </v-snackbar>
   </v-container>
 </template>
 
@@ -126,7 +143,14 @@ export default {
           "E-mail must be valid"
       ],
       emailRest: "",
-      validRest: false
+      validRest: false,
+      snackbar: false,
+      y: "top",
+      x: null,
+      mode: "multi-line",
+      timeout: 2000,
+      newListMsg: null,
+      color: null
     };
   },
   methods: {
@@ -205,7 +229,7 @@ export default {
         .auth()
         .sendPasswordResetEmail(this.emailRest)
         .then(() => {
-          this.newListMsg = "Email send!";
+          this.newListMsg = "Email sent!";
           this.color = "success";
           this.snackbar = true;
         })

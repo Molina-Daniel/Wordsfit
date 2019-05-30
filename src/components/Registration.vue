@@ -164,8 +164,7 @@ export default {
       db.collection("users")
         .doc(user.user.email)
         .set({
-          user_id: user.user.email,
-          user_name: this.name
+          user_email: user.user.email
         })
         .then(() => {
           alert(`Welcome to WordsFit. It's a pleasure have you here!`);
