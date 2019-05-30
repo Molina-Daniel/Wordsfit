@@ -7,6 +7,7 @@ import Home from "./views/Home.vue";
 import AddWord from "./components/AddWord.vue";
 import Workout from "./components/Workout.vue";
 import Lists from "./components/Lists.vue";
+import List from "./components/List.vue";
 import ChatRooms from "./components/ChatRooms.vue";
 import Chat from "./components/Chat.vue";
 import Profile from "./components/Profile.vue";
@@ -69,6 +70,14 @@ let router = new Router({
       path: "/lists",
       name: "Lists",
       component: Lists,
+      meta: {
+        requiresAuth: true
+      }
+    },
+    {
+      path: "/list",
+      name: "List",
+      component: List,
       meta: {
         requiresAuth: true
       }

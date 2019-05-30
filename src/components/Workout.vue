@@ -111,7 +111,7 @@ export default {
   },
   data() {
     return {
-      userEmail: null,
+      userID: null,
       list: null,
       word: null,
       answer: null,
@@ -134,22 +134,22 @@ export default {
     }
   },
   methods: {
-    getUserEmail() {
-      this.userEmail = this.$store.getters.getUserEmail;
+    getUserID() {
+      this.userID = this.$store.getters.getUserID;
     },
     // Get ONE document from a collection
     getlist() {
       db.collection("users")
-        .doc(this.userEmail)
+        .doc(this.userID)
         .collection("lists")
         .doc(this.list)
         .get()
         .then(doc => {
           // Retrieve the keys form the object
           this.words = Object.keys(doc.data());
-          // Remove default key 'userEmail' from the array
-          let userEmailIndex = this.words.indexOf(this.userEmail);
-          this.words.splice(userEmailIndex, 1);
+          // Remove default key 'userID' from the array
+          let userIDIndex = this.words.indexOf(this.userID);
+          this.words.splice(userIDIndex, 1);
 
           // Retrieve the values form the object
           this.wordsAndAnswers = Object.entries(doc.data());
@@ -183,13 +183,13 @@ export default {
     }
   },
   // beforeCreate() {
-  //   this.$store.dispatch("getUserEmail");
+  //   this.$store.dispatch("getUserID");
   //   this.$store.dispatch("getAllLists");
   // },
   created() {
-    this.$store.dispatch("getUserEmail");
+    this.$store.dispatch("getUserID");
     this.$store.dispatch("getAllLists");
-    this.getUserEmail();
+    this.getUserID();
   }
 };
 
@@ -197,7 +197,7 @@ export default {
 // getlist() {
 //   let docRef = db
 //     .collection("users")
-//     .doc(this.userEmail)
+//     .doc(this.userID)
 //     .collection("lists")
 //     // .doc(this.list)
 //     .get()

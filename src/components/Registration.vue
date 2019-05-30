@@ -162,7 +162,7 @@ export default {
     },
     setUserInDB(user) {
       db.collection("users")
-        .doc(user.user.email)
+        .doc(user.user.uid)
         .set({
           user_email: user.user.email
         })

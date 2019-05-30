@@ -11,7 +11,7 @@
     </v-card>
 
     <v-container color="rgb(255, 255, 255, 0.7)" fluid grid-list-sm>
-      <v-layout row wrap>
+      <!-- <v-layout row wrap>
         <v-flex d-flex xs12>
           <v-layout row wrap>
             <v-flex d-flex xs12>
@@ -39,7 +39,7 @@
             </v-flex>
           </v-layout>
         </v-flex>
-      </v-layout>
+      </v-layout>-->
 
       <v-layout row wrap>
         <v-flex d-flex xs12>
@@ -71,14 +71,61 @@
         </v-flex>
       </v-layout>
 
-      <v-card class="mt-1" v-if="words.length > 0" color="rgb(255, 255, 255, 0.7)">
+      <!-- User Lists -->
+      <v-layout row class="mt-2">
+        <v-flex xs12 sm6 offset-sm3>
+          <v-card color="rgb(255, 255, 255, 0.5)">
+            <v-list class="transparent" subheader v-for="list in lists" :key="list">
+              <v-list-tile avatar>
+                <!-- <v-list-tile-avatar>
+                  <v-icon>fas fa-language</v-icon>
+                </v-list-tile-avatar>-->
+
+                <v-list-tile-content @click="getList()">
+                  <v-list-tile-title>{{ list }}</v-list-tile-title>
+                  <!-- <v-list-tile-sub-title>{{ list }}</v-list-tile-sub-title> -->
+                </v-list-tile-content>
+
+                <v-list-tile-action>
+                  <v-speed-dial
+                    v-model="fab"
+                    direction="left"
+                    :open-on-hover="hover"
+                    :transition="transition"
+                  >
+                    <template v-slot:activator>
+                      <v-btn v-model="fab" color="red darken-4" dark fab small>
+                        <v-icon>fas fa-user-circle</v-icon>
+                        <v-icon>fas fa-times-circle</v-icon>
+                      </v-btn>
+                    </template>
+                    <v-btn fab dark small color="green">
+                      <v-icon>fas fa-edit</v-icon>
+                    </v-btn>
+                    <v-btn fab dark small color="red">
+                      <v-icon>fas fa-trash-alt</v-icon>
+                    </v-btn>
+                  </v-speed-dial>
+                  <!-- <v-btn icon ripple>
+                    <v-icon>fas fa-info-circle</v-icon>
+                  </v-btn>-->
+                </v-list-tile-action>
+              </v-list-tile>
+
+              <v-divider></v-divider>
+            </v-list>
+          </v-card>
+        </v-flex>
+      </v-layout>
+
+      <!-- <v-card class="mt-1" v-if="words.length > 0" color="rgb(255, 255, 255, 0.7)">
         <v-card-text>
           <p v-for="(word, i) in words" :key="word">
             <strong>{{ word }}</strong> =
             <span v-for="answer in answers[i]" :key="answer">{{ answer+", " }}</span>
           </p>
         </v-card-text>
-      </v-card>
+      </v-card>-->
     </v-container>
 
     <v-snackbar
@@ -113,11 +160,13 @@ export default {
   },
   data() {
     return {
-      userEmail: null,
+      userID: null,
       list: null,
       words: [],
       answers: null,
       newListName: null,
+      listNameChanged: null,
+      transition: "slide-y-reverse-transition",
       snackbar: false,
       y: "top",
       x: null,
@@ -150,25 +199,25 @@ export default {
     //     })
     //     .catch(error => console.log("Error getting document:", error));
     // },
-    getUserEmail() {
-      this.userEmail = this.$store.getters.getUserEmail;
+    getUserID() {
+      this.userID = this.$store.getters.getUserID;
     },
     getList() {
       db.collection("users")
-        .doc(this.userEmail)
+        .doc(this.userID)
         .collection("lists")
         .doc(this.list)
         .get()
         .then(doc => {
           // Retrieve the keys form the object
           this.words = Object.keys(doc.data());
-          // Remove default key 'userEmail' from the array
-          let userEmailIndex = this.words.indexOf(this.userEmail);
-          this.words.splice(userEmailIndex, 1);
+          // Remove default key 'userID' from the array
+          let userIDIndex = this.words.indexOf(this.userID);
+          this.words.splice(userIDIndex, 1);
           // Retrieve the values form the object
           this.answers = Object.values(doc.data());
-          // Remove default value 'userEmail' from the array
-          this.answers.splice(userEmailIndex, 1);
+          // Remove default value 'userID' from the array
+          this.answers.splice(userIDIndex, 1);
           // this.wordsAndAnswers = Object.entries(doc.data());
           // this.checkAnswer();
           // console.log(this.answers);
@@ -177,11 +226,11 @@ export default {
     },
     newList() {
       db.collection("users")
-        .doc(this.userEmail)
+        .doc(this.userID)
         .collection("lists")
         .doc(this.newListName)
         .set({
-          [this.userEmail]: this.userEmail
+          [this.userID]: this.userID
         })
         .then(() => {
           this.newListMsg = "New list created!";
@@ -191,15 +240,42 @@ export default {
           this.$store.dispatch("getAllLists");
         })
         .catch(error => console.error("Error merging: ", error));
+    },
+    changeListName() {
+      db.collection("users")
+        .doc(this.userID)
+        .collection("lists")
+        .doc(this.list)
+        .get()
+        .then(doc => {
+          if (doc && doc.exists) {
+            let data = doc.data();
+            // Save the data to the new doc name
+            db.collection("users")
+              .doc(this.userID)
+              .collection("lists")
+              .doc(this.listNameChanged)
+              .set(data)
+              .then(() => {
+                db.collection("users")
+                  .doc(this.userID)
+                  .collection("lists")
+                  .doc(this.list)
+                  .delete();
+                this.$store.dispatch("getAllLists");
+              });
+          }
+        })
+        .catch(error => console.log("Error changing document name:", error));
     }
   },
   mounted() {
     // this.$store.dispatch("getAllLists");
   },
   created() {
-    this.$store.dispatch("getUserEmail");
+    this.$store.dispatch("getUserID");
     this.$store.dispatch("getAllLists");
-    this.getUserEmail();
+    this.getUserID();
   },
   filters: {
     capitalize(value) {

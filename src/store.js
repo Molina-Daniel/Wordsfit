@@ -7,50 +7,63 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    userEmail: null,
+    userID: null,
     userName: null,
+    userEmail: null,
     listNames: []
   },
   mutations: {
-    setUserEmail(state, payload) {
-      state.userEmail = payload;
+    setUserID(state, payload) {
+      state.userID = payload;
     },
     setUserName(state, payload) {
       state.userName = payload;
     },
+    setUserEmail(state, payload) {
+      state.userEmail = payload;
+    },
     setLists(state, payload) {
-      state.listNames.push(payload);
+      state.listNames = payload;
     }
   },
   actions: {
-    getUserEmail(context) {
-      context.commit("setUserEmail", firebase.auth().currentUser.email)
+    getUserID(context) {
+      context.commit("setUserID", firebase.auth().currentUser.uid)
     },
     getUserName(context) {
       context.commit("setUserName", firebase.auth().currentUser.displayName)
     },
+    getUserEmail(context) {
+      context.commit("setUserEmail", firebase.auth().currentUser.email)
+    },
     getAllLists(context) {
       // Get ALL documents from a collection
       db.collection("users")
-        .doc(context.state.userEmail)
+        .doc(context.state.userID)
         .collection("lists")
         // .doc(this.list)
         .get()
         .then(querySnapshot => {
+          let lists = []
           querySnapshot.forEach(doc => {
-            context.commit("setLists", doc.id)
+            lists.push(doc.id)
           });
+          context.commit("setLists", lists)
+
         })
         .catch(error => console.log("Error getting document:", error));
     }
 
   },
   getters: {
-    getUserEmail(state) {
-      return state.userEmail;
+    getUserID(state) {
+      return state.userID;
     },
     getUserName(state) {
       return state.userName;
+    },
+    getUserEmail(state) {
+      return state.userEmail;
     },
     getLists(state) {
       return state.listNames;
