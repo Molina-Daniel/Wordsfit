@@ -78,6 +78,7 @@ let router = new Router({
       path: "/list",
       name: "List",
       component: List,
+      props: true,
       meta: {
         requiresAuth: true
       }

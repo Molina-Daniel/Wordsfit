@@ -46,7 +46,7 @@
           <v-layout row wrap>
             <v-flex d-flex xs12>
               <v-card color="rgb(255, 255, 255, 0.3)" tile flat>
-                <v-card-text class="text-xs-center title">Or create a new one:</v-card-text>
+                <v-card-text class="text-xs-center title">Create a new list:</v-card-text>
               </v-card>
             </v-flex>
 
@@ -75,34 +75,33 @@
       <v-layout row class="mt-2">
         <v-flex xs12 sm6 offset-sm3>
           <v-card color="rgb(255, 255, 255, 0.5)">
-            <v-list class="transparent" subheader v-for="list in lists" :key="list">
+            <v-list class="transparent" subheader v-for="(list) in lists" :key="list">
               <v-list-tile avatar>
                 <!-- <v-list-tile-avatar>
                   <v-icon>fas fa-language</v-icon>
                 </v-list-tile-avatar>-->
 
-                <v-list-tile-content @click="getList()">
-                  <v-list-tile-title>{{ list }}</v-list-tile-title>
-                  <!-- <v-list-tile-sub-title>{{ list }}</v-list-tile-sub-title> -->
-                </v-list-tile-content>
+                <router-link :to="{ name: 'List', params: { listName: list }}">
+                  <v-list-tile-content>
+                    <v-list-tile-title>{{ list }}</v-list-tile-title>
+                    <!-- <v-list-tile-sub-title>{{ list }}</v-list-tile-sub-title> -->
+                  </v-list-tile-content>
+                </router-link>
+
+                <v-spacer></v-spacer>
 
                 <v-list-tile-action>
-                  <v-speed-dial
-                    v-model="fab"
-                    direction="left"
-                    :open-on-hover="hover"
-                    :transition="transition"
-                  >
+                  <v-speed-dial direction="left" :transition="transition">
                     <template v-slot:activator>
                       <v-btn v-model="fab" color="red darken-4" dark fab small>
                         <v-icon>fas fa-user-circle</v-icon>
                         <v-icon>fas fa-times-circle</v-icon>
                       </v-btn>
                     </template>
-                    <v-btn fab dark small color="green">
+                    <v-btn fab dark small color="green" class="mr-1">
                       <v-icon>fas fa-edit</v-icon>
                     </v-btn>
-                    <v-btn fab dark small color="red">
+                    <v-btn fab dark small color="red" class="mr-1">
                       <v-icon>fas fa-trash-alt</v-icon>
                     </v-btn>
                   </v-speed-dial>
@@ -166,7 +165,8 @@ export default {
       answers: null,
       newListName: null,
       listNameChanged: null,
-      transition: "slide-y-reverse-transition",
+      fab: false,
+      transition: "scale-transition",
       snackbar: false,
       y: "top",
       x: null,
