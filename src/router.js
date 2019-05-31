@@ -25,6 +25,10 @@ let router = new Router({
     //   component: Landing
     // },
     {
+      path: "*",
+      redirect: "/",
+    },
+    {
       path: "/",
       name: "Home",
       component: Home

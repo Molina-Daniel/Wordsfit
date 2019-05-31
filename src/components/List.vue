@@ -9,8 +9,7 @@
           </v-list-tile-avatar>-->
 
           <v-list-tile-content>
-            <v-list-tile-title>{{ listName }}</v-list-tile-title>
-            <v-list-tile-sub-title></v-list-tile-sub-title>
+            <v-list-tile-title class="title font-weight-bold">{{ listName }}</v-list-tile-title>
           </v-list-tile-content>
 
           <v-list-tile-action>
@@ -62,9 +61,7 @@ export default {
   },
   computed: {},
   methods: {},
-  mounted() {
-    console.log(this.$route.params.listname);
-  },
+  mounted() {},
   created() {}
 };
 </script>

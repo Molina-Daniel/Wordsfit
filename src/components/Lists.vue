@@ -75,7 +75,7 @@
       <v-layout row class="mt-2">
         <v-flex xs12 sm6 offset-sm3>
           <v-card color="rgb(255, 255, 255, 0.5)">
-            <v-list class="transparent" subheader v-for="(list) in lists" :key="list">
+            <v-list class="transparent" subheader v-for="(list, i) in lists" :key="list">
               <v-list-tile avatar>
                 <!-- <v-list-tile-avatar>
                   <v-icon>fas fa-language</v-icon>
@@ -91,19 +91,112 @@
                 <v-spacer></v-spacer>
 
                 <v-list-tile-action>
-                  <v-speed-dial direction="left" :transition="transition">
+                  <v-speed-dial v-model="fab[i]" direction="left" :transition="transition">
                     <template v-slot:activator>
-                      <v-btn v-model="fab" color="red darken-4" dark fab small>
+                      <v-btn
+                        v-model="fab[i]"
+                        color="red darken-4"
+                        dark
+                        fab
+                        small
+                        @click="selectedList(list)"
+                      >
                         <v-icon>fas fa-user-circle</v-icon>
                         <v-icon>fas fa-times-circle</v-icon>
                       </v-btn>
                     </template>
-                    <v-btn fab dark small color="green" class="mr-1">
+
+                    <!-- Edit name dialog -->
+                    <v-dialog v-model="editDialog">
+                      <template v-slot:activator="{ on }">
+                        <v-btn fab dark small color="green" class="mr-1" v-on="on">
+                          <v-icon>fas fa-edit</v-icon>
+                        </v-btn>
+                      </template>
+
+                      <v-card>
+                        <v-card-title>
+                          <span class="headline">List name change</span>
+                        </v-card-title>
+
+                        <v-card-text>
+                          <v-container grid-list-md>
+                            <v-layout wrap>
+                              <v-flex xs12 sm6 md4>
+                                <p>
+                                  Type below the new name for
+                                  <span
+                                    class="font-weight-bold"
+                                  >{{ list }}</span> list
+                                </p>
+                                <v-form v-model="validName" ref="form">
+                                  <v-text-field
+                                    label="Type a new name"
+                                    v-model="listNameChanged"
+                                    :rules="nameRules"
+                                    required
+                                  ></v-text-field>
+                                </v-form>
+                              </v-flex>
+                            </v-layout>
+                          </v-container>
+                        </v-card-text>
+
+                        <v-card-actions>
+                          <v-spacer></v-spacer>
+                          <v-btn dark round color="red darken-4" @click="editDialog = false">Cancel</v-btn>
+                          <v-btn
+                            :class=" { 'red darken-4 white--text' : validName }"
+                            :disabled="!validName"
+                            round
+                            @click="changeListName(); editDialog = false"
+                          >Change name</v-btn>
+                        </v-card-actions>
+                      </v-card>
+                    </v-dialog>
+
+                    <v-dialog v-model="deleteDialog" width="500">
+                      <template v-slot:activator="{ on }">
+                        <v-btn fab dark small color="red" class="mr-1" v-on="on">
+                          <v-icon>fas fa-trash-alt</v-icon>
+                        </v-btn>
+                      </template>
+
+                      <v-card>
+                        <v-card-title class="headline grey lighten-2" primary-title>Are you sure?</v-card-title>
+
+                        <v-card-text>
+                          List
+                          <span class="font-weight-bold">{{ list }}</span> is going to be deleted. This change is permanent and you can't recover this list in the future
+                        </v-card-text>
+
+                        <v-divider></v-divider>
+
+                        <v-card-actions>
+                          <v-spacer></v-spacer>
+                          <v-btn
+                            dark
+                            round
+                            color="red darken-4"
+                            @click="deleteDialog = false"
+                          >No! I'm sorry</v-btn>
+                          <v-btn
+                            dark
+                            round
+                            color="red darken-4"
+                            @click="deleteList(); deleteDialog = false"
+                          >Yes! I'm sure</v-btn>
+                        </v-card-actions>
+                      </v-card>
+                    </v-dialog>
+
+                    <!-- <v-btn fab dark small color="green" class="mr-1">
                       <v-icon>fas fa-edit</v-icon>
-                    </v-btn>
-                    <v-btn fab dark small color="red" class="mr-1">
+                    </v-btn>-->
+
+                    <!-- <v-btn fab dark small color="red" class="mr-1">
                       <v-icon>fas fa-trash-alt</v-icon>
-                    </v-btn>
+                    </v-btn>-->
                   </v-speed-dial>
                   <!-- <v-btn icon ripple>
                     <v-icon>fas fa-info-circle</v-icon>
@@ -159,14 +252,18 @@ export default {
   },
   data() {
     return {
+      editDialog: false,
+      deleteDialog: false,
+      nameRules: [v => !!v || "A name is required"],
+      validName: false,
       userID: null,
       list: null,
       words: [],
       answers: null,
       newListName: null,
       listNameChanged: null,
-      fab: false,
-      transition: "scale-transition",
+      fab: [],
+      transition: "slide-y-reverse-transition",
       snackbar: false,
       y: "top",
       x: null,
@@ -241,6 +338,9 @@ export default {
         })
         .catch(error => console.error("Error merging: ", error));
     },
+    selectedList(list) {
+      this.list = list;
+    },
     changeListName() {
       db.collection("users")
         .doc(this.userID)
@@ -248,6 +348,7 @@ export default {
         .doc(this.list)
         .get()
         .then(doc => {
+          console.log(doc.id);
           if (doc && doc.exists) {
             let data = doc.data();
             // Save the data to the new doc name
@@ -263,10 +364,34 @@ export default {
                   .doc(this.list)
                   .delete();
                 this.$store.dispatch("getAllLists");
-              });
+                this.listNameChanged = null;
+              })
+              .catch(err =>
+                console.log(
+                  "Couldn't delelete the document in the database, error: " +
+                    err
+                )
+              );
           }
+          this.$store.dispatch("getAllLists");
+          this.fab = [];
         })
         .catch(error => console.log("Error changing document name:", error));
+      this.$store.dispatch("getAllLists");
+    },
+    deleteList() {
+      db.collection("users")
+        .doc(this.userID)
+        .collection("lists")
+        .doc(this.list)
+        .delete()
+        .then(() => {
+          this.newListMsg = "List deleted!";
+          this.color = "success";
+          this.snackbar = true;
+          this.newListName = "";
+          this.$store.dispatch("getAllLists");
+        });
     }
   },
   mounted() {
