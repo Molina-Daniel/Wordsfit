@@ -42,7 +42,7 @@
       </v-layout>-->
 
       <v-layout row wrap>
-        <v-flex d-flex xs12>
+        <v-flex xs12>
           <v-layout row wrap>
             <v-flex d-flex xs12>
               <v-card color="rgb(255, 255, 255, 0.3)" tile flat>
@@ -50,7 +50,7 @@
               </v-card>
             </v-flex>
 
-            <v-flex d-flex>
+            <v-flex>
               <v-layout row align-center>
                 <v-flex xs8>
                   <v-text-field
@@ -71,7 +71,7 @@
         </v-flex>
       </v-layout>
 
-      <!-- User Lists -->
+      <!-- Lists -->
       <v-layout row class="mt-2">
         <v-flex xs12 sm6 offset-sm3>
           <v-card color="rgb(255, 255, 255, 0.5)">
@@ -155,6 +155,7 @@
                       </v-card>
                     </v-dialog>
 
+                    <!-- Delete list dialog -->
                     <v-dialog v-model="deleteDialog" width="500">
                       <template v-slot:activator="{ on }">
                         <v-btn fab dark small color="red" class="mr-1" v-on="on">
