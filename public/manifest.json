@@ -2,7 +2,7 @@
   "short_name": "WordsFit",
   "name": "WordsFit",
   "start_url": "/",
-  "display": "fullscreen",
+  "display": "standalone",
   "orientation": "portrait",
   "background_color": "#1c1c1c",
   "icons": [
