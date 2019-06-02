@@ -57,7 +57,7 @@
                     small
                     color="grey darken-1"
                     class="ml-1"
-                    @click="selectedWord(word); deleteTranslation(answer)"
+                    @click="getWordIndex(i); selectedWord(word); deleteTranslation(answer)"
                   >fas fa-times-circle</v-icon>
                 </v-chip>
               </v-card-text>
@@ -123,7 +123,7 @@
                       :class=" { 'red darken-4 white--text' : validName }"
                       :disabled="!validName"
                       round
-                      @click="addTranslation(); editDialog = false"
+                      @click="addTranslation(); editDialog = false; getWordIndex(i)"
                     >Add translation</v-btn>
                   </v-card-actions>
                 </v-card>
@@ -159,7 +159,7 @@
                       dark
                       round
                       color="red darken-4"
-                      @click="deleteWord(); deleteDialog = false"
+                      @click="deleteWord(); deleteDialog = false; getWordIndex(i)"
                     >Yes! I'm sure</v-btn>
                   </v-card-actions>
                 </v-card>
@@ -266,6 +266,9 @@ export default {
     selectedWord(word) {
       this.word = word;
     },
+    getWordIndex(i) {
+      this.wordIndex = i;
+    },
     deleteWord() {
       db.collection("users")
         .doc(this.userID)
@@ -275,6 +278,7 @@ export default {
           [this.word]: firebase.firestore.FieldValue.delete()
         })
         .then(() => {
+          this.fab[this.wordIndex] = false;
           this.newListMsg = "Word deleted!";
           this.color = "success";
           this.snackbar = true;
@@ -288,7 +292,9 @@ export default {
         .collection("lists")
         .doc(this.listName)
         .update({
-          [this.word]: this.answers[0].filter(answer => answer !== translation)
+          [this.word]: this.answers[this.wordIndex].filter(
+            answer => answer !== translation
+          )
         })
         .then(() => {
           this.newListMsg = "Translation deleted!";
@@ -309,6 +315,8 @@ export default {
           )
         })
         .then(() => {
+          this.newTranslation = null;
+          this.fab[this.wordIndex] = false;
           this.newListMsg = "Translation added!";
           this.color = "success";
           this.snackbar = true;
