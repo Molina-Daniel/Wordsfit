@@ -57,7 +57,7 @@
                     small
                     color="grey darken-1"
                     class="ml-1"
-                    @click="hola1()"
+                    @click="selectedWord(word); deleteTranslation(answer)"
                   >fas fa-times-circle</v-icon>
                 </v-chip>
               </v-card-text>
@@ -73,14 +73,14 @@
                   dark
                   fab
                   small
-                  @click="selectedList(list)"
+                  @click="selectedWord(word)"
                 >
                   <v-icon>fas fa-user-circle</v-icon>
                   <v-icon>fas fa-times-circle</v-icon>
                 </v-btn>
               </template>
 
-              <!-- Edit name dialog -->
+              <!-- Add word dialog -->
               <v-dialog v-model="editDialog">
                 <template v-slot:activator="{ on }">
                   <v-btn fab dark small color="green" class="mr-1" v-on="on">
@@ -97,7 +97,7 @@
                     <v-container grid-list-md>
                       <v-layout wrap>
                         <v-flex xs12 sm6 md4>
-                          <p>
+                          <!-- <p>
                             Type below the new name for
                             <span class="font-weight-bold">{{ list }}</span> list
                           </p>
@@ -108,7 +108,7 @@
                               :rules="nameRules"
                               required
                             ></v-text-field>
-                          </v-form>
+                          </v-form>-->
                         </v-flex>
                       </v-layout>
                     </v-container>
@@ -117,17 +117,17 @@
                   <v-card-actions>
                     <v-spacer></v-spacer>
                     <v-btn dark round color="red darken-4" @click="editDialog = false">Cancel</v-btn>
-                    <v-btn
+                    <!-- <v-btn
                       :class=" { 'red darken-4 white--text' : validName }"
                       :disabled="!validName"
                       round
                       @click="changeListName(); editDialog = false"
-                    >Change name</v-btn>
+                    >Change name</v-btn>-->
                   </v-card-actions>
                 </v-card>
               </v-dialog>
 
-              <!-- Delete list dialog -->
+              <!-- Delete word dialog -->
               <v-dialog v-model="deleteDialog" width="500">
                 <template v-slot:activator="{ on }">
                   <v-btn fab dark small color="red" class="mr-1" v-on="on">
@@ -138,10 +138,10 @@
                 <v-card>
                   <v-card-title class="headline grey lighten-2" primary-title>Are you sure?</v-card-title>
 
-                  <v-card-text>
+                  <!-- <v-card-text>
                     List
                     <span class="font-weight-bold">{{ list }}</span> is going to be deleted. This change is permanent and you can't recover this list in the future
-                  </v-card-text>
+                  </v-card-text>-->
 
                   <v-divider></v-divider>
 
@@ -157,7 +157,7 @@
                       dark
                       round
                       color="red darken-4"
-                      @click="deleteList(); deleteDialog = false"
+                      @click="deleteWord(); deleteDialog = false"
                     >Yes! I'm sure</v-btn>
                   </v-card-actions>
                 </v-card>
@@ -176,6 +176,24 @@
         </v-layout>
       </v-flex>
     </v-layout>
+
+    <v-snackbar
+      class="mt-5 title"
+      v-model="snackbar"
+      :color="color"
+      :bottom="y === 'bottom'"
+      :left="x === 'left'"
+      :multi-line="mode === 'multi-line'"
+      :right="x === 'right'"
+      :timeout="timeout"
+      :top="y === 'top'"
+      :vertical="mode === 'vertical'"
+    >
+      <v-icon v-if="color === 'success'">fas fa-check-circle</v-icon>
+      <v-icon v-else>fas fa-times-circle</v-icon>
+      {{ newListMsg }}
+      <v-btn dark flat @click="snackbar = false">Close</v-btn>
+    </v-snackbar>
   </div>
 </template>
 
@@ -196,28 +214,29 @@ export default {
       userID: null,
       words: [],
       answers: null,
+      word: null,
       editDialog: false,
       deleteDialog: false,
       fab: [],
-      transition: "slide-y-reverse-transition"
+      transition: "slide-y-reverse-transition",
+      snackbar: false,
+      y: "top",
+      x: null,
+      mode: "multi-line",
+      timeout: 2000,
+      newListMsg: null,
+      color: null
     };
   },
-  computed: {
-    lists() {
-      return this.$store.getters.getLists;
-    }
-  },
+  computed: {},
   methods: {
     hola1() {
       console.log("Soy el content");
     },
-    hola2() {
-      console.log("Soy el icono");
-    },
     getUserID() {
       this.userID = this.$store.getters.getUserID;
     },
-    getList() {
+    getWords() {
       db.collection("users")
         .doc(this.userID)
         .collection("lists")
@@ -238,14 +257,50 @@ export default {
           // console.log(this.answers);
         })
         .catch(error => console.log("Error getting document:", error));
+    },
+    selectedWord(word) {
+      this.word = word;
+    },
+    deleteWord() {
+      db.collection("users")
+        .doc(this.userID)
+        .collection("lists")
+        .doc(this.listName)
+        .update({
+          [this.word]: firebase.firestore.FieldValue.delete()
+        })
+        .then(() => {
+          this.newListMsg = "Word deleted!";
+          this.color = "success";
+          this.snackbar = true;
+          this.getWords();
+          this.$forceUpdate();
+        });
+    },
+    deleteTranslation(translation) {
+      console.log(this.answers);
+      console.log(this.word);
+      db.collection("users")
+        .doc(this.userID)
+        .collection("lists")
+        .doc(this.listName)
+        .update({
+          [this.word]: this.answers[0].filter(answer => answer !== translation)
+        })
+        .then(() => {
+          this.newListMsg = "Word deleted!";
+          this.color = "success";
+          this.snackbar = true;
+          this.getWords();
+          this.$forceUpdate();
+        });
     }
   },
   mounted() {},
   created() {
     this.$store.dispatch("getUserID");
-    this.$store.dispatch("getAllLists");
     this.getUserID();
-    this.getList();
+    this.getWords();
   }
 };
 </script>
