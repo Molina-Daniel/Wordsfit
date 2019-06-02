@@ -84,31 +84,33 @@
               <v-dialog v-model="editDialog">
                 <template v-slot:activator="{ on }">
                   <v-btn fab dark small color="green" class="mr-1" v-on="on">
-                    <v-icon>fas fa-edit</v-icon>
+                    <v-icon>fas fa-plus</v-icon>
                   </v-btn>
                 </template>
 
                 <v-card>
                   <v-card-title>
-                    <span class="headline">List name change</span>
+                    <span class="headline">Add new meaning</span>
                   </v-card-title>
 
                   <v-card-text>
                     <v-container grid-list-md>
                       <v-layout wrap>
                         <v-flex xs12 sm6 md4>
-                          <!-- <p>
-                            Type below the new name for
-                            <span class="font-weight-bold">{{ list }}</span> list
+                          <p>
+                            Type below the new translation for
+                            <span
+                              class="font-weight-bold"
+                            >{{ word }}</span>
                           </p>
                           <v-form v-model="validName" ref="form">
                             <v-text-field
-                              label="Type a new name"
-                              v-model="listNameChanged"
+                              label="Type a new meaning"
+                              v-model="newTranslation"
                               :rules="nameRules"
                               required
                             ></v-text-field>
-                          </v-form>-->
+                          </v-form>
                         </v-flex>
                       </v-layout>
                     </v-container>
@@ -117,12 +119,12 @@
                   <v-card-actions>
                     <v-spacer></v-spacer>
                     <v-btn dark round color="red darken-4" @click="editDialog = false">Cancel</v-btn>
-                    <!-- <v-btn
+                    <v-btn
                       :class=" { 'red darken-4 white--text' : validName }"
                       :disabled="!validName"
                       round
-                      @click="changeListName(); editDialog = false"
-                    >Change name</v-btn>-->
+                      @click="addTranslation(); editDialog = false"
+                    >Add translation</v-btn>
                   </v-card-actions>
                 </v-card>
               </v-dialog>
@@ -215,6 +217,9 @@ export default {
       words: [],
       answers: null,
       word: null,
+      validName: false,
+      nameRules: [v => !!v || "A name is required"],
+      newTranslation: null,
       editDialog: false,
       deleteDialog: false,
       fab: [],
@@ -278,8 +283,6 @@ export default {
         });
     },
     deleteTranslation(translation) {
-      console.log(this.answers);
-      console.log(this.word);
       db.collection("users")
         .doc(this.userID)
         .collection("lists")
@@ -288,12 +291,31 @@ export default {
           [this.word]: this.answers[0].filter(answer => answer !== translation)
         })
         .then(() => {
-          this.newListMsg = "Word deleted!";
+          this.newListMsg = "Translation deleted!";
           this.color = "success";
           this.snackbar = true;
           this.getWords();
           this.$forceUpdate();
         });
+    },
+    addTranslation() {
+      db.collection("users")
+        .doc(this.userID)
+        .collection("lists")
+        .doc(this.listName)
+        .update({
+          [this.word]: firebase.firestore.FieldValue.arrayUnion(
+            this.newTranslation
+          )
+        })
+        .then(() => {
+          this.newListMsg = "Translation added!";
+          this.color = "success";
+          this.snackbar = true;
+          this.getWords();
+          this.$forceUpdate();
+        })
+        .catch(error => console.error("Error adding words: ", error));
     }
   },
   mounted() {},
