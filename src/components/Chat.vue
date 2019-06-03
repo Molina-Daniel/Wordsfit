@@ -173,7 +173,6 @@ export default {
     }
   },
   mounted() {
-    console.log(this.lang);
   },
   created() {
     this.getMessages();
@@ -182,12 +181,6 @@ export default {
 </script>
 
 <style scoped>
-/* #chatbox {
-  height: 300px;
-  width: 400px;
-  overflow-y: scroll;
-} */
-
 .messages {
   max-height: 300px;
   overflow: auto;

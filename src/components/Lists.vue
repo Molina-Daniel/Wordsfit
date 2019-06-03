@@ -11,36 +11,6 @@
     </v-card>
 
     <v-container color="rgb(255, 255, 255, 0.7)" fluid grid-list-sm>
-      <!-- <v-layout row wrap>
-        <v-flex d-flex xs12>
-          <v-layout row wrap>
-            <v-flex d-flex xs12>
-              <v-card color="rgb(255, 255, 255, 0.3)" tile flat>
-                <v-card-text class="text-xs-center title">Choose one of your lists:</v-card-text>
-              </v-card>
-            </v-flex>
-
-            <v-flex d-flex>
-              <v-layout row>
-                <v-flex xs12>
-                  <v-select
-                    v-model="list"
-                    :items="lists"
-                    @change="getList()"
-                    label="Lists"
-                    class="font-weight-bold mt-1"
-                    hide-details
-                    outline
-                    single-line
-                    :menu-props="{ auto: true }"
-                  ></v-select>
-                </v-flex>
-              </v-layout>
-            </v-flex>
-          </v-layout>
-        </v-flex>
-      </v-layout>-->
-
       <v-layout row wrap>
         <v-flex xs12>
           <v-layout row wrap>
@@ -77,14 +47,9 @@
           <v-card color="rgb(255, 255, 255, 0.5)">
             <v-list class="transparent" subheader v-for="(list, i) in lists" :key="list">
               <v-list-tile avatar>
-                <!-- <v-list-tile-avatar>
-                  <v-icon>fas fa-language</v-icon>
-                </v-list-tile-avatar>-->
-
                 <router-link :to="{ name: 'List', params: { listName: list }}">
                   <v-list-tile-content>
                     <v-list-tile-title>{{ list }}</v-list-tile-title>
-                    <!-- <v-list-tile-sub-title>{{ list }}</v-list-tile-sub-title> -->
                   </v-list-tile-content>
                 </router-link>
 
@@ -190,18 +155,7 @@
                         </v-card-actions>
                       </v-card>
                     </v-dialog>
-
-                    <!-- <v-btn fab dark small color="green" class="mr-1">
-                      <v-icon>fas fa-edit</v-icon>
-                    </v-btn>-->
-
-                    <!-- <v-btn fab dark small color="red" class="mr-1">
-                      <v-icon>fas fa-trash-alt</v-icon>
-                    </v-btn>-->
                   </v-speed-dial>
-                  <!-- <v-btn icon ripple>
-                    <v-icon>fas fa-info-circle</v-icon>
-                  </v-btn>-->
                 </v-list-tile-action>
               </v-list-tile>
 
@@ -210,15 +164,6 @@
           </v-card>
         </v-flex>
       </v-layout>
-
-      <!-- <v-card class="mt-1" v-if="words.length > 0" color="rgb(255, 255, 255, 0.7)">
-        <v-card-text>
-          <p v-for="(word, i) in words" :key="word">
-            <strong>{{ word }}</strong> =
-            <span v-for="answer in answers[i]" :key="answer">{{ answer+", " }}</span>
-          </p>
-        </v-card-text>
-      </v-card>-->
     </v-container>
 
     <v-snackbar
