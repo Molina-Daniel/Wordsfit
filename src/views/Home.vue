@@ -1,8 +1,5 @@
 <template>
   <div class="container">
-    <!-- <div>
-      <Navbar/>
-    </div>-->
     <div class="main">
       <div>
         <router-link to="/workout">

@@ -188,7 +188,6 @@ export default {
         .signOut()
         .then(() => {
           alert(`Successfully logged out!`);
-          // this.$router.go({ path: this.$router.path });
           this.$router.push("/login");
           this.$forceUpdate();
         })
