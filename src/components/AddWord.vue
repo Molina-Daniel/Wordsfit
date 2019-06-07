@@ -23,8 +23,8 @@
             </v-flex>
 
             <v-flex d-flex>
-              <v-layout row>
-                <v-flex xs6>
+              <v-layout row align-center>
+                <v-flex xs5>
                   <v-layout>
                     <v-flex>
                       <v-select
@@ -39,7 +39,12 @@
                     </v-flex>
                   </v-layout>
                 </v-flex>
-                <v-flex xs6>
+                <v-flex xs2>
+                  <v-btn icon color>
+                    <v-icon>fas fa-exchange-alt</v-icon>
+                  </v-btn>
+                </v-flex>
+                <v-flex xs5>
                   <v-layout>
                     <v-flex>
                       <v-select
