@@ -40,7 +40,7 @@
                   </v-layout>
                 </v-flex>
                 <v-flex xs2>
-                  <v-btn icon color>
+                  <v-btn icon color @click="switchLang()">
                     <v-icon>fas fa-exchange-alt</v-icon>
                   </v-btn>
                 </v-flex>
@@ -303,6 +303,7 @@ export default {
       ],
       fromLang: null,
       toLang: null,
+      switchLng: null,
       userID: null,
       textToTranslate: "",
       translation: "",
@@ -356,6 +357,11 @@ export default {
           this.snackbar = true;
         })
         .catch(error => console.error("Error adding words: ", error));
+    },
+    switchLang() {
+      this.switchLng = this.fromLang;
+      this.fromLang = this.toLang;
+      this.toLang = this.switchLng;
     }
   },
   // mounted() {
